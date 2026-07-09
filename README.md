@@ -1,4 +1,4 @@
-### KeilerHirsch
+# KeilerHirsch
 
 AI tooling and agent-workflow engineering — I build and harden the tools I use daily to run Claude Code as a real production system, not a demo. Background in electrical/trades work, self-taught into security research and Go/Python systems tooling.
 
