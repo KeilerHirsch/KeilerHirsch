@@ -1,0 +1,14 @@
+# --- Secrets / PII (NEVER commit) ---
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+*.pfx
+Local State
+Cookies
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
