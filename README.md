@@ -1,47 +1,76 @@
+<div align="center">
+
 # KeilerHirsch
 
-[![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)](https://github.com/KeilerHirsch/schroedinger-sync)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://github.com/KeilerHirsch?tab=repositories)
-[![Lua](https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white)](https://github.com/KeilerHirsch?tab=repositories)
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=flat&logo=kofi&logoColor=white)](https://ko-fi.com/keilerhirsch)
+[![myrank.dev](https://myrank.dev/api/badge/KeilerHirsch?style=profile)](https://myrank.dev/u/KeilerHirsch)
+
+**OSINT & digital forensics meets AI agent engineering**
+
+</div>
+
+---
 
 I build and harden the tools I actually run — AI agent workflows in Go and Python, game mods in Lua.
 Self-taught from electrical/trades work into security research and systems tooling. When something breaks
 in a tool I depend on, I'd rather root-cause it and send a tested fix upstream than work around it forever.
 
----
+## 🛠️ AI tooling & agent workflows
 
-## AI tooling & agent workflows
+- **[ai-trinity](https://github.com/KeilerHirsch/ai-trinity)**
+  The three things that make an AI coding setup actually reliable: a model that isn't dumb, a real harness,
+  and persistent memory. Problem → thesis → buildable solution, EN/DE, from months of hands-on iteration
+  rather than theory.
+- **[schroedinger-sync](https://github.com/KeilerHirsch/schroedinger-sync)**
+  Single Go binary that exports your own claude.ai conversations, project docs and memory to local Markdown.
+  Windows, DPAPI + CDP, no telemetry, no cloud dependency.
+- **[claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds)**
+  Star-Trek ship's-computer acoustic hooks for Claude Code auto-mode workflows.
 
-| Repo | What it is |
-|---|---|
-| **[ai-trinity](https://github.com/KeilerHirsch/ai-trinity)** | The three things that make an AI coding setup actually reliable: a model that isn't dumb, a real harness, and persistent memory. Problem → thesis → buildable solution, EN/DE, from months of hands-on iteration rather than theory. |
-| **[schroedinger-sync](https://github.com/KeilerHirsch/schroedinger-sync)** | Single Go binary that exports your own claude.ai conversations, project docs and memory to local Markdown. Windows, DPAPI + CDP, no telemetry, no cloud dependency. |
-| **[mempalace](https://github.com/KeilerHirsch/mempalace)** *(fork — upstream contributor)* | Open-source AI memory system. I run it as my daily long-term memory store and send fixes upstream when I hit real bugs under load. |
-| **[claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds)** | Star-Trek ship's-computer acoustic hooks for Claude Code auto-mode workflows. |
+## 🤝 Upstream contributions
 
-## Farming Simulator 25 — mods & server tooling
+I don't file drive-by issues. Everything below is a tested patch or a root-caused report against code I run.
+
+- **[MemPalace/mempalace](https://github.com/MemPalace/mempalace)** — open-source AI memory system, my daily
+  long-term memory store. Three merged fixes, all found by running it under real load rather than reading its
+  source: an MCP startup deadlock ([#1987](https://github.com/MemPalace/mempalace/pull/1987) — answer
+  `initialize` immediately, move preflight off the handshake thread), a cross-device rename that broke
+  in-place archive repair ([#1945](https://github.com/MemPalace/mempalace/pull/1945)), and a miner that
+  flooded the store with raw agent tool dumps ([#2010](https://github.com/MemPalace/mempalace/pull/2010)).
+- **Farming Simulator 25 mods** — dedicated-server bugs found on a live multiplayer server, submitted as
+  patches with the reproduction and the log evidence attached:
+  [Courseplay](https://github.com/Courseplay/Courseplay_FS25/pull/1298) ·
+  [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive/pull/553) ·
+  [EnhancedVehicle](https://github.com/ZhooL/FS25_EnhancedVehicle/pull/84) ·
+  [BetterContracts](https://github.com/Mmtrx/FS25_BetterContracts/pull/205) ·
+  [RedTape](https://github.com/Ozz-Modding/FS25_RedTape/pull/122) ·
+  [ToolInclinationHelper](https://github.com/Timmeey86/FS25_ToolInclinationHelper/pull/13) ·
+  [UnloadBalesEarly](https://github.com/Timmeey86/FS25_UnloadBalesEarly/pull/33)
+
+## 🚜 Farming Simulator 25 — mods & server tooling
 
 My proving ground: a real dedicated server, real multiplayer, real players hitting real bugs.
 Multiplayer is where sloppy code actually breaks — which makes it honest training for the security work.
 
-| Repo | What it is |
-|---|---|
-| **[FS25_IronHorseRealism](https://github.com/KeilerHirsch/FS25_IronHorseRealism)** | Original modular vehicle-realism framework for FS25. |
-| **[FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix)** | Diagnosis + verified fix for the 16x-map "freezes at 100% compiling shaders" bug. |
-| **[FS25_AutoVRAMOptimizer](https://github.com/KeilerHirsch/FS25_AutoVRAMOptimizer)** | Raises the texture-streaming VRAM budget automatically, matched to your card. |
-| **[FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP)** | Hardcore multiplayer: disables the free vehicle "reset to shop". |
-| **[FS25_SoundOverhaulRealism](https://github.com/KeilerHirsch/FS25_SoundOverhaulRealism)** | Engine-accurate vehicle sounds (I6/V8), built strictly from CC0 / self-recorded audio. |
-| **[fs25-server-watch](https://github.com/KeilerHirsch/fs25-server-watch)** | Zero-dependency dedicated-server monitor: live status, joins, crashes. |
+- **[FS25_IronHorseRealism](https://github.com/KeilerHirsch/FS25_IronHorseRealism)**
+  Original modular vehicle-realism framework for FS25.
+- **[FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix)**
+  Diagnosis + verified fix for the 16x-map "freezes at 100% compiling shaders" bug.
+- **[FS25_AutoVRAMOptimizer](https://github.com/KeilerHirsch/FS25_AutoVRAMOptimizer)**
+  Raises the texture-streaming VRAM budget automatically, matched to your card.
+- **[FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP)**
+  Hardcore multiplayer: disables the free vehicle "reset to shop".
+- **[FS25_SoundOverhaulRealism](https://github.com/KeilerHirsch/FS25_SoundOverhaulRealism)**
+  Engine-accurate vehicle sounds (I6/V8), built strictly from CC0 / self-recorded audio.
+- **[fs25-server-watch](https://github.com/KeilerHirsch/fs25-server-watch)**
+  Zero-dependency dedicated-server monitor: live status, joins, crashes.
 
-## Consumer rights
+## ⚖️ Consumer rights
 
-**[reach-a-human](https://github.com/KeilerHirsch/reach-a-human)** — bypasses AI customer-service bots to reach a
-real human, and documents how to exercise GDPR/CCPA rights when a company hides behind automation.
+- **[reach-a-human](https://github.com/KeilerHirsch/reach-a-human)**
+  Bypasses AI customer-service bots to reach a real human, and documents how to exercise GDPR/CCPA rights
+  when a company hides behind automation.
 
----
-
-## Security research
+## 🔍 Security research
 
 I hunt bugs in code I actually run — game mods, AI tooling, agent CLIs — and report them as tested patches,
 not drive-by issues. Concrete and recent:
@@ -57,7 +86,7 @@ not drive-by issues. Concrete and recent:
 
 Coordinated disclosure only. No public details before a fix ships — and I don't claim other people's CVEs.
 
-## How I work
+## ⚙️ How I work
 
 Every repo here clears the same floor, because "works on my machine" is not a standard:
 
@@ -66,7 +95,14 @@ Every repo here clears the same floor, because "works on my machine" is not a st
 - **Tests before the release**, not after the bug report
 - **Adversarial review before shipping** — a second pass whose only job is to find what I missed
 - **Root cause over band-aid** — hypothesis → reproduction → evidence → fix. No "this should help" commits.
+- **Measure, never guess** — a claim without a number is a hunch wearing a lab coat.
 
 ---
 
-📫 Open an issue on any repo above — that's the reliable way to reach me.
+<div align="center">
+
+📫 **Open an issue on any repo above** — that's the reliable way to reach me.
+
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=flat&logo=kofi&logoColor=white)](https://ko-fi.com/keilerhirsch)
+
+</div>
