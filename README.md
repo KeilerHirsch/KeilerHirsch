@@ -6,6 +6,9 @@
 
 **OSINT & digital forensics meets AI agent engineering**
 
+🔬 [KeilerHirsch-Labs](https://github.com/KeilerHirsch-Labs) — dedicated org for the tools meant to stand on
+their own, separate from the experiments below.
+
 </div>
 
 ---
@@ -20,7 +23,8 @@ in a tool I depend on, I'd rather root-cause it and send a tested fix upstream t
   The three things that make an AI coding setup actually reliable: a model that isn't dumb, a real harness,
   and persistent memory. Problem → thesis → buildable solution, EN/DE, from months of hands-on iteration
   rather than theory.
-- **[schroedinger-sync](https://github.com/KeilerHirsch/schroedinger-sync)**
+- **[schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync)** (now under
+  [KeilerHirsch-Labs](https://github.com/KeilerHirsch-Labs))
   Single Go binary that exports your own claude.ai conversations, project docs and memory to local Markdown.
   Windows, DPAPI + CDP, no telemetry, no cloud dependency.
 - **[claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds)**
