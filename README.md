@@ -50,6 +50,25 @@ I don't file drive-by issues. Everything below is a tested patch or a root-cause
   repo, so reported via Issue rather than a PR — both fixed and credited by name, twice, in the maintainer's
   own v1.1.0.0 release notes.
 
+## 👀 Code review
+
+I review other people's pull requests the same way I ship my own — trace a fix to where it's actually
+consumed, don't just read the diff, and check the discussion thread before adding to it.
+12 PRs reviewed across 10 repos in the FS25 modding ecosystem: 8 approved, 3 flagged with concrete findings,
+1 changes-requested.
+
+- **[RealisticWeather#170](https://github.com/Arrow-kb/FS25_RealisticWeather/pull/170)** — a swapped
+  `self`/`superFunc` parameter order that would have crashed on every savegame load
+  ("attempt to call a table value"), proven by comparing against the codebase's own established calling
+  convention rather than guessing.
+- **[AutoDrive#544](https://github.com/Stephan-S/FS25_AutoDrive/pull/544)** — read the discussion before the
+  code: the maintainers had already flagged the change as reintroducing a deliberately-fixed regression.
+  Backed their call with a concrete alternative instead of repeating what was already said.
+- **[ContractBoost#122](https://github.com/GMNGjoy/FS25_ContractBoost/pull/122)** — a likely nil-crash when
+  opening a UI menu for a disabled game feature.
+- **[ContractBoost#115](https://github.com/GMNGjoy/FS25_ContractBoost/pull/115)** — a hardcoded engine
+  constant for a new DLC feature that nobody had verified against the base game.
+
 ## 🚜 Farming Simulator 25 — mods & server tooling
 
 My proving ground: a real dedicated server, real multiplayer, real players hitting real bugs.
