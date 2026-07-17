@@ -45,6 +45,10 @@ I don't file drive-by issues. Everything below is a tested patch or a root-cause
   [RedTape](https://github.com/Ozz-Modding/FS25_RedTape/pull/122) ·
   [ToolInclinationHelper](https://github.com/Timmeey86/FS25_ToolInclinationHelper/pull/13) ·
   [UnloadBalesEarly](https://github.com/Timmeey86/FS25_UnloadBalesEarly/pull/33)
+- **[Dude23-mods/FS25_Personnel_Management](https://github.com/Dude23-mods/FS25_Personnel_Management)** —
+  server-freeze (unbounded network array reads) and fail-open farm-authorization bugs. No license on the
+  repo, so reported via Issue rather than a PR — both fixed and credited by name, twice, in the maintainer's
+  own v1.1.0.0 release notes.
 
 ## 🚜 Farming Simulator 25 — mods & server tooling
 
@@ -75,10 +79,15 @@ Multiplayer is where sloppy code actually breaks — which makes it honest train
 I hunt bugs in code I actually run — game mods, AI tooling, agent CLIs — and report them as tested patches,
 not drive-by issues. Concrete and recent:
 
-- **Multiplayer DoS + authorization bypass** in a third-party FS25 mod: network readers took a client-supplied
-  array length with no upper bound (a ~2-billion count in one small packet freezes the single-threaded
-  server), and farm authorization failed *open* instead of closed, letting a client act on a farm they don't
-  own. Both confirmed by the maintainer and going into the next release.
+- **A recurring multiplayer vulnerability class, found across 5 independent FS25 mod authors**: a
+  server-authoritative network event missing the origin check its sibling events correctly have, letting a
+  modified client spoof a fake "server message" straight at the server and overwrite protected state. 7 issues
+  filed — economy exploits (forged invoices, unlimited money, forged crop quality in
+  [MoistureSystem](https://github.com/Ozz-Modding/FS25_MoistureSystem/issues/63)), a cross-farm exploit with
+  a crash vector in [EnhancedAnimalSystem](https://github.com/Chissel/FS25_EnhancedAnimalSystem/issues/45),
+  and an unbounded-read DoS.
+- **A server-freeze + fail-open farm-authorization bug** in a Farming Simulator mod: reported, fixed, and
+  credited by name twice in the maintainer's own release notes.
 - **A dedicated-server crash** and a **data-loss bug** in two other mods — root-caused by bisection against
   live server and client logs, then submitted as PRs.
 - **Upstream fixes** to the AI memory system I depend on, found by running it under real load rather than
