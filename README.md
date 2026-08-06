@@ -109,9 +109,12 @@ not drive-by issues.
   maintainer's release notes.
 - **Dedicated-server crash and data-loss bug** in two other mods — root-caused by bisecting live server
   and client logs, submitted as PRs.
-- **Gen-5 audit** — measured, independently fact-checked evidence on Claude generation 5 (nonsense
-  detection, verbosity, under-disclosed model fallback), with reproducible protocols:
-  [full write-up](https://gist.github.com/KeilerHirsch/5e212e6f9fb6fd670f191920eea4cb78).
+- **Gen-5 audit + model pinning** — measured, independently fact-checked evidence on Claude generation 5
+  (nonsense detection, verbosity, under-disclosed model fallback) and on silent model-pinning bypasses in an
+  agent CLI, with reproducible protocols:
+  [full write-up](https://gist.github.com/KeilerHirsch/5e212e6f9fb6fd670f191920eea4cb78) ·
+  [pinning reproduction protocol v2](https://github.com/KeilerHirsch/ai-trinity/blob/main/docs/audit-claude-gen5/pinning-vektoren-messprotokoll-v2.1.223.md) ·
+  [issue #83795](https://github.com/anthropics/claude-code/issues/83795).
 
 Coordinated disclosure only. No public details before a fix ships — and I don't claim other people's CVEs.
 
