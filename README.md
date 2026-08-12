@@ -24,7 +24,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🛠️ Selected work
 
 - **[schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync)** — local-first export and sync for `claude.ai` conversations, project docs, and memory. Windows, DPAPI + CDP, no telemetry, no cloud.
-- **[anthropic-failure-forensics](https://github.com/KeilerHirsch/anthropic-failure-forensics)** — evidence-driven case archive for reproducible Anthropic / Claude failures, regressions, unsafe generated code, and broken product behavior.
+- **[AFFLR_Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar))** —AFFLR watches the public anthropics/claude-code issue space and surfaces the strongest GitHub activity signals so interesting failures, regressions, and weird behavior are harder to miss.
 - **[MemPalace/mempalace](https://github.com/MemPalace/mempalace)** — my daily persistent-memory layer for agent workflows. I contribute fixes found by running it under real-world load.
 
 ## 🔬 How I work
