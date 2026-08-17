@@ -1,0 +1,53 @@
+name: Refresh profile activity
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update recent public work
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/update_profile.py
+
+      - name: Commit changed profile
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- README.md; then
+            echo "Profile activity unchanged; nothing to commit."
+            exit 0
+          fi
+
+          base_sha="$(git rev-parse HEAD)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: refresh profile activity"
+
+          git fetch origin main
+          remote_sha="$(git rev-parse origin/main)"
+          if [ "$remote_sha" != "$base_sha" ]; then
+            echo "remote main moved during profile refresh; refusing to overwrite" >&2
+            exit 1
+          fi
+
+          git push origin HEAD:main
