@@ -43,4 +43,6 @@ My current focus is offensive security around AI and developer tooling: real sys
 
 📫 **Open an issue on the relevant repository** — that's the reliable way to reach me.
 
+[![Profile visits](https://hits.sh/github.com/KeilerHirsch.svg?style=flat&label=profile%20visits&color=555&labelColor=2f3337&logo=github)](https://hits.sh/github.com/KeilerHirsch/)
+
 </div>
