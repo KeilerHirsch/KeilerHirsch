@@ -35,6 +35,29 @@ My current focus is offensive security around AI and developer tooling: real sys
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
 
+## 🔭 Open upstream work
+
+<!-- OPEN-UPSTREAM:START -->
+- [tobi/qmd#901](https://github.com/tobi/qmd/pull/901) — fix(embed): report actual completion and session expiry (additive)
+- [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989) — fix(embedding): preload CUDA/cuDNN DLLs before the first GPU session
+- [evalplus/evalplus#313](https://github.com/evalplus/evalplus/pull/313) — feat: Wilson CI + paired McNemar reporting for eval_results
+- [THUDM/AgentBench#231](https://github.com/THUDM/AgentBench/pull/231) — feat(scripts): Wilson CI + paired McNemar reporting
+<!-- OPEN-UPSTREAM:END -->
+
+<sub>Selected automatically from my currently open public PRs, preferring one active contribution per upstream repository.</sub>
+
+## 📦 Latest release
+
+<!-- LATEST-RELEASE:START -->
+- [KeilerHirsch-Labs/schroedinger-sync `v2.2.0`](https://github.com/KeilerHirsch-Labs/schroedinger-sync/releases/tag/v2.2.0) — published 19 Jul 2026 · [SHA256SUMS](https://github.com/KeilerHirsch-Labs/schroedinger-sync/releases/download/v2.2.0/SHA256SUMS)
+<!-- LATEST-RELEASE:END -->
+
+## 🔎 Verification surfaces
+
+- **[Threat model / security policy](https://github.com/KeilerHirsch-Labs/schroedinger-sync/blob/main/SECURITY.md)** — constraints, caveats, reporting path, and what the tests actually enforce.
+- **[BRONCO Field Cases](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/tree/main/docs/field-cases)** — evidence-linked measurement cases with falsifiers and explicit open questions.
+- **Release checksums** are linked beside shipped releases when available.
+
 ## 🛠️ Selected work
 
 - **[schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync)** — local-first export and sync for `claude.ai` conversations, project docs, and memory. Windows, DPAPI + CDP, no telemetry, no cloud.
