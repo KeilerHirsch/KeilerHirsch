@@ -15,11 +15,25 @@ I break systems I actually use, trace failures to their root cause, and turn the
 
 My current focus is offensive security around AI and developer tooling: real systems under real load, reproducible failures, preserved artifacts, and attribution that survives a second look.
 
-## 🎯 Current focus
+**Public lab:** AI metrology · digital forensics · agent memory · security research · FS25 engine archaeology
 
-- **Offensive security & vulnerability research** around AI agents, developer tooling, and the systems they depend on.
-- **Digital forensics & OSINT** for reconstructing incidents, establishing provenance, and separating evidence from assumptions.
-- **Agent infrastructure** that keeps context persistent, inspectable, portable, and under user control.
+## 🛰️ Current operations
+
+- **[BRONCO](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC)** — FC-001 · policy-driving evaluation provenance & reproducibility.
+- **[schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync)** — local-first AI data sovereignty · hardening under real workloads.
+- **[MemPalace](https://github.com/MemPalace/mempalace)** — upstream fixes and persistent-memory work from production use.
+
+[![schroedinger-sync CI](https://github.com/KeilerHirsch-Labs/schroedinger-sync/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/KeilerHirsch-Labs/schroedinger-sync/actions/workflows/ci.yml) [![AFFLR radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/actions/workflows/afflr.yml/badge.svg?branch=main)](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/actions/workflows/afflr.yml)
+
+## 🧭 Recent public work
+
+<!-- RECENT-WORK:START -->
+- `17 Aug` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/de2dd72cc789b976dbceb96b8aa98403cc8548ba)
+- `17 Aug` — commented on issue [anthropics/claude-code#80697](https://github.com/anthropics/claude-code/issues/80697)
+- `16 Aug` — commented on PR [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989)
+<!-- RECENT-WORK:END -->
+
+<sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
 
 ## 🛠️ Selected work
 
