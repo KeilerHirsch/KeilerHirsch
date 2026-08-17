@@ -30,7 +30,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 <!-- RECENT-WORK:START -->
 - `17 Aug` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/de2dd72cc789b976dbceb96b8aa98403cc8548ba)
 - `17 Aug` — commented on issue [anthropics/claude-code#80697](https://github.com/anthropics/claude-code/issues/80697)
-- `16 Aug` — commented on PR [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989)
+- `17 Aug` — commented on issue [UKGovernmentBEIS/inspect_ai#4136](https://github.com/UKGovernmentBEIS/inspect_ai/issues/4136)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
