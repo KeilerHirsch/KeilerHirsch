@@ -18,9 +18,12 @@ RECENT_START = "<!-- RECENT-WORK:START -->"
 RECENT_END = "<!-- RECENT-WORK:END -->"
 UPSTREAM_START = "<!-- OPEN-UPSTREAM:START -->"
 UPSTREAM_END = "<!-- OPEN-UPSTREAM:END -->"
+RELEASE_START = "<!-- LATEST-RELEASE:START -->"
+RELEASE_END = "<!-- LATEST-RELEASE:END -->"
 
 MAX_RECENT = 3
 MAX_UPSTREAM = 4
+RELEASE_REPOS = ("KeilerHirsch-Labs/schroedinger-sync",)
 
 
 def github_json(url: str):
@@ -41,6 +44,11 @@ def github_json(url: str):
 def event_date(event: dict) -> str:
     dt = datetime.fromisoformat(event["created_at"].replace("Z", "+00:00"))
     return dt.strftime("%d %b")
+
+
+def iso_date(value: str) -> str:
+    dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return dt.strftime("%d %b %Y")
 
 
 def branch_from_ref(ref: str | None) -> str:
@@ -204,6 +212,28 @@ def open_upstream_items() -> list[str]:
     return selected
 
 
+def latest_release_items() -> list[str]:
+    lines: list[str] = []
+    for repo in RELEASE_REPOS:
+        release = github_json(f"https://api.github.com/repos/{repo}/releases/latest")
+        tag = release.get("tag_name")
+        url = release.get("html_url")
+        published = release.get("published_at")
+        assets = release.get("assets", [])
+        if not tag or not url or not published:
+            continue
+
+        checksums = next((a for a in assets if a.get("name") == "SHA256SUMS"), None)
+        verification = ""
+        if checksums and checksums.get("browser_download_url"):
+            verification = f" · [SHA256SUMS]({checksums['browser_download_url']})"
+
+        lines.append(
+            f"- [{repo} `{tag}`]({url}) — published {iso_date(published)}{verification}"
+        )
+    return lines
+
+
 def replace_block(text: str, start: str, end: str, lines: list[str], label: str) -> str:
     if start not in text or end not in text:
         raise SystemExit(f"README {label} markers are missing; refusing to modify the file")
@@ -225,6 +255,9 @@ def main() -> None:
     )
     text = replace_block(
         text, UPSTREAM_START, UPSTREAM_END, open_upstream_items(), "open-upstream"
+    )
+    text = replace_block(
+        text, RELEASE_START, RELEASE_END, latest_release_items(), "latest-release"
     )
     README.write_text(text, encoding="utf-8", newline="\n")
 
