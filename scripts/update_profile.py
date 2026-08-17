@@ -4,16 +4,23 @@ from __future__ import annotations
 import json
 import os
 import re
+import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
 
 USER = "KeilerHirsch"
 PROFILE_REPO = f"{USER}/{USER}"
+OWN_PREFIXES = (f"{USER}/", "KeilerHirsch-Labs/")
 README = Path("README.md")
-START = "<!-- RECENT-WORK:START -->"
-END = "<!-- RECENT-WORK:END -->"
-MAX_ITEMS = 3
+
+RECENT_START = "<!-- RECENT-WORK:START -->"
+RECENT_END = "<!-- RECENT-WORK:END -->"
+UPSTREAM_START = "<!-- OPEN-UPSTREAM:START -->"
+UPSTREAM_END = "<!-- OPEN-UPSTREAM:END -->"
+
+MAX_RECENT = 3
+MAX_UPSTREAM = 4
 
 
 def github_json(url: str):
@@ -41,6 +48,11 @@ def branch_from_ref(ref: str | None) -> str:
         return "default branch"
     branch = ref.removeprefix("refs/heads/")
     return re.sub(r"[^A-Za-z0-9._/-]", "?", branch)
+
+
+def clean_title(value: str) -> str:
+    title = " ".join(value.split())
+    return title.replace("[", "\\[").replace("]", "\\]")
 
 
 def format_event(event: dict) -> str | None:
@@ -132,35 +144,89 @@ def recent_items() -> list[str]:
             continue
         selected.append(rendered)
         seen_repos.add(repo)
-        if len(selected) == MAX_ITEMS:
+        if len(selected) == MAX_RECENT:
             return selected
 
     for _, rendered in candidates:
         if rendered in selected:
             continue
         selected.append(rendered)
-        if len(selected) == MAX_ITEMS:
+        if len(selected) == MAX_RECENT:
             break
 
     return selected
 
 
-def main() -> None:
-    text = README.read_text(encoding="utf-8")
-    if START not in text or END not in text:
-        raise SystemExit("README activity markers are missing; refusing to modify the file")
+def open_upstream_items() -> list[str]:
+    params = urllib.parse.urlencode(
+        {
+            "q": f"is:pr is:open author:{USER}",
+            "sort": "updated",
+            "order": "desc",
+            "per_page": 100,
+        }
+    )
+    data = github_json(f"https://api.github.com/search/issues?{params}")
 
-    items = recent_items()
-    if not items:
-        raise SystemExit("No supported public GitHub activity found; refusing to erase current data")
+    candidates: list[tuple[str, str]] = []
+    for item in data.get("items", []):
+        repo_url = item.get("repository_url", "")
+        repo = repo_url.split("/repos/", 1)[-1]
+        if not repo or repo.startswith(OWN_PREFIXES):
+            continue
 
-    replacement = START + "\n" + "\n".join(items) + "\n" + END
-    pattern = re.compile(re.escape(START) + r".*?" + re.escape(END), re.DOTALL)
+        number = item.get("number")
+        url = item.get("html_url")
+        title = clean_title(item.get("title", ""))
+        if not number or not url or not title:
+            continue
+
+        rendered = f"- [{repo}#{number}]({url}) — {title}"
+        candidates.append((repo, rendered))
+
+    selected: list[str] = []
+    seen_repos: set[str] = set()
+    for repo, rendered in candidates:
+        if repo in seen_repos:
+            continue
+        selected.append(rendered)
+        seen_repos.add(repo)
+        if len(selected) == MAX_UPSTREAM:
+            return selected
+
+    for _, rendered in candidates:
+        if rendered in selected:
+            continue
+        selected.append(rendered)
+        if len(selected) == MAX_UPSTREAM:
+            break
+
+    return selected
+
+
+def replace_block(text: str, start: str, end: str, lines: list[str], label: str) -> str:
+    if start not in text or end not in text:
+        raise SystemExit(f"README {label} markers are missing; refusing to modify the file")
+    if not lines:
+        raise SystemExit(f"No {label} data found; refusing to erase current data")
+
+    replacement = start + "\n" + "\n".join(lines) + "\n" + end
+    pattern = re.compile(re.escape(start) + r".*?" + re.escape(end), re.DOTALL)
     updated, count = pattern.subn(replacement, text, count=1)
     if count != 1:
-        raise SystemExit(f"Expected exactly one activity block, replaced {count}")
+        raise SystemExit(f"Expected exactly one {label} block, replaced {count}")
+    return updated
 
-    README.write_text(updated, encoding="utf-8", newline="\n")
+
+def main() -> None:
+    text = README.read_text(encoding="utf-8")
+    text = replace_block(
+        text, RECENT_START, RECENT_END, recent_items(), "recent-work"
+    )
+    text = replace_block(
+        text, UPSTREAM_START, UPSTREAM_END, open_upstream_items(), "open-upstream"
+    )
+    README.write_text(text, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
