@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `17 Aug` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/de2dd72cc789b976dbceb96b8aa98403cc8548ba)
-- `17 Aug` — commented on issue [anthropics/claude-code#80697](https://github.com/anthropics/claude-code/issues/80697)
-- `17 Aug` — commented on issue [UKGovernmentBEIS/inspect_ai#4136](https://github.com/UKGovernmentBEIS/inspect_ai/issues/4136)
+- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_AutoVRAMOptimizer](https://github.com/KeilerHirsch/FS25_AutoVRAMOptimizer/commit/83621031c28d0810c13855960b7705d1d422b863)
+- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP/commit/a3daefe29b5833a5d72b0c18b744ee6b21ca9201)
+- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/9955758ea326332f22dedbf582c7945b725b18b3)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
