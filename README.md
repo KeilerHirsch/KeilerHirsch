@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
+- `18 Aug` — pushed to `afflr/targeted-critical-pools` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/32c66e9cb177e841e521b1a83e419c787fbab10a)
 - `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_AutoVRAMOptimizer](https://github.com/KeilerHirsch/FS25_AutoVRAMOptimizer/commit/83621031c28d0810c13855960b7705d1d422b863)
 - `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP/commit/a3daefe29b5833a5d72b0c18b744ee6b21ca9201)
-- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/9955758ea326332f22dedbf582c7945b725b18b3)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
