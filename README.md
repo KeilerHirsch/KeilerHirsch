@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `18 Aug` — pushed to `fix/afflr-targeted-query-scope` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/b076c36cbb61d83c237233c9da6e809665f296d3)
-- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_AutoVRAMOptimizer](https://github.com/KeilerHirsch/FS25_AutoVRAMOptimizer/commit/83621031c28d0810c13855960b7705d1d422b863)
-- `17 Aug` — pushed to `main` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP/commit/a3daefe29b5833a5d72b0c18b744ee6b21ca9201)
+- `19 Aug` — pushed to `docs/ktcp-technical-communication` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/068d7c06ec96d07139c8d92e624fe9875fc24968)
+- `19 Aug` — pushed to `docs/refresh-afflr-description` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/27fc5f1ae35c28780e58c2808a2a50d8f73aa909)
+- `18 Aug` — pushed to `fix/link-check-green-2026-08-19` in [KeilerHirsch/ai-trinity](https://github.com/KeilerHirsch/ai-trinity/commit/f4717d0bafa01ceb74a35bd7cbdb19715974eeeb)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
