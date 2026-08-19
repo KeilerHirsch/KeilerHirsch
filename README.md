@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `19 Aug` — pushed to `docs/ktcp-technical-communication` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/068d7c06ec96d07139c8d92e624fe9875fc24968)
-- `19 Aug` — pushed to `docs/refresh-afflr-description` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/27fc5f1ae35c28780e58c2808a2a50d8f73aa909)
-- `18 Aug` — pushed to `fix/link-check-green-2026-08-19` in [KeilerHirsch/ai-trinity](https://github.com/KeilerHirsch/ai-trinity/commit/f4717d0bafa01ceb74a35bd7cbdb19715974eeeb)
+- `19 Aug` — pushed to `docs/refresh-afflr-description` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/9deb4385ea1da7df44450d682022aa40a0ee9e50)
+- `18 Aug` — pushed to `fix/ci-green-2026-08-19` in [KeilerHirsch-Labs/schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync/commit/d0a3e8ead4a96e64e4d47af83ef62d850fc7fcd9)
+- `19 Aug` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/21961ac898493a2010d38d2dcc5f952bbda48869)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
@@ -38,10 +38,10 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🔭 Open upstream work
 
 <!-- OPEN-UPSTREAM:START -->
+- [modelscope/evalscope#1587](https://github.com/modelscope/evalscope/pull/1587) — feat(metrics): Wilson CI + paired McNemar helpers
 - [tobi/qmd#901](https://github.com/tobi/qmd/pull/901) — fix(embed): report actual completion and session expiry (additive)
 - [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989) — fix(embedding): preload CUDA/cuDNN DLLs before the first GPU session
 - [evalplus/evalplus#313](https://github.com/evalplus/evalplus/pull/313) — feat: Wilson CI + paired McNemar reporting for eval_results
-- [THUDM/AgentBench#231](https://github.com/THUDM/AgentBench/pull/231) — feat(scripts): Wilson CI + paired McNemar reporting
 <!-- OPEN-UPSTREAM:END -->
 
 <sub>Selected automatically from my currently open public PRs, preferring one active contribution per upstream repository.</sub>
