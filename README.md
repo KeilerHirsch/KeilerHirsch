@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `19 Aug` — pushed to `docs/refresh-afflr-description` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/9deb4385ea1da7df44450d682022aa40a0ee9e50)
-- `18 Aug` — pushed to `fix/ci-green-2026-08-19` in [KeilerHirsch-Labs/schroedinger-sync](https://github.com/KeilerHirsch-Labs/schroedinger-sync/commit/d0a3e8ead4a96e64e4d47af83ef62d850fc7fcd9)
-- `19 Aug` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/21961ac898493a2010d38d2dcc5f952bbda48869)
+- `19 Aug` — commented on issue [EleutherAI/lm-evaluation-harness#3749](https://github.com/EleutherAI/lm-evaluation-harness/issues/3749)
+- `19 Aug` — commented on issue [SWE-bench/SWE-bench#621](https://github.com/SWE-bench/SWE-bench/issues/621)
+- `19 Aug` — commented on issue [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC#1](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/issues/1)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
@@ -38,10 +38,10 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🔭 Open upstream work
 
 <!-- OPEN-UPSTREAM:START -->
+- [Courseplay/Courseplay_FS25#1298](https://github.com/Courseplay/Courseplay_FS25/pull/1298) — fix: don't build the vehicle HUD on a dedicated server
 - [modelscope/evalscope#1587](https://github.com/modelscope/evalscope/pull/1587) — feat(metrics): Wilson CI + paired McNemar helpers
 - [tobi/qmd#901](https://github.com/tobi/qmd/pull/901) — fix(embed): report actual completion and session expiry (additive)
 - [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989) — fix(embedding): preload CUDA/cuDNN DLLs before the first GPU session
-- [evalplus/evalplus#313](https://github.com/evalplus/evalplus/pull/313) — feat: Wilson CI + paired McNemar reporting for eval_results
 <!-- OPEN-UPSTREAM:END -->
 
 <sub>Selected automatically from my currently open public PRs, preferring one active contribution per upstream repository.</sub>
