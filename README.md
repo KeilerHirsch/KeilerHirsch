@@ -28,8 +28,8 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
+- `21 Aug` — commented on PR [SWE-bench/swe-bench.github.io#60](https://github.com/SWE-bench/swe-bench.github.io/pull/60)
 - `20 Aug` — commented on issue [EleutherAI/lm-evaluation-harness#3749](https://github.com/EleutherAI/lm-evaluation-harness/issues/3749)
-- `20 Aug` — commented on PR [SWE-bench/swe-bench.github.io#60](https://github.com/SWE-bench/swe-bench.github.io/pull/60)
 - `20 Aug` — commented on issue [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC#1](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/issues/1)
 <!-- RECENT-WORK:END -->
 
