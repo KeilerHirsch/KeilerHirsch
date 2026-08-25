@@ -38,10 +38,10 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🔭 Open upstream work
 
 <!-- OPEN-UPSTREAM:START -->
+- [MemPalace/mempalace#1909](https://github.com/MemPalace/mempalace/pull/1909) — fix(normalize): strip full slash-command envelope + ANSI escapes (#1333)
 - [Courseplay/Courseplay_FS25#1298](https://github.com/Courseplay/Courseplay_FS25/pull/1298) — fix: don't build the vehicle HUD on a dedicated server
 - [modelscope/evalscope#1587](https://github.com/modelscope/evalscope/pull/1587) — feat(metrics): Wilson CI + paired McNemar helpers
 - [tobi/qmd#901](https://github.com/tobi/qmd/pull/901) — fix(embed): report actual completion and session expiry (additive)
-- [MemPalace/mempalace#1989](https://github.com/MemPalace/mempalace/pull/1989) — fix(embedding): preload CUDA/cuDNN DLLs before the first GPU session
 <!-- OPEN-UPSTREAM:END -->
 
 <sub>Selected automatically from my currently open public PRs, preferring one active contribution per upstream repository.</sub>
