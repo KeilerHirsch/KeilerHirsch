@@ -28,7 +28,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `28 Aug` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/b5a246c9422f5d192c8a327cab2e0f8b83c10cef)
+- `28 Aug` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/beb425d2d43eed5832cbe0e1e36cd406a21b9021)
 - `28 Aug` — commented on issue [anthropics/claude-code#83510](https://github.com/anthropics/claude-code/issues/83510)
 - `21 Aug` — commented on PR [SWE-bench/swe-bench.github.io#60](https://github.com/SWE-bench/swe-bench.github.io/pull/60)
 <!-- RECENT-WORK:END -->
