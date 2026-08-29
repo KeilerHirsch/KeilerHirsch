@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `28 Aug` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/beb425d2d43eed5832cbe0e1e36cd406a21b9021)
-- `28 Aug` — commented on issue [anthropics/claude-code#83510](https://github.com/anthropics/claude-code/issues/83510)
-- `21 Aug` — commented on PR [SWE-bench/swe-bench.github.io#60](https://github.com/SWE-bench/swe-bench.github.io/pull/60)
+- `28 Aug` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/6e78b1f6533f93b117ea45eedfc814d48ee623d4)
+- `29 Aug` — pushed to `main` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/f2a075646a26a12d0e7588736cf0332db8410ae5)
+- `29 Aug` — commented on PR [MemPalace/mempalace#1910](https://github.com/MemPalace/mempalace/pull/1910)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
@@ -38,8 +38,8 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🔭 Open upstream work
 
 <!-- OPEN-UPSTREAM:START -->
+- [MemPalace/mempalace#1910](https://github.com/MemPalace/mempalace/pull/1910) — fix(palace): make per-file mine_lock block indefinitely on Windows
 - [Courseplay/Courseplay_FS25#1298](https://github.com/Courseplay/Courseplay_FS25/pull/1298) — fix: don't build the vehicle HUD on a dedicated server
-- [MemPalace/mempalace#1909](https://github.com/MemPalace/mempalace/pull/1909) — fix(normalize): strip full slash-command envelope + ANSI escapes (#1333)
 - [modelscope/evalscope#1587](https://github.com/modelscope/evalscope/pull/1587) — feat(metrics): Wilson CI + paired McNemar helpers
 - [tobi/qmd#901](https://github.com/tobi/qmd/pull/901) — fix(embed): report actual completion and session expiry (additive)
 <!-- OPEN-UPSTREAM:END -->
