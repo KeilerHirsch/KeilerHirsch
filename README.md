@@ -28,7 +28,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `29 Aug` — created branch `archive/2026-08-29/pr2031-pre-rebase` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace)
+- `29 Aug` — pushed to `fix/windows-mine-lock-blocking-timeout` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/b7f521b5dc4ac96bd88655dd4036c892ae360f0c)
 - `29 Aug` — pushed to `docs/invariant-engineering-profile` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/225db64b3491051593fb2dbe7c83f4d40bf2c186)
 - `29 Aug` — commented on PR [MemPalace/mempalace#1910](https://github.com/MemPalace/mempalace/pull/1910)
 <!-- RECENT-WORK:END -->
