@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
+- `29 Aug` — created branch `archive/2026-08-29/pr2031-pre-rebase` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace)
+- `29 Aug` — pushed to `docs/invariant-engineering-profile` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/225db64b3491051593fb2dbe7c83f4d40bf2c186)
 - `29 Aug` — commented on PR [MemPalace/mempalace#1910](https://github.com/MemPalace/mempalace/pull/1910)
-- `28 Aug` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/6e78b1f6533f93b117ea45eedfc814d48ee623d4)
-- `29 Aug` — pushed to `main` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/f2a075646a26a12d0e7588736cf0332db8410ae5)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
