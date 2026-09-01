@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
+- `01 Sep` — pushed to `plan/ai-refund-v1` in [KeilerHirsch/reach-a-human](https://github.com/KeilerHirsch/reach-a-human/commit/989b9c0b88f0b71521dbc6e91d16340081a5c268)
 - `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
 - `30 Aug` — commented on issue [anthropics/claude-code#83795](https://github.com/anthropics/claude-code/issues/83795)
-- `29 Aug` — pushed to `docs/invariant-engineering-profile` in [KeilerHirsch-Labs/.github](https://github.com/KeilerHirsch-Labs/.github/commit/225db64b3491051593fb2dbe7c83f4d40bf2c186)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
