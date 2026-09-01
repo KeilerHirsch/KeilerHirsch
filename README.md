@@ -28,7 +28,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `01 Sep` — pushed to `plan/ai-refund-v1` in [KeilerHirsch/reach-a-human](https://github.com/KeilerHirsch/reach-a-human/commit/1ec9c560b296eed44c68f7eebded9345db5e81a6)
+- `01 Sep` — pushed to `plan/ai-refund-v1` in [KeilerHirsch/reach-a-human](https://github.com/KeilerHirsch/reach-a-human/commit/4d90630e237a7dcef81501452a34471a43396de8)
 - `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
 - `30 Aug` — commented on issue [anthropics/claude-code#83795](https://github.com/anthropics/claude-code/issues/83795)
 <!-- RECENT-WORK:END -->
