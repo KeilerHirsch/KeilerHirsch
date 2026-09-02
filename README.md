@@ -28,9 +28,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `01 Sep` — pushed to `plan/ai-refund-v1` in [KeilerHirsch/reach-a-human](https://github.com/KeilerHirsch/reach-a-human/commit/4d90630e237a7dcef81501452a34471a43396de8)
+- `01 Sep` — pushed to `plan/ai-refund-v1` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/418e52135550c4e4caaf36ffb17ca33371b51f4b)
+- `01 Sep` — created branch `fix/afflr-transient-fetch-retry` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar)
 - `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
-- `30 Aug` — commented on issue [anthropics/claude-code#83795](https://github.com/anthropics/claude-code/issues/83795)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
