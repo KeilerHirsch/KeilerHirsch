@@ -28,7 +28,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `02 Sep` — published release in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/releases/tag/v2.1.0)
+- `01 Sep` — pushed to `main` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/b198efb50508f3d058a2d254b63ca33d9baec353)
 - `01 Sep` — created branch `fix/afflr-transient-fetch-retry` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar)
 - `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
 <!-- RECENT-WORK:END -->
