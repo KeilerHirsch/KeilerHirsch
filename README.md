@@ -28,7 +28,7 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `01 Sep` — created branch `docs/ai-refund-link` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar)
+- `02 Sep` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/cf6def3cf86959047d94e96ae23024f0b6455c60)
 - `02 Sep` — created branch `release/v2.1.0` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund)
 - `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
 <!-- RECENT-WORK:END -->
