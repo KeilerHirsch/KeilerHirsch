@@ -30,9 +30,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `02 Sep` — pushed to `main` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/c6a6c6a98fbf9ab08948d13c540c550ca3420989)
-- `02 Sep` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/91986bced45e35016db166044caaad15fe004918)
-- `02 Sep` — pushed to `main` in [KeilerHirsch/claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds/commit/ddccc71328a6ae5915b5bebc583a9691fe78c133)
+- `02 Sep` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/abec70a56d6ef9ce8e2e36586415d94c86fb52f2)
+- `02 Sep` — pushed to `design/maximum-customer-utility-v3` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/c5990eec305b27dafb14521791d5ddf53146468b)
+- `03 Sep` — pushed to `main` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP/commit/8cf79c661ac3f7206aba33c7d8c121057d1478be)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
