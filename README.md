@@ -4,6 +4,8 @@
 
 [![myrank.dev](https://myrank.dev/api/badge/KeilerHirsch?style=profile)](https://myrank.dev/u/KeilerHirsch)
 
+[![Automation: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/automation-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE) [![Profile text: CC BY-NC-SA 4.0](https://img.shields.io/badge/profile%20text-CC%20BY--NC--SA%204.0-lightgrey.svg)](CONTENT-LICENSE.md)
+
 **Bughunter · Security Research · Digital Forensics & OSINT**  
 *Offensive Security · AI systems · agent tooling*
 
@@ -71,6 +73,12 @@ My current focus is offensive security around AI and developer tooling: real sys
 - **Hypothesis → reproduction → evidence → root cause → fix.**
 - **Measure, don't guess.**
 - **Evidence before attribution.**
+
+## Rights and provenance
+
+The profile is deliberately mixed-rights: current project-controlled automation software is [PolyForm Noncommercial 1.0.0](LICENSE); current project-controlled static profile prose is [CC BY-NC-SA 4.0](CONTENT-LICENSE.md). Automatically refreshed GitHub facts, third-party PR titles, external badges/services, and branding are separately scoped.
+
+See [`LEGAL-NOTICE.md`](LEGAL-NOTICE.md), [`DYNAMIC-DATA.md`](DYNAMIC-DATA.md), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md), and [`RIGHTS_AND_PROVENANCE.md`](RIGHTS_AND_PROVENANCE.md). Historical MIT grants remain preserved in [`LICENSE-HISTORY.md`](LICENSE-HISTORY.md).
 
 ---
 
