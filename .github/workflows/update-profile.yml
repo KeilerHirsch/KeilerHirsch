@@ -1,3 +1,5 @@
+# Copyright (c) 2026 KeilerHirsch
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 name: Refresh profile activity
 
 on:
