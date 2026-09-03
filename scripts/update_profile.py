@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 KeilerHirsch
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 from __future__ import annotations
 
 import json
