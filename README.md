@@ -30,9 +30,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `02 Sep` — pushed to `main` in [KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar](https://github.com/KeilerHirsch/AFFLR-Anthropic-Failure-Forensics-Live-Radar/commit/cf6def3cf86959047d94e96ae23024f0b6455c60)
-- `02 Sep` — created branch `release/v2.1.0` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund)
-- `29 Aug` — pushed to `feat/repair-reconcile-mode` in [KeilerHirsch/mempalace](https://github.com/KeilerHirsch/mempalace/commit/1dcad0927e6c971c74c5adbe1a69bdf0553e94b3)
+- `02 Sep` — pushed to `main` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/c6a6c6a98fbf9ab08948d13c540c550ca3420989)
+- `02 Sep` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/91986bced45e35016db166044caaad15fe004918)
+- `02 Sep` — pushed to `main` in [KeilerHirsch/claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds/commit/ddccc71328a6ae5915b5bebc583a9691fe78c133)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
