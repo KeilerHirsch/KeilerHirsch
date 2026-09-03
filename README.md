@@ -30,9 +30,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `02 Sep` — pushed to `main` in [KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC](https://github.com/KeilerHirsch-Labs/BRONCO-AI-Metrology-Benchmarks-DIN-ISO-IEC/commit/abec70a56d6ef9ce8e2e36586415d94c86fb52f2)
-- `02 Sep` — pushed to `design/maximum-customer-utility-v3` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/c5990eec305b27dafb14521791d5ddf53146468b)
-- `03 Sep` — pushed to `main` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP/commit/8cf79c661ac3f7206aba33c7d8c121057d1478be)
+- `03 Sep` — commented on PR [KeilerHirsch-Labs/schroedinger-sync#10](https://github.com/KeilerHirsch-Labs/schroedinger-sync/pull/10)
+- `03 Sep` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/c96181c3498e46ec48d55a449363cd4586a12503)
+- `02 Sep` — created branch `integration/v2.0.0-reconcile` in [KeilerHirsch/claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
