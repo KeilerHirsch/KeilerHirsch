@@ -30,9 +30,9 @@ My current focus is offensive security around AI and developer tooling: real sys
 ## 🧭 Recent public work
 
 <!-- RECENT-WORK:START -->
-- `03 Sep` — commented on PR [KeilerHirsch-Labs/schroedinger-sync#10](https://github.com/KeilerHirsch-Labs/schroedinger-sync/pull/10)
-- `03 Sep` — pushed to `main` in [KeilerHirsch/FS25_16xMapFix](https://github.com/KeilerHirsch/FS25_16xMapFix/commit/c96181c3498e46ec48d55a449363cd4586a12503)
-- `02 Sep` — created branch `integration/v2.0.0-reconcile` in [KeilerHirsch/claude-bordcomputer-sounds](https://github.com/KeilerHirsch/claude-bordcomputer-sounds)
+- `02 Sep` — pushed to `design/maximum-customer-utility-v3` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/7609df0b52465229ca9fc8a5dc37a037b621d354)
+- `03 Sep` — created branch `licensing/polyform-noncommercial-20260903` in [KeilerHirsch/FS25_NoResetMP](https://github.com/KeilerHirsch/FS25_NoResetMP)
+- `04 Sep` — commented on PR [KeilerHirsch-Labs/schroedinger-sync#8](https://github.com/KeilerHirsch-Labs/schroedinger-sync/pull/8)
 <!-- RECENT-WORK:END -->
 
 <sub>Auto-refreshed from public GitHub activity every 6 hours. Profile-maintenance commits are excluded.</sub>
