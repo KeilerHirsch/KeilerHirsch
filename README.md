@@ -29,7 +29,6 @@ My current focus is offensive security around AI and developer tooling: real sys
 
 <!-- RECENT-WORK:START -->
 - `04 Sep` — commented on PR [KeilerHirsch-Labs/schroedinger-sync#20](https://github.com/KeilerHirsch-Labs/schroedinger-sync/pull/20)
-- `02 Sep` — created branch `licensing/polyform-noncommercial-v1` in [KeilerHirsch/fs25-server-watch](https://github.com/KeilerHirsch/fs25-server-watch)
 - `02 Sep` — pushed to `main` in [KeilerHirsch/ai-refund](https://github.com/KeilerHirsch/ai-refund/commit/a1b806177a078db78d27c4db43f3de37fa7c26cf)
 <!-- RECENT-WORK:END -->
 
