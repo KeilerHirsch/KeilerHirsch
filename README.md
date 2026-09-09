@@ -2,6 +2,8 @@
 
 # KeilerHirsch
 
+[![myrank.dev](https://myrank.dev/api/badge/KeilerHirsch?style=profile)](https://myrank.dev/u/KeilerHirsch)
+
 **Evidence-driven software engineering. High-assurance inside. KISS outside.**
 
 I build software that keeps the complicated parts inside the system instead of handing them to the user.
