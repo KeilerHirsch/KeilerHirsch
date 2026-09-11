@@ -36,6 +36,8 @@ No stars, contribution counts, commit counts, language percentages, visitor coun
 
 The render is deterministic for equal inputs and contains no generated timestamp. If GitHub API collection or rendering fails, the workflow fails before replacing the last valid SVG. Missing workflow runs are shown as `UNKNOWN`; absence of releases is valid.
 
+The missing timestamp is deliberate: freshness is bounded operationally by the six-hour workflow cadence, while unchanged data produces no cosmetic commit. The checked-in SVG is therefore last-known-good state, not a wall clock.
+
 ## Automation
 
 Run every six hours and through `workflow_dispatch`. The workflow has read access by default and `contents: write` only because it may commit the generated SVG. It commits only when `assets/current-signal.svg` actually changes.
