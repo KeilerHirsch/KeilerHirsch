@@ -217,6 +217,7 @@ class ProfileSurfaceContractTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", text)
         self.assertIn("cron: '17 */6 * * *'", text)
         self.assertIn("contents: write", text)
+        self.assertIn("persist-credentials: true", text)
         self.assertIn("python tools/render_profile_signal.py --config profile.json --output assets/current-signal.svg", text)
         self.assertIn("git diff --quiet -- assets/current-signal.svg", text)
         self.assertIn("git add -- assets/current-signal.svg", text)
