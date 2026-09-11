@@ -1,0 +1,17 @@
+{
+  "current_focus": "WOLPERTINGER — Presentation subsystem",
+  "projects": [
+    {
+      "key": "WOLPERTINGER",
+      "repo": "KeilerHirsch/WOLPERTINGER",
+      "status": "BUILDING",
+      "workflow": "ci.yml"
+    },
+    {
+      "key": "PLLDN",
+      "repo": "KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator",
+      "status": "BETA 1",
+      "workflow": "verify.yml"
+    }
+  ]
+}

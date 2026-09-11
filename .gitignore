@@ -9,3 +9,6 @@ Thumbs.db
 *.key
 *.pfx
 id_rsa*
+
+__pycache__/
+*.py[cod]

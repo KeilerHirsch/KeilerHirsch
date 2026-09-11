@@ -1,0 +1,41 @@
+name: Profile signal
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-signal
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Verify renderer
+        run: python -m unittest discover -s tests -v
+
+      - name: Render current signal
+        id: signal
+        run: |
+          python tools/render_profile_signal.py --config profile.json --output assets/current-signal.svg
+          if git diff --quiet -- assets/current-signal.svg; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit changed signal
+        if: steps.signal.outputs.changed == 'true' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- assets/current-signal.svg
+          git commit -m "chore: refresh profile signal"
+          git push

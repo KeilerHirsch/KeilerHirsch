@@ -1,54 +1,41 @@
 <div align="center">
 
-# KeilerHirsch
+![KeilerHirsch — High-assurance inside. KISS outside.](assets/profile-hero.webp)
 
-[![myrank.dev](https://myrank.dev/api/badge/KeilerHirsch?style=profile)](https://myrank.dev/u/KeilerHirsch)
+**I build complicated systems so the user doesn't have to operate one.**
 
-**Evidence-driven software engineering. High-assurance inside. KISS outside.**
-
-I build software that keeps the complicated parts inside the system instead of handing them to the user.
+[MyRank](https://myrank.dev/u/KeilerHirsch) · [MAYHEM Club](https://www.reddit.com/r/MAYHEMClub/) · [Ko-fi](https://ko-fi.com/keilerhirsch)
 
 </div>
 
----
+## Current signal
 
-## Current public work
+![Current engineering signal](assets/current-signal.svg)
+
+One small panel, four useful facts: what I am focused on, what is actively shipping, whether the selected CI is healthy, and the latest public release. No contribution heatmap archaeology required.
+
+## Selected work
 
 ### [WOLPERTINGER](https://github.com/KeilerHirsch/WOLPERTINGER)
 
-An Elite Dangerous companion platform built around one core and multiple presentation surfaces. The goal is not to become tool number 15; it is to stop the Commander from having to coordinate 14 separate tools.
+An Elite Dangerous companion platform built around **one core and multiple presentation surfaces**. The point is simple: fewer separate tools for the Commander to coordinate, with the complicated state, replay, provenance, and assurance machinery kept underneath.
 
-**Status:** active development. Windows-first, cross-platform-ready architecture; high-assurance internals with a low-friction Commander experience as the product target.
+### [PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)
 
-### [PLLDN - Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)
+Turns real project constraints into technology choices you can actually defend. Deterministic filters stay authoritative, unknown evidence stays unknown, and free text is an accelerator rather than an AI oracle.
 
-A constraint-first decision navigator for programming-language and licensing choices. It prefers explainable recommendations, explicit unknowns, and deterministic decision paths over hype or decorative confidence scores.
-
-**Status:** `v0.0.1 Beta 1` is public. The live Beta intentionally exposes a narrow reviewed language surface while the broader product evolves behind explicit release gates.
+[Use PLLDN](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/) · [Latest release](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/releases)
 
 ## How I build
 
-- **Product first, machine room second.** A README should explain the outcome before the architecture.
-- **High-assurance inside. KISS outside.** Complexity belongs in the implementation, not in the user's startup ritual.
-- **Requirements before code.** Architectural work starts with explicit scope, constraints, and acceptance criteria.
-- **Evidence before claims.** Tests, review, provenance, and reproducible artifacts are distinct evidence classes; none substitutes for another.
-- **Deterministic where it matters.** Core decisions should not depend on fuzzy inference when explicit rules and traceable facts can do the job.
-- **Isolated change flow.** Worktree -> implementation -> verification -> review -> PR -> CI -> merge -> true-main verification.
-- **Fail closed, recover clearly.** Unknown state stays unknown; errors should explain what failed, what still works, and what action recovers the system.
+- **Evidence before claims.** Tests, review, provenance, and reproducible artifacts should prove what the README says.
+- **Deterministic where it matters.** If explicit rules and traceable facts can answer a core decision, fuzzy inference does not get to own it.
+- **High-assurance inside. KISS outside.** Complexity belongs in the machine room, not in the user's startup ritual.
 
-The engineering process behind these repositories is intentionally stricter than the user experience they expose. That is the point.
+## MAYHEM Club
 
-## Clean-slate policy
+I am the **Founder & Mod** of [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub/), a creator-first space for indie devs, modders, toolmakers, open-source builders, and people shipping wonderfully weird things.
 
-In September 2026 I deliberately reduced my public GitHub surface. Older experiments and historical repositories are preserved, but they are not presented as current engineering quality.
+**Build cool shit. Share it. Get real feedback.** Self-promotion is normal; spam is not. No karma gates, promo rituals, permission slips, or mandatory ceremony before you can show what you made.
 
-I would rather maintain a small number of repositories I can defend end-to-end than a large portfolio of stale demos, abandoned automation, and inherited workflow debt.
-
-New public work is rebuilt against the current engineering baseline instead of carrying old repository conventions forward by default.
-
-## Links
-
-- [MyRank.dev](https://myrank.dev/u/KeilerHirsch)
-- [Ko-fi](https://ko-fi.com/keilerhirsch)
-
-For project-specific questions or bug reports, open an issue in the relevant repository.
+For project-specific bugs or ideas, use the issue tracker in the relevant repository. For the workshop floor, MAYHEM Club is open.
