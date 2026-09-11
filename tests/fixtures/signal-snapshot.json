@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "WOLPERTINGER": {
+      "ci": "PASS",
+      "release": null
+    },
+    "PLLDN": {
+      "ci": "PASS",
+      "release": {
+        "name": "PLLDN v0.0.1 Beta 1",
+        "tag": "v0.0.1-beta.1",
+        "published_at": "2026-09-07T17:21:54Z",
+        "url": "https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/releases/tag/v0.0.1-beta.1"
+      }
+    }
+  }
+}

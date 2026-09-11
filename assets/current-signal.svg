@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
+<title id="title">Current Signal</title>
+<desc id="desc">Current engineering focus, project status, CI state, and latest shipped release.</desc>
+<rect width="1200" height="330" rx="18" fill="#0b0d10"/>
+<rect x="1" y="1" width="1198" height="328" rx="17" fill="none" stroke="#2b313a"/>
+<path d="M40 78H1160" stroke="#252a31" stroke-width="1"/>
+<text x="40" y="50" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" font-weight="700">CURRENT SIGNAL</text>
+<text x="40" y="106" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">FOCUS</text>
+<text x="235" y="106" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">WOLPERTINGER — Presentation subsystem</text>
+<circle cx="1125" cy="148" r="6" fill="#67e480"/>
+<text x="40" y="154" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">WOLPERTINGER</text>
+<text x="235" y="154" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BUILDING</text>
+<text x="980" y="154" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">CI PASS</text>
+<circle cx="1125" cy="196" r="6" fill="#67e480"/>
+<text x="40" y="202" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">PLLDN</text>
+<text x="235" y="202" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BETA 1</text>
+<text x="980" y="202" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">CI PASS</text>
+<path d="M40 262H1160" stroke="#252a31" stroke-width="1"/>
+<text x="40" y="302" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LATEST SHIP</text>
+<text x="235" y="302" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">PLLDN v0.0.1 Beta 1</text>
+</svg>
