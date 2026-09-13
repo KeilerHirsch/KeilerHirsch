@@ -11,10 +11,10 @@
 <text x="40" y="154" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">WOLPERTINGER</text>
 <text x="235" y="154" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BUILDING</text>
 <text x="980" y="154" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">CI PASS</text>
-<circle cx="1125" cy="196" r="6" fill="#67e480"/>
+<circle cx="1125" cy="196" r="6" fill="#ff5f56"/>
 <text x="40" y="202" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">PLLDN</text>
 <text x="235" y="202" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BETA 1</text>
-<text x="980" y="202" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">CI PASS</text>
+<text x="980" y="202" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">CI FAIL</text>
 <path d="M40 262H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="302" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LATEST SHIP</text>
 <text x="235" y="302" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">PLLDN v0.0.1 Beta 1</text>
