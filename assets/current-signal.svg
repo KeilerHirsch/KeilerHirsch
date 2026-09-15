@@ -7,19 +7,19 @@
 <text x="40" y="50" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" font-weight="700">CURRENT SIGNAL</text>
 <text x="40" y="106" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">FOCUS</text>
 <text x="235" y="106" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">WOLPERTINGER — Presentation subsystem</text>
-<circle cx="1125" cy="148" r="6" fill="#9aa4b2"/>
+<circle cx="1125" cy="148" r="6" fill="#67e480"/>
 <text x="40" y="154" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">WOLPERTINGER</text>
 <text x="235" y="154" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BUILDING</text>
-<text x="855" y="154" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">UNKNOWN</text>
+<text x="855" y="154" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">VERIFIED</text>
 <text x="235" y="177" fill="#7f8a99" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">main@fe59c30 · ci.yml</text>
-<circle cx="1125" cy="214" r="6" fill="#9aa4b2"/>
+<circle cx="1125" cy="214" r="6" fill="#ff5f56"/>
 <text x="40" y="220" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">PLLDN</text>
 <text x="235" y="220" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">BETA 1</text>
-<text x="855" y="220" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">UNKNOWN · SHIPPED</text>
+<text x="855" y="220" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">FAIL · SHIPPED</text>
 <text x="235" y="243" fill="#7f8a99" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">main@90507a9 · verify.yml</text>
 <path d="M40 298H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="332" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LATEST SHIP</text>
-<text x="235" y="332" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">PLLDN v0.0.1 Beta 1 · UNKNOWN</text>
+<text x="235" y="332" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">PLLDN v0.0.1 Beta 1 · VERIFIED</text>
 <text x="40" y="366" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">EVIDENCE</text>
 <text x="235" y="366" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">exact-HEAD · GitHub Actions</text>
 </svg>
