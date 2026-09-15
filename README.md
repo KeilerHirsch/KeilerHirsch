@@ -52,7 +52,7 @@ I still use C#, Python, JavaScript and whatever else fits the job. Not every com
 I came to software from the physical world:
 
 - **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification.
-- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinentechnik, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
+- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinenbau, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
 - **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification.
 - **23 months of voluntary military service** in the German Armed Forces (`Bundeswehr`).
 - **Autodidact by habit** — largely self-taught in software engineering, security research, digital forensics, OSINT and systems work.
