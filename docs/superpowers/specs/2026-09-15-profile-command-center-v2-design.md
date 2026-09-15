@@ -237,10 +237,10 @@ Also make the pragmatic boundary explicit:
 
 Public-safe, factual chain:
 
-- **Feinwerkmechaniker** — completed German vocational qualification; use the German original alongside any English working translation.
+- **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification / journeyman qualification.
 - **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** at Technische Fachschule Heinze, Hamburg — **13 of 24 full-time months completed; no qualification awarded**.
-- **Elektroniker für Betriebstechnik** — completed German IHK vocational qualification; do not reduce this to “electrician”.
-- roughly two years of voluntary service in the **German Armed Forces (Bundeswehr)**.
+- **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification. This English occupation label follows the BIBB translation; do not reduce the German occupation to “electrician”.
+- **23 months of voluntary military service in the German Armed Forces (Bundeswehr)**.
 - extensive **self-taught / autodidactic** work in software engineering, security research, digital forensics, OSINT and systems engineering.
 
 Important accuracy constraint:
