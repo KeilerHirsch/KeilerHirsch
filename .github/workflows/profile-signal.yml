@@ -4,12 +4,20 @@ on:
   schedule:
     - cron: '17 */6 * * *'
   workflow_dispatch:
+  pull_request:
+    paths:
+      - README.md
+      - profile.json
+      - tools/render_profile_signal.py
+      - tests/**
+      - assets/current-signal.svg
+      - .github/workflows/profile-signal.yml
 
 permissions:
   contents: write
 
 concurrency:
-  group: profile-signal
+  group: profile-signal-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -20,11 +28,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: true
+
       - name: Verify renderer
         run: python -m unittest discover -s tests -v
 
       - name: Render current signal
         id: signal
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           python tools/render_profile_signal.py --config profile.json --output assets/current-signal.svg
           if git diff --quiet -- assets/current-signal.svg; then
