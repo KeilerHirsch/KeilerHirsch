@@ -4,7 +4,7 @@
 
 **Goal:** Rebuild the KeilerHirsch GitHub profile into a professional builder-first landing page whose Current Signal is backed by exact-HEAD GitHub Actions evidence and public release provenance.
 
-**Architecture:** Keep the profile self-contained in the existing public profile repository. `profile.json` remains the declarative source for human-owned product phase/focus, while `tools/render_profile_signal.py` derives verification and release evidence from GitHub's public REST API, fails closed on stale or malformed evidence, and renders one deterministic SVG consumed by `README.md`. The README then explains the engineering identity, background and selected work without adding external vanity widgets or tracking services.
+**Architecture:** Keep the profile self-contained in the existing public profile repository. `profile.json` remains the declarative source for human-owned focus/product phase, while `tools/render_profile_signal.py` derives verification and release evidence from GitHub's public REST API, fails closed on stale or malformed evidence, and renders one deterministic SVG consumed by `README.md`. The README explains the engineering identity, background and selected work without external vanity widgets or tracking services.
 
 **Tech Stack:** Python 3 standard library, `unittest`, GitHub REST API, GitHub Actions, SVG, Markdown.
 
@@ -19,36 +19,36 @@
 - Product phase and verification evidence are separate concepts.
 - `VERIFIED` requires the configured workflow to succeed for the **exact current default-branch HEAD SHA**.
 - A successful workflow for an older SHA must never produce `VERIFIED`.
-- Missing, malformed, ambiguous, or inaccessible evidence must fail closed to `UNKNOWN`.
+- Missing, malformed, ambiguous, inaccessible, or network-failed evidence must fail closed to `UNKNOWN`.
 - A current-HEAD failed workflow must render `FAIL`; do not hide red states.
 - `SHIPPED` requires a real public GitHub release and does not imply that the release commit is verified.
 - `ATTESTED` is reserved for future real artifact/build provenance and is out of scope for this implementation.
 - Ada/SPARK is presented as the primary high-assurance language without dogmatism or status-signaling.
 - Public qualification wording must not imply an unearned title or degree.
-- Heinze wording must remain bounded to **13 of 24 full-time months completed; no qualification awarded**.
+- Heinze wording remains bounded to **13 of 24 full-time months completed; no qualification awarded**.
 - Do not claim that the user's specific Heinze cohort was an Airbus cooperation course.
 - `Feinwerkmechaniker` and `Elektroniker für Betriebstechnik` remain visible alongside clear English working translations.
 - Bundeswehr wording is **23 months of voluntary military service in the German Armed Forces (Bundeswehr)**.
 - Keep the personal README-source Easter egg stealth and harmless.
 - Canonical public links only; no tracking parameters.
-- Preserve the existing atomic-write behavior and the existing test-before-render workflow shape.
-- Work in an isolated worktree/branch at execution time; do not rewrite history, force-push, or delete unrelated files.
+- Preserve existing atomic-write behavior and test-before-render workflow behavior.
+- Work in an isolated worktree/branch at execution time; never rewrite history, force-push, or delete unrelated files.
 
 ---
 
 ## File map
 
-- `README.md` — public landing page copy, section order, links, humor, Engineering DNA and stealth HTML-comment Easter egg.
-- `profile.json` — human-owned current focus, selected projects, product phase and configured workflow names. No evidence state is stored here.
-- `tools/render_profile_signal.py` — GitHub API collection, exact-HEAD verification semantics, release evidence normalization and deterministic SVG rendering.
-- `tests/test_profile_signal.py` — unit tests for evidence semantics, rendering, workflow contract and README surface contract.
-- `tests/fixtures/signal-snapshot.json` — deterministic normalized snapshot used for offline rendering tests.
-- `.github/workflows/profile-signal.yml` — scheduled/manual refresh, test gate, authenticated GitHub API access and conditional SVG commit.
+- `README.md` — public landing page copy, section order, links, humor, Engineering DNA, stealth HTML-comment Easter egg.
+- `profile.json` — human-owned focus, selected projects, product phase and configured workflow names; **no evidence state**.
+- `tools/render_profile_signal.py` — GitHub API collection, exact-HEAD verification, release evidence normalization, deterministic SVG rendering.
+- `tests/test_profile_signal.py` — evidence semantics, rendering, workflow contract, public fallback and README surface contract.
+- `tests/fixtures/signal-snapshot.json` — deterministic normalized snapshot for offline rendering tests.
+- `.github/workflows/profile-signal.yml` — scheduled/manual refresh, test gate, authenticated API access, conditional SVG commit.
 - `assets/current-signal.svg` — generated public panel; never hand-edit.
 
 ---
 
-### Task 1: Lock the normalized evidence contract with failing tests
+### Task 1: Define the v2 evidence contract in tests
 
 **Files:**
 - Modify: `tests/test_profile_signal.py`
@@ -56,15 +56,12 @@
 - Read only: `profile.json`
 
 **Interfaces:**
-- Consumes: current `profile.json` project records with `key`, `repo`, `status`, `workflow`.
-- Produces: normalized per-project snapshot shape used by all later tasks:
+- Consumes: project records with `key`, `repo`, `status`, `workflow`.
+- Produces this normalized project snapshot shape for later tasks:
 
 ```python
 {
-    "head": {
-        "branch": "main",
-        "sha": "1111111111111111111111111111111111111111",
-    },
+    "head": {"branch": "main", "sha": "a" * 40},
     "verification": {
         "state": "VERIFIED",  # VERIFIED | FAIL | UNKNOWN
         "workflow": "ci.yml",
@@ -77,7 +74,7 @@
 }
 ```
 
-For a shipped release:
+A shipped release uses:
 
 ```python
 {
@@ -87,21 +84,21 @@ For a shipped release:
         "tag": "v0.0.1-beta.1",
         "published_at": "2026-09-07T17:21:54Z",
         "url": "https://github.com/.../releases/tag/v0.0.1-beta.1",
-        "sha": "2222222222222222222222222222222222222222",
+        "sha": "b" * 40,
         "verification": {
             "state": "VERIFIED",
             "workflow": "verify.yml",
             "run_id": 456,
             "url": "https://github.com/.../actions/runs/456",
-            "completed_at": "2026-09-07T17:00:00Z",
+            "completed_at": "2026-09-07T17:10:00Z",
         },
     },
 }
 ```
 
-- [ ] **Step 1: Replace the fixture with the v2 normalized evidence shape**
+- [ ] **Step 1: Replace the fixture with deterministic v2 evidence**
 
-Use exact deterministic values so rendering never depends on the network:
+Write `tests/fixtures/signal-snapshot.json` exactly as:
 
 ```json
 {
@@ -153,17 +150,31 @@ Use exact deterministic values so rendering never depends on the network:
 }
 ```
 
-- [ ] **Step 2: Add failing exact-HEAD collection tests**
+- [ ] **Step 2: Add exact reusable test helpers**
 
-Add helpers inside `ProfileSignalCollectionTests` so each test controls the fake API precisely:
+At module scope add `urllib.error` and these helpers:
 
 ```python
-def make_repo_payload(default_branch="main"):
-    return {"default_branch": default_branch}
+import urllib.error
 
 
-def make_branch_payload(sha):
-    return {"commit": {"sha": sha}}
+def single_project_config(
+    *,
+    repo="example/project",
+    workflow="verify.yml",
+    status="BUILDING",
+):
+    return {
+        "current_focus": "Evidence contract test",
+        "projects": [
+            {
+                "key": "PROJECT",
+                "repo": repo,
+                "status": status,
+                "workflow": workflow,
+            }
+        ],
+    }
 
 
 def make_run(sha, conclusion="success", run_id=1):
@@ -174,100 +185,245 @@ def make_run(sha, conclusion="success", run_id=1):
         "html_url": f"https://example.invalid/actions/runs/{run_id}",
         "updated_at": "2026-09-15T12:00:00Z",
     }
+
+
+def route_json(routes):
+    def get_json(path):
+        if path not in routes:
+            raise AssertionError(f"unexpected API path: {path}")
+        value = routes[path]
+        if isinstance(value, BaseException):
+            raise value
+        return value
+
+    return get_json
 ```
 
-Add these tests with concrete assertions:
+Also correct the mojibake test focus in existing `setUp` methods to:
+
+```python
+"current_focus": "WOLPERTINGER — Presentation subsystem",
+```
+
+- [ ] **Step 3: Add concrete exact-HEAD success/stale/fail/missing/malformed tests**
+
+Add to `ProfileSignalCollectionTests`:
 
 ```python
 def test_collect_snapshot_verifies_exact_default_branch_head(self):
+    config = single_project_config()
     head = "a" * 40
-
-    def get_json(path):
-        if path == "/repos/KeilerHirsch/WOLPERTINGER":
-            return make_repo_payload("main")
-        if path == "/repos/KeilerHirsch/WOLPERTINGER/branches/main":
-            return make_branch_payload(head)
-        if "WOLPERTINGER/actions/workflows/ci.yml/runs" in path:
-            self.assertIn(f"head_sha={head}", path)
-            return {"workflow_runs": [make_run(head, "success", 11)]}
-        if path.endswith("WOLPERTINGER/releases?per_page=10"):
-            return []
-        # Return equivalent valid data for PLLDN so the whole snapshot is valid.
-        if path == "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator":
-            return make_repo_payload("main")
-        if path == "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/branches/main":
-            return make_branch_payload("b" * 40)
-        if "PLLDN-Programming-Language-Licensing-Decision-Navigator/actions/workflows/verify.yml/runs" in path:
-            return {"workflow_runs": [make_run("b" * 40, "success", 12)]}
-        if path.endswith("PLLDN-Programming-Language-Licensing-Decision-Navigator/releases?per_page=10"):
-            return []
-        raise AssertionError(path)
-
-    snapshot = self.renderer.collect_snapshot(self.config, get_json)
-    project = snapshot["projects"]["WOLPERTINGER"]
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": [make_run(head, "success", 11)]},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    project = snapshot["projects"]["PROJECT"]
     self.assertEqual(project["head"], {"branch": "main", "sha": head})
     self.assertEqual(project["verification"]["state"], "VERIFIED")
-```
 
-Add separate tests for stale, failed, missing and malformed evidence:
 
-```python
 def test_stale_success_never_verifies_current_head(self):
-    # API query is for current head, but a malformed/stale response returns another SHA.
-    # Expected: UNKNOWN, never VERIFIED.
+    config = single_project_config()
+    head = "a" * 40
+    stale = "b" * 40
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": [make_run(stale, "success", 12)]},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    self.assertEqual(
+        snapshot["projects"]["PROJECT"]["verification"]["state"],
+        "UNKNOWN",
+    )
 
 
 def test_current_head_failure_maps_to_fail(self):
-    # Matching head_sha + conclusion=failure -> FAIL.
+    config = single_project_config()
+    head = "c" * 40
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": [make_run(head, "failure", 13)]},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    self.assertEqual(
+        snapshot["projects"]["PROJECT"]["verification"]["state"],
+        "FAIL",
+    )
 
 
 def test_missing_current_head_run_maps_to_unknown(self):
-    # Empty workflow_runs -> UNKNOWN.
+    config = single_project_config()
+    head = "d" * 40
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": []},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    self.assertEqual(
+        snapshot["projects"]["PROJECT"]["verification"]["state"],
+        "UNKNOWN",
+    )
 
 
-def test_malformed_repo_or_branch_payload_fails_closed(self):
-    # Missing default_branch or commit.sha -> head fields None and verification UNKNOWN.
+def test_malformed_repo_payload_fails_closed(self):
+    config = single_project_config()
+    routes = {
+        "/repos/example/project": {},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    project = snapshot["projects"]["PROJECT"]
+    self.assertEqual(project["head"], {"branch": None, "sha": None})
+    self.assertEqual(project["verification"]["state"], "UNKNOWN")
 ```
 
-For each test, assert the exact state string.
-
-- [ ] **Step 3: Add failing default-branch and release-binding tests**
+- [ ] **Step 4: Add concrete default-branch and release-binding tests**
 
 Add:
 
 ```python
 def test_default_branch_is_not_hardcoded_to_main(self):
-    # Return default_branch="develop" and assert the collector requests /branches/develop.
+    config = single_project_config()
+    head = "e" * 40
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "develop"},
+        "/repos/example/project/branches/develop": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": [make_run(head, "success", 14)]},
+        "/repos/example/project/releases?per_page=10": [],
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    self.assertEqual(
+        snapshot["projects"]["PROJECT"]["head"]["branch"],
+        "develop",
+    )
 
 
-def test_public_release_is_shipped_and_resolves_tag_to_commit(self):
-    # releases endpoint returns one published non-draft release.
-    # /commits/v0.0.1-beta.1 returns {"sha": release_sha}.
-    # matching workflow run for release_sha -> release_state SHIPPED and release.verification VERIFIED.
+def test_public_release_is_shipped_and_binds_its_own_verification(self):
+    config = single_project_config()
+    head = "f" * 40
+    release_sha = "1" * 40
+    head_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    release_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={release_sha}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        head_path: {"workflow_runs": [make_run(head, "success", 15)]},
+        "/repos/example/project/releases?per_page=10": [
+            {
+                "draft": False,
+                "name": "Example v1",
+                "tag_name": "v1.0.0",
+                "published_at": "2026-09-10T12:00:00Z",
+                "html_url": "https://example.invalid/releases/v1.0.0",
+            }
+        ],
+        "/repos/example/project/commits/v1.0.0": {"sha": release_sha},
+        release_path: {"workflow_runs": [make_run(release_sha, "success", 16)]},
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    project = snapshot["projects"]["PROJECT"]
+    self.assertEqual(project["release_state"], "SHIPPED")
+    self.assertEqual(project["release"]["sha"], release_sha)
+    self.assertEqual(project["release"]["verification"]["state"], "VERIFIED")
 
 
 def test_release_does_not_inherit_head_verification_for_different_sha(self):
-    # Head SHA is VERIFIED, release SHA differs, release workflow lookup has no run.
-    # Expected: project.verification VERIFIED, release.verification UNKNOWN.
+    config = single_project_config()
+    head = "2" * 40
+    release_sha = "3" * 40
+    head_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    release_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={release_sha}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        head_path: {"workflow_runs": [make_run(head, "success", 17)]},
+        "/repos/example/project/releases?per_page=10": [
+            {
+                "draft": False,
+                "name": "Example v1",
+                "tag_name": "v1.0.0",
+                "published_at": "2026-09-10T12:00:00Z",
+                "html_url": "https://example.invalid/releases/v1.0.0",
+            }
+        ],
+        "/repos/example/project/commits/v1.0.0": {"sha": release_sha},
+        release_path: {"workflow_runs": []},
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    project = snapshot["projects"]["PROJECT"]
+    self.assertEqual(project["verification"]["state"], "VERIFIED")
+    self.assertEqual(project["release"]["verification"]["state"], "UNKNOWN")
 
 
 def test_release_api_failure_is_unknown_not_shipped(self):
-    # get_json raises for releases endpoint.
-    # Expected: release_state UNKNOWN and release None.
+    config = single_project_config()
+    head = "4" * 40
+    workflow_path = (
+        "/repos/example/project/actions/workflows/verify.yml/runs?"
+        f"head_sha={head}&status=completed&per_page=1"
+    )
+    routes = {
+        "/repos/example/project": {"default_branch": "main"},
+        "/repos/example/project/branches/main": {"commit": {"sha": head}},
+        workflow_path: {"workflow_runs": [make_run(head, "success", 18)]},
+        "/repos/example/project/releases?per_page=10": urllib.error.URLError("boom"),
+    }
+    snapshot = self.renderer.collect_snapshot(config, route_json(routes))
+    project = snapshot["projects"]["PROJECT"]
+    self.assertEqual(project["release_state"], "UNKNOWN")
+    self.assertIsNone(project["release"])
 ```
 
-- [ ] **Step 4: Run the focused tests and confirm RED**
-
-Run:
+- [ ] **Step 5: Run the focused tests and confirm RED**
 
 ```bash
-python -m unittest \
-  tests.test_profile_signal.ProfileSignalCollectionTests -v
+python -m unittest tests.test_profile_signal.ProfileSignalCollectionTests -v
 ```
 
-Expected: failures because the current collector still returns `ci` and does not fetch repository/default-branch HEAD evidence.
+Expected: failures because the current collector returns `ci` and does not collect exact default-branch HEAD evidence.
 
-- [ ] **Step 5: Commit the test contract**
+- [ ] **Step 6: Commit the test contract**
 
 ```bash
 git add tests/test_profile_signal.py tests/fixtures/signal-snapshot.json
@@ -280,17 +436,19 @@ git commit -m "test: define profile evidence v2 contract"
 
 **Files:**
 - Modify: `tools/render_profile_signal.py`
-- Test: `tests/test_profile_signal.py`
+- Modify: `tests/test_profile_signal.py`
 
 **Interfaces:**
-- Consumes: `profile.json` records and a `get_json(path: str) -> Any` callable.
+- Consumes: `profile.json` records and `get_json(path: str) -> Any`.
 - Produces:
   - `normalize_verification(conclusion: str | None) -> str`
+  - `_collect_head(repo: str, get_json: Callable[[str], Any]) -> dict[str, Any]`
   - `_workflow_evidence(repo: str, workflow: str, sha: str, get_json: Callable[[str], Any]) -> dict[str, Any]`
-  - `_collect_project_snapshot(project: dict[str, Any], get_json: Callable[[str], Any]) -> dict[str, Any]`
-  - `collect_snapshot(config: dict[str, Any], get_json: Callable[[str], Any]) -> dict[str, Any]`
+  - `_collect_release(...) -> tuple[str, dict[str, Any] | None]`
+  - `_collect_project_snapshot(...) -> dict[str, Any]`
+  - `collect_snapshot(...) -> dict[str, Any]`
 
-- [ ] **Step 1: Replace CI naming with explicit verification naming**
+- [ ] **Step 1: Replace CI vocabulary with verification vocabulary**
 
 Replace `normalize_ci` with:
 
@@ -308,13 +466,14 @@ def normalize_verification(conclusion: str | None) -> str:
     return UNKNOWN
 ```
 
-Update tests that currently call `normalize_ci` to assert the new vocabulary.
+Update the existing normalization test to call `normalize_verification` and expect `VERIFIED`, `FAIL`, `UNKNOWN`.
 
-- [ ] **Step 2: Add safe GitHub API helpers**
+- [ ] **Step 2: Add narrow network-failure handling and URL encoding**
 
-Import URL helpers:
+Add imports:
 
 ```python
+import urllib.error
 from urllib.parse import quote, urlencode
 ```
 
@@ -324,8 +483,30 @@ Add:
 def _safe_get_json(get_json: Callable[[str], Any], path: str) -> Any | None:
     try:
         return get_json(path)
-    except Exception:
+    except (
+        urllib.error.HTTPError,
+        urllib.error.URLError,
+        TimeoutError,
+        json.JSONDecodeError,
+    ):
         return None
+```
+
+Do **not** catch `AssertionError`, `KeyError`, or all `Exception`; programming/test routing errors must stay visible.
+
+- [ ] **Step 3: Implement exact workflow evidence**
+
+Add:
+
+```python
+def _unknown_verification(workflow: str) -> dict[str, Any]:
+    return {
+        "state": UNKNOWN,
+        "workflow": workflow,
+        "run_id": None,
+        "url": "",
+        "completed_at": None,
+    }
 
 
 def _workflow_evidence(
@@ -335,29 +516,21 @@ def _workflow_evidence(
     get_json: Callable[[str], Any],
 ) -> dict[str, Any]:
     query = urlencode({"head_sha": sha, "status": "completed", "per_page": 1})
-    path = (
-        f"/repos/{repo}/actions/workflows/{quote(workflow, safe='')}/runs?{query}"
-    )
+    path = f"/repos/{repo}/actions/workflows/{quote(workflow, safe='')}/runs?{query}"
     payload = _safe_get_json(get_json, path)
     runs = payload.get("workflow_runs") if isinstance(payload, dict) else None
     if not isinstance(runs, list) or not runs or not isinstance(runs[0], dict):
-        return {
-            "state": UNKNOWN,
-            "workflow": workflow,
-            "run_id": None,
-            "url": "",
-            "completed_at": None,
-        }
+        return _unknown_verification(workflow)
 
     run = runs[0]
     if run.get("head_sha") != sha:
-        return {
-            "state": UNKNOWN,
-            "workflow": workflow,
-            "run_id": run.get("id"),
-            "url": run.get("html_url") or "",
-            "completed_at": run.get("updated_at"),
-        }
+        evidence = _unknown_verification(workflow)
+        evidence.update(
+            run_id=run.get("id"),
+            url=run.get("html_url") or "",
+            completed_at=run.get("updated_at"),
+        )
+        return evidence
 
     return {
         "state": normalize_verification(run.get("conclusion")),
@@ -368,9 +541,7 @@ def _workflow_evidence(
     }
 ```
 
-The `head_sha` equality check is mandatory even though the request is filtered by SHA; it protects against malformed fixtures/API responses and keeps the rule explicit.
-
-- [ ] **Step 3: Add default-branch HEAD collection**
+- [ ] **Step 4: Implement default-branch HEAD collection**
 
 Add:
 
@@ -392,7 +563,7 @@ def _collect_head(repo: str, get_json: Callable[[str], Any]) -> dict[str, Any]:
     return {"branch": branch, "sha": sha}
 ```
 
-- [ ] **Step 4: Add public release collection and independent release verification**
+- [ ] **Step 5: Implement independent public-release evidence**
 
 Add:
 
@@ -432,17 +603,9 @@ def _collect_release(
     if release_sha and release_sha == head.get("sha"):
         release_verification = dict(head_verification)
     elif release_sha:
-        release_verification = _workflow_evidence(
-            repo, workflow, release_sha, get_json
-        )
+        release_verification = _workflow_evidence(repo, workflow, release_sha, get_json)
     else:
-        release_verification = {
-            "state": UNKNOWN,
-            "workflow": workflow,
-            "run_id": None,
-            "url": "",
-            "completed_at": None,
-        }
+        release_verification = _unknown_verification(workflow)
 
     return "SHIPPED", {
         "name": newest.get("name") or tag or "Unnamed release",
@@ -454,7 +617,7 @@ def _collect_release(
     }
 ```
 
-- [ ] **Step 5: Replace `collect_snapshot` with per-project v2 collection**
+- [ ] **Step 6: Replace `collect_snapshot` with v2 per-project collection**
 
 Add:
 
@@ -466,20 +629,17 @@ def _collect_project_snapshot(
     repo = project["repo"]
     workflow = project["workflow"]
     head = _collect_head(repo, get_json)
-
-    if head.get("sha"):
-        verification = _workflow_evidence(repo, workflow, head["sha"], get_json)
-    else:
-        verification = {
-            "state": UNKNOWN,
-            "workflow": workflow,
-            "run_id": None,
-            "url": "",
-            "completed_at": None,
-        }
-
+    verification = (
+        _workflow_evidence(repo, workflow, head["sha"], get_json)
+        if head.get("sha")
+        else _unknown_verification(workflow)
+    )
     release_state, release = _collect_release(
-        repo, workflow, head, verification, get_json
+        repo,
+        workflow,
+        head,
+        verification,
+        get_json,
     )
     return {
         "head": head,
@@ -502,17 +662,90 @@ def collect_snapshot(
     }
 ```
 
-Delete the old latest-completed-`main` workflow lookup.
+Delete the old `branch=main&status=completed&per_page=1` collector path entirely.
 
-- [ ] **Step 6: Update the live-mode test fake API**
+- [ ] **Step 7: Replace the authenticated live-mode fake with the exact v2 API surface**
 
-The fake must now handle repository metadata, branch HEAD, workflow, releases and optional tag-to-commit lookups. Verify `Authorization: Bearer test-token` is still sent whenever a token exists.
+Inside `test_main_live_mode_uses_github_token_and_api`, use:
 
-Use assertions that the generated SVG ultimately contains `VERIFIED`, not the old `CI PASS` wording.
+```python
+wolper_head = "a" * 40
+plldn_head = "b" * 40
 
-- [ ] **Step 7: Run the collection suite and confirm GREEN**
 
-Run:
+def fake_urlopen(request, timeout=0):
+    self.assertEqual(request.headers.get("Authorization"), "Bearer test-token")
+    url = request.full_url
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER"):
+        return FakeResponse({"default_branch": "main"})
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER/branches/main"):
+        return FakeResponse({"commit": {"sha": wolper_head}})
+    if "/WOLPERTINGER/actions/workflows/ci.yml/runs?" in url:
+        return FakeResponse({"workflow_runs": [make_run(wolper_head, "success", 31)]})
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER/releases?per_page=10"):
+        return FakeResponse([])
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator"
+    ):
+        return FakeResponse({"default_branch": "main"})
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/branches/main"
+    ):
+        return FakeResponse({"commit": {"sha": plldn_head}})
+    if "/PLLDN-Programming-Language-Licensing-Decision-Navigator/actions/workflows/verify.yml/runs?" in url:
+        return FakeResponse({"workflow_runs": [make_run(plldn_head, "success", 32)]})
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/releases?per_page=10"
+    ):
+        return FakeResponse([])
+    raise AssertionError(url)
+```
+
+After running `main(...)`, assert:
+
+```python
+self.assertEqual(exit_code, 0)
+svg = output_path.read_text(encoding="utf-8")
+self.assertIn("VERIFIED", svg)
+self.assertNotIn("CI PASS", svg)
+```
+
+- [ ] **Step 8: Replace the public unauthenticated fallback fake**
+
+In `PublicApiFallbackTests`, use the same repository/branch routes but return empty workflow runs and releases, while asserting no Authorization header:
+
+```python
+def fake_urlopen(request, timeout=0):
+    self.assertIsNone(request.headers.get("Authorization"))
+    url = request.full_url
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER"):
+        return FakeResponse({"default_branch": "main"})
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER/branches/main"):
+        return FakeResponse({"commit": {"sha": "a" * 40}})
+    if "/WOLPERTINGER/actions/workflows/ci.yml/runs?" in url:
+        return FakeResponse({"workflow_runs": []})
+    if url.endswith("/repos/KeilerHirsch/WOLPERTINGER/releases?per_page=10"):
+        return FakeResponse([])
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator"
+    ):
+        return FakeResponse({"default_branch": "main"})
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/branches/main"
+    ):
+        return FakeResponse({"commit": {"sha": "b" * 40}})
+    if "/PLLDN-Programming-Language-Licensing-Decision-Navigator/actions/workflows/verify.yml/runs?" in url:
+        return FakeResponse({"workflow_runs": []})
+    if url.endswith(
+        "/repos/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/releases?per_page=10"
+    ):
+        return FakeResponse([])
+    raise AssertionError(url)
+```
+
+Assert the output contains `UNKNOWN` and no `CI PASS`.
+
+- [ ] **Step 9: Run the collector/fallback suites and confirm GREEN**
 
 ```bash
 python -m unittest \
@@ -520,9 +753,9 @@ python -m unittest \
   tests.test_profile_signal.PublicApiFallbackTests -v
 ```
 
-Expected: all collection/fallback tests pass.
+Expected: all tests pass.
 
-- [ ] **Step 8: Commit the collector**
+- [ ] **Step 10: Commit the collector**
 
 ```bash
 git add tools/render_profile_signal.py tests/test_profile_signal.py
@@ -531,22 +764,25 @@ git commit -m "feat: bind profile verification to exact head"
 
 ---
 
-### Task 3: Render Current Signal v2 with provenance without visual noise
+### Task 3: Render Current Signal v2 with compact provenance
 
 **Files:**
 - Modify: `tools/render_profile_signal.py`
 - Modify: `tests/test_profile_signal.py`
-- Modify: `tests/fixtures/signal-snapshot.json` only if a test-value correction is needed
 
 **Interfaces:**
 - Consumes: normalized v2 snapshot from Task 2.
-- Produces: deterministic `render_svg(config, snapshot) -> str` showing product phase, exact-HEAD verification state, SHIPPED marker, short head SHA and latest-release verification.
+- Produces: deterministic `render_svg(config, snapshot) -> str` showing product phase, exact-HEAD verification, `SHIPPED`, short HEAD SHA and latest-release verification.
 
-- [ ] **Step 1: Add failing renderer assertions for the v2 vocabulary**
+- [ ] **Step 1: Write concrete failing renderer tests**
 
-Update `test_render_is_deterministic_and_valid_svg` to assert:
+Add `import copy` and update the deterministic render test:
 
 ```python
+first = self.renderer.render_svg(self.config, self.snapshot)
+second = self.renderer.render_svg(self.config, self.snapshot)
+self.assertEqual(first, second)
+ET.fromstring(first)
 self.assertIn("CURRENT SIGNAL", first)
 self.assertIn("WOLPERTINGER", first)
 self.assertIn("BUILDING", first)
@@ -554,14 +790,34 @@ self.assertIn("VERIFIED", first)
 self.assertIn("SHIPPED", first)
 self.assertIn("main@1111111", first)
 self.assertIn("PLLDN v0.0.1 Beta 1", first)
+self.assertIn("exact-HEAD · GitHub Actions", first)
 self.assertNotIn("CI PASS", first)
 ```
 
-Add a test with a project state of `FAIL` and another with `UNKNOWN`; assert both strings are rendered exactly and the SVG remains valid XML.
+Add:
 
-- [ ] **Step 2: Add small rendering helpers**
+```python
+def test_render_shows_fail_and_unknown_without_hiding_them(self):
+    snapshot = copy.deepcopy(self.snapshot)
+    snapshot["projects"]["WOLPERTINGER"]["verification"]["state"] = "FAIL"
+    snapshot["projects"]["PLLDN"]["verification"]["state"] = "UNKNOWN"
+    svg = self.renderer.render_svg(self.config, snapshot)
+    ET.fromstring(svg)
+    self.assertIn("FAIL", svg)
+    self.assertIn("UNKNOWN · SHIPPED", svg)
+```
 
-Replace `_status_color` with explicit evidence-state naming:
+Run:
+
+```bash
+python -m unittest tests.test_profile_signal.ProfileSignalTests -v
+```
+
+Expected: fail against the old `CI PASS` renderer.
+
+- [ ] **Step 2: Add renderer helpers and v2 release selection**
+
+Add:
 
 ```python
 def _verification_color(state: str) -> str:
@@ -573,7 +829,7 @@ def _verification_color(state: str) -> str:
 
 
 def _short_sha(value: Any) -> str:
-    return str(value)[:7] if isinstance(value, str) and value else "unknown"
+    return value[:7] if isinstance(value, str) and value else "unknown"
 
 
 def _project_state_label(project_snapshot: dict[str, Any]) -> str:
@@ -581,16 +837,13 @@ def _project_state_label(project_snapshot: dict[str, Any]) -> str:
     state = verification.get("state") if isinstance(verification, dict) else UNKNOWN
     if state not in {VERIFIED, FAIL, UNKNOWN}:
         state = UNKNOWN
-    if project_snapshot.get("release_state") == "SHIPPED":
-        return f"{state} · SHIPPED"
-    return state
-```
+    return (
+        f"{state} · SHIPPED"
+        if project_snapshot.get("release_state") == "SHIPPED"
+        else state
+    )
 
-- [ ] **Step 3: Update `latest_release` for the v2 schema**
 
-Only `release_state == "SHIPPED"` with a dictionary release may participate:
-
-```python
 def latest_release(snapshot: dict[str, Any]) -> dict[str, Any] | None:
     releases = []
     projects = snapshot.get("projects", {})
@@ -607,49 +860,101 @@ def latest_release(snapshot: dict[str, Any]) -> dict[str, Any] | None:
     return max(releases, key=lambda item: str(item["published_at"]))
 ```
 
-- [ ] **Step 4: Redesign the SVG into a compact command-center panel**
+- [ ] **Step 3: Replace `render_svg` with the v2 command-center layout**
 
-Keep one SVG, monospace typography and the existing dark visual language. Increase the canvas only enough for provenance detail; target `1200x390`.
-
-Each selected project row must contain:
-
-```text
-KEY                 PRODUCT PHASE                    VERIFIED · SHIPPED
-                    main@abcdef1 · workflow.yml
-```
-
-Derive the detail string with:
+Use this implementation shape exactly; retain `_safe()` for every config/API-derived text value:
 
 ```python
-head = project_snapshot.get("head", {})
-verification = project_snapshot.get("verification", {})
-branch = head.get("branch") if isinstance(head, dict) else None
-sha = head.get("sha") if isinstance(head, dict) else None
-workflow = verification.get("workflow") if isinstance(verification, dict) else None
-provenance = f"{branch or 'unknown'}@{_short_sha(sha)} · {workflow or 'workflow unknown'}"
+def render_svg(config: dict[str, Any], snapshot: dict[str, Any]) -> str:
+    validate_config(config)
+    projects = snapshot.get("projects", {})
+    if not isinstance(projects, dict):
+        raise ValueError("snapshot projects must be an object")
+
+    rows = []
+    for project in config["projects"]:
+        key = project["key"]
+        project_snapshot = projects.get(key, {})
+        if not isinstance(project_snapshot, dict):
+            project_snapshot = {}
+        head = project_snapshot.get("head", {})
+        verification = project_snapshot.get("verification", {})
+        if not isinstance(head, dict):
+            head = {}
+        if not isinstance(verification, dict):
+            verification = {}
+        state = verification.get("state")
+        if state not in {VERIFIED, FAIL, UNKNOWN}:
+            state = UNKNOWN
+        provenance = (
+            f"{head.get('branch') or 'unknown'}@{_short_sha(head.get('sha'))}"
+            f" · {verification.get('workflow') or 'workflow unknown'}"
+        )
+        rows.append(
+            (
+                key,
+                project["status"],
+                _project_state_label(project_snapshot),
+                provenance,
+                state,
+            )
+        )
+
+    release = latest_release(snapshot)
+    latest_label = "No public release yet"
+    release_state = UNKNOWN
+    if release:
+        latest_label = str(release.get("name") or release.get("tag") or "Unnamed release")
+        release_verification = release.get("verification")
+        if isinstance(release_verification, dict):
+            candidate = release_verification.get("state")
+            if candidate in {VERIFIED, FAIL, UNKNOWN}:
+                release_state = candidate
+
+    divider_y = 140 + len(rows) * 62
+    latest_y = divider_y + 42
+    evidence_y = divider_y + 84
+    height = evidence_y + 30
+
+    svg = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="{height}" viewBox="0 0 1200 {height}" role="img" aria-labelledby="title desc">',
+        '<title id="title">Current Signal</title>',
+        '<desc id="desc">Current focus, product phase, exact-HEAD verification state, public release state, and GitHub Actions provenance.</desc>',
+        f'<rect width="1200" height="{height}" rx="18" fill="#0b0d10"/>',
+        f'<rect x="1" y="1" width="1198" height="{height - 2}" rx="17" fill="none" stroke="#2b313a"/>',
+        '<path d="M40 78H1160" stroke="#252a31" stroke-width="1"/>',
+        '<text x="40" y="50" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" font-weight="700">CURRENT SIGNAL</text>',
+        '<text x="40" y="106" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">FOCUS</text>',
+        f'<text x="235" y="106" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">{_safe(config["current_focus"])}</text>',
+    ]
+
+    y = 154
+    for key, product_status, state_label, provenance, state in rows:
+        svg.extend(
+            [
+                f'<circle cx="1128" cy="{y - 6}" r="6" fill="{_verification_color(state)}"/>',
+                f'<text x="40" y="{y}" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">{_safe(key)}</text>',
+                f'<text x="235" y="{y}" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">{_safe(product_status)}</text>',
+                f'<text x="860" y="{y}" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">{_safe(state_label)}</text>',
+                f'<text x="235" y="{y + 22}" fill="#7f8a99" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">{_safe(provenance)}</text>',
+            ]
+        )
+        y += 62
+
+    svg.extend(
+        [
+            f'<path d="M40 {divider_y}H1160" stroke="#252a31" stroke-width="1"/>',
+            f'<text x="40" y="{latest_y}" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LATEST SHIP</text>',
+            f'<text x="235" y="{latest_y}" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">{_safe(latest_label)} · {_safe(release_state)}</text>',
+            f'<text x="40" y="{evidence_y}" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">EVIDENCE</text>',
+            f'<text x="235" y="{evidence_y}" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">exact-HEAD · GitHub Actions</text>',
+            '</svg>',
+        ]
+    )
+    return "\n".join(svg) + "\n"
 ```
 
-For the bottom release block, render:
-
-```text
-LATEST SHIP         PLLDN v0.0.1 Beta 1 · VERIFIED
-EVIDENCE            exact-HEAD · GitHub Actions
-```
-
-The release suffix comes from `release["verification"]["state"]`; if absent/malformed, render `UNKNOWN`.
-
-Update SVG accessibility text to:
-
-```xml
-<title id="title">Current Signal</title>
-<desc id="desc">Current focus, product phase, exact-HEAD verification state, public release state, and GitHub Actions provenance.</desc>
-```
-
-Keep every user/API-derived text value passed through `_safe()`.
-
-- [ ] **Step 5: Run renderer tests and inspect a fixture render**
-
-Run:
+- [ ] **Step 4: Run renderer tests and a deterministic fixture render**
 
 ```bash
 python -m unittest tests.test_profile_signal.ProfileSignalTests -v
@@ -657,11 +962,22 @@ python tools/render_profile_signal.py \
   --config profile.json \
   --snapshot tests/fixtures/signal-snapshot.json \
   --output /tmp/profile-signal-v2.svg
+python - <<'PY'
+from pathlib import Path
+import xml.etree.ElementTree as ET
+text = Path("/tmp/profile-signal-v2.svg").read_text(encoding="utf-8")
+ET.fromstring(text)
+assert "VERIFIED" in text
+assert "SHIPPED" in text
+assert "main@1111111" in text
+assert "CI PASS" not in text
+print("fixture SVG OK")
+PY
 ```
 
-Expected: unit tests pass; `/tmp/profile-signal-v2.svg` parses as XML and contains `VERIFIED`, `SHIPPED`, `main@1111111`, and no `CI PASS`.
+Expected: tests pass and `fixture SVG OK` prints.
 
-- [ ] **Step 6: Commit the v2 renderer**
+- [ ] **Step 5: Commit the renderer**
 
 ```bash
 git add tools/render_profile_signal.py tests/test_profile_signal.py tests/fixtures/signal-snapshot.json
@@ -675,15 +991,15 @@ git commit -m "feat: render provenance-aware profile signal"
 **Files:**
 - Modify: `README.md`
 - Modify: `tests/test_profile_signal.py`
-- Keep: `assets/profile-hero.webp`
+- Keep unchanged: `assets/profile-hero.webp`
 
 **Interfaces:**
-- Consumes: existing hero and `assets/current-signal.svg`.
-- Produces: final section order `Hero -> Current Signal -> Selected Work -> How I Build -> Engineering DNA -> Security & Forensics -> MAYHEM Club -> Footer -> hidden source Easter egg`.
+- Consumes: existing hero and generated Current Signal SVG.
+- Produces final order: `Hero -> Current Signal -> Selected Work -> How I Build -> Engineering DNA -> Security & Forensics -> MAYHEM Club -> Footer -> hidden source Easter egg`.
 
-- [ ] **Step 1: Rewrite the README surface-contract test first**
+- [ ] **Step 1: Replace the old README contract with the v2 contract**
 
-Replace the old 250–350-word/three-principle assumptions with these checks:
+In `test_readme_contract`, retain hero-before-signal-before-selected-work and canonical-link checks, then enforce:
 
 ```python
 required_sections = [
@@ -696,7 +1012,6 @@ required_sections = [
 ]
 for section in required_sections:
     self.assertIn(section, readme)
-
 positions = [readme.index(section) for section in required_sections]
 self.assertEqual(positions, sorted(positions))
 
@@ -731,26 +1046,24 @@ self.assertNotIn("Airbus", readme)
 self.assertNotIn("utm_", readme.lower())
 self.assertGreaterEqual(len(readme.split()), 350)
 self.assertLessEqual(len(readme.split()), 650)
+
+how_i_build = readme.split("## How I build", 1)[1].split("## Engineering DNA", 1)[0]
+principles = [line for line in how_i_build.splitlines() if line.startswith("- **")]
+self.assertEqual(len(principles), 4)
 ```
 
-Keep the hero-before-signal-before-selected-work assertions and canonical-link assertions.
-
-Assert exactly four principle bullets in `How I build`.
-
 - [ ] **Step 2: Run the README contract and confirm RED**
-
-Run:
 
 ```bash
 python -m unittest \
   tests.test_profile_signal.ProfileSurfaceContractTests.test_readme_contract -v
 ```
 
-Expected: fail because the current README does not yet contain Engineering DNA, exact qualification wording or the new hero copy.
+Expected: fail because the current README lacks the approved Engineering DNA and v2 hero/copy.
 
 - [ ] **Step 3: Replace `README.md` with the approved concise narrative**
 
-Use this copy as the implementation target; wording may only be adjusted for grammar/line wrapping without changing factual claims:
+Write:
 
 ```markdown
 <div align="center">
@@ -848,13 +1161,10 @@ The UI was the easy part.
 
 Do not add Airbus, private life context, employer claims, or additional qualifications.
 
-- [ ] **Step 4: Run the README contract and full surface tests**
-
-Run:
+- [ ] **Step 4: Run the surface contract and confirm GREEN**
 
 ```bash
-python -m unittest \
-  tests.test_profile_signal.ProfileSurfaceContractTests -v
+python -m unittest tests.test_profile_signal.ProfileSurfaceContractTests -v
 ```
 
 Expected: all surface-contract tests pass.
@@ -868,7 +1178,7 @@ git commit -m "docs: rebuild profile command center"
 
 ---
 
-### Task 5: Authenticate the scheduled renderer and regenerate the public signal asset
+### Task 5: Authenticate refresh and regenerate the public signal asset
 
 **Files:**
 - Modify: `.github/workflows/profile-signal.yml`
@@ -876,10 +1186,10 @@ git commit -m "docs: rebuild profile command center"
 - Regenerate: `assets/current-signal.svg`
 
 **Interfaces:**
-- Consumes: the renderer CLI already used by the workflow.
-- Produces: an authenticated scheduled/manual GitHub API refresh while retaining the conditional commit behavior.
+- Consumes: renderer CLI.
+- Produces: authenticated scheduled/manual GitHub API refresh while retaining the conditional SVG commit.
 
-- [ ] **Step 1: Add a failing workflow-contract assertion for explicit token wiring**
+- [ ] **Step 1: Add a failing explicit-token workflow assertion**
 
 In `test_workflow_contract`, add:
 
@@ -887,31 +1197,20 @@ In `test_workflow_contract`, add:
 self.assertIn("GITHUB_TOKEN: ${{ github.token }}", text)
 ```
 
-Retain existing assertions for:
+Retain assertions for schedule, `workflow_dispatch`, `contents: write`, test execution, render command, diff check and conditional commit.
 
-```python
-self.assertIn("workflow_dispatch:", text)
-self.assertIn("cron: '17 */6 * * *'", text)
-self.assertIn("contents: write", text)
-self.assertIn("python -m unittest discover -s tests -v", text)
-self.assertIn("git diff --quiet -- assets/current-signal.svg", text)
-self.assertIn("git commit -m \"chore: refresh profile signal\"", text)
-```
-
-- [ ] **Step 2: Run the workflow contract and confirm RED**
-
-Run:
+- [ ] **Step 2: Confirm RED**
 
 ```bash
 python -m unittest \
   tests.test_profile_signal.ProfileSurfaceContractTests.test_workflow_contract -v
 ```
 
-Expected: fail because the current render step does not explicitly export `github.token` as `GITHUB_TOKEN`.
+Expected: fail because the render step does not currently export `github.token` as `GITHUB_TOKEN`.
 
 - [ ] **Step 3: Wire the token only into the render step**
 
-Change the render step to:
+Change that step to:
 
 ```yaml
       - name: Render current signal
@@ -927,11 +1226,9 @@ Change the render step to:
           fi
 ```
 
-Do not widen repository permissions or add new secrets.
+Do not widen permissions and do not add a new secret.
 
-- [ ] **Step 4: Run the complete test suite**
-
-Run:
+- [ ] **Step 4: Run the full suite**
 
 ```bash
 python -m unittest discover -s tests -v
@@ -939,9 +1236,7 @@ python -m unittest discover -s tests -v
 
 Expected: all tests pass.
 
-- [ ] **Step 5: Generate the public SVG from live public evidence**
-
-Run:
+- [ ] **Step 5: Generate the public SVG from live evidence**
 
 ```bash
 python tools/render_profile_signal.py \
@@ -949,13 +1244,9 @@ python tools/render_profile_signal.py \
   --output assets/current-signal.svg
 ```
 
-Expected: exit code `0`; the file contains one of `VERIFIED`, `FAIL`, or `UNKNOWN` for each configured project, and contains exact-head provenance text rather than `CI PASS`.
+Expected: exit code `0`; each project renders `VERIFIED`, `FAIL`, or `UNKNOWN`; exact-head provenance is present; `CI PASS` is absent. If `GITHUB_TOKEN` exists locally it is used; otherwise the tested public fallback is used. Never hand-edit the status.
 
-If the local environment has `GITHUB_TOKEN`, it will be used. If not, the public-repo fallback must still work; do not substitute hand-edited status values.
-
-- [ ] **Step 6: Validate the generated SVG and test suite again**
-
-Run:
+- [ ] **Step 6: Validate the generated SVG and rerun tests**
 
 ```bash
 python - <<'PY'
@@ -964,6 +1255,7 @@ import xml.etree.ElementTree as ET
 text = Path("assets/current-signal.svg").read_text(encoding="utf-8")
 ET.fromstring(text)
 assert "CURRENT SIGNAL" in text
+assert "exact-HEAD · GitHub Actions" in text
 assert "CI PASS" not in text
 print("SVG OK")
 PY
@@ -981,17 +1273,17 @@ git commit -m "ci: authenticate profile signal refresh"
 
 ---
 
-### Task 6: Final audit, public-safety review and PR handoff
+### Task 6: Final audit and PR handoff
 
 **Files:**
-- Read/review: all files changed in Tasks 1–5
+- Review: every file changed in Tasks 1–5
 - No new production files expected
 
 **Interfaces:**
-- Consumes: complete branch.
-- Produces: one reviewable PR with evidence that copy, tests and exact-HEAD semantics match the frozen spec.
+- Consumes: complete implementation branch.
+- Produces: one reviewable PR with verification evidence.
 
-- [ ] **Step 1: Run all deterministic verification commands**
+- [ ] **Step 1: Run deterministic verification**
 
 ```bash
 python -m unittest discover -s tests -v
@@ -999,11 +1291,9 @@ git diff --check
 git status --short
 ```
 
-Expected: tests pass; `git diff --check` produces no output; working tree contains no unexpected edits.
+Expected: all tests pass; `git diff --check` emits nothing; no unexpected working-tree changes.
 
-- [ ] **Step 2: Run a public-copy safety audit**
-
-Run:
+- [ ] **Step 2: Run public-copy safety checks**
 
 ```bash
 python - <<'PY'
@@ -1023,25 +1313,34 @@ PY
 
 Expected: `PUBLIC COPY OK`.
 
-- [ ] **Step 3: Inspect the commit range**
+- [ ] **Step 3: Inspect the complete branch diff**
 
 ```bash
 git log --oneline --decorate --max-count=12
 git diff --stat origin/main...HEAD
-git diff origin/main...HEAD -- README.md profile.json tools/render_profile_signal.py tests/test_profile_signal.py tests/fixtures/signal-snapshot.json .github/workflows/profile-signal.yml
+git diff origin/main...HEAD -- \
+  README.md \
+  profile.json \
+  tools/render_profile_signal.py \
+  tests/test_profile_signal.py \
+  tests/fixtures/signal-snapshot.json \
+  .github/workflows/profile-signal.yml \
+  assets/current-signal.svg
 ```
 
-Check specifically that:
+Acceptance checks:
 
-- no evidence state was hard-coded into `profile.json`,
-- no stale-run path remains in the collector,
-- no private-context material leaked into public files,
-- no Airbus course-level claim appears,
-- no external vanity service was added,
-- the README source Easter egg is invisible in rendered Markdown,
-- generated SVG is the only generated file changed.
+```text
+profile.json contains product phase/focus only, never evidence state
+collector has no latest-completed-main shortcut
+README contains no Airbus course-level claim
+README contains no private-life context or employer claim
+README has no tracking parameters or external vanity widget
+Easter egg exists only as an HTML source comment
+current-signal.svg is generated, not hand-edited
+```
 
-- [ ] **Step 4: Confirm the branch is based on the intended current `main`**
+- [ ] **Step 4: Confirm ancestry against current `origin/main`**
 
 ```bash
 git fetch origin
@@ -1049,17 +1348,17 @@ git rev-parse origin/main
 git merge-base --is-ancestor origin/main HEAD
 ```
 
-Expected: the ancestry check exits `0`. If `origin/main` advanced during implementation, stop and rebase/merge only through the normal non-destructive workflow approved for the execution session; never force-update history.
+Expected: ancestry check exits `0`. If `origin/main` advanced, stop and reconcile through the normal non-destructive workflow; never force-update history.
 
-- [ ] **Step 5: Open the PR with a concise factual description**
+- [ ] **Step 5: Open the PR**
 
-Suggested title:
+Title:
 
 ```text
 docs: rebuild profile command center with exact-head evidence
 ```
 
-Suggested body:
+Body:
 
 ```markdown
 ## Summary
@@ -1077,16 +1376,16 @@ Suggested body:
 - live `assets/current-signal.svg` render from GitHub public evidence
 ```
 
-- [ ] **Step 6: Review the PR diff before merge**
+- [ ] **Step 6: Review the PR before merge**
 
-Use the repository's normal review/outward gate. The final acceptance question is not “does it look cool?” but:
+The acceptance question is:
 
 ```text
 Can a visitor understand within ~20–30 seconds what KeilerHirsch builds,
 why the engineering is assurance-heavy, and which visible evidence supports it?
 ```
 
-Do not merge if exact-HEAD evidence semantics, qualification wording or public-safety constraints are ambiguous.
+Do not merge if exact-HEAD semantics, qualification wording or public-safety boundaries are ambiguous.
 
 ---
 
@@ -1096,30 +1395,30 @@ Do not merge if exact-HEAD evidence semantics, qualification wording or public-s
 
 - Hero / builder-first identity: Task 4.
 - Current Signal exact-HEAD semantics: Tasks 1–3.
-- Fail-closed stale/malformed evidence: Tasks 1–2.
-- Public releases and separate release verification: Tasks 1–3.
+- Fail-closed stale/malformed/network evidence: Tasks 1–2.
+- Public releases + independent release verification: Tasks 1–3.
 - Future ATTESTED intentionally excluded: Global Constraints.
 - Selected Work WOLPERTINGER + PLLDN: Task 4.
 - Four engineering principles + dry humor: Task 4.
-- Ada/SPARK primary language and invariant line: Task 4.
+- Ada/SPARK + invariant line: Task 4.
 - Precision Mechanic / Heinze 13/24 / Electronics Technician / Bundeswehr / autodidact: Task 4.
 - Languages: Task 4.
-- Security & Forensics remains secondary: Task 4.
+- Security & Forensics secondary to builder identity: Task 4.
 - MAYHEM compact: Task 4.
-- Stealth canonical Easter egg: Task 4.
+- Stealth Easter egg: Task 4.
 - Mobile-oriented compactness: Tasks 3–4.
-- Workflow authentication and test-before-render behavior: Task 5.
-- Public truthfulness and Airbus boundary: Tasks 4 and 6.
+- Explicit workflow authentication + test-before-render: Task 5.
+- Public truthfulness / Airbus evidence boundary: Tasks 4 and 6.
 
 ### Placeholder scan
 
-No `TBD`, `TODO`, “implement later”, unspecified error handling, or “similar to” instructions are permitted in this plan. Every behavioral task contains concrete interfaces, assertions, commands and expected outcomes.
+All behavioral steps contain concrete tests, implementation snippets, commands and expected outcomes. There are no `TBD`, `TODO`, “implement later”, empty test bodies, broad “add error handling” instructions, or references to undefined interfaces.
 
 ### Type / vocabulary consistency
 
-- Verification states: `VERIFIED | FAIL | UNKNOWN` everywhere.
-- Release state: `SHIPPED | NONE | UNKNOWN` everywhere.
-- Product phase remains `project["status"]` from `profile.json` and is never used as evidence.
+- Verification state: `VERIFIED | FAIL | UNKNOWN`.
+- Release state: `SHIPPED | NONE | UNKNOWN`.
+- Product phase remains `project["status"]` from `profile.json` and never becomes evidence.
 - Workflow filename remains `project["workflow"]`.
-- Exact HEAD is represented by `head.branch` + `head.sha`.
-- Release verification is nested under `release.verification` and never inherited from current HEAD unless the release SHA is exactly the current HEAD SHA.
+- Exact HEAD is `head.branch` + `head.sha`.
+- Release verification is `release.verification` and is inherited from current HEAD only when release SHA exactly equals current HEAD SHA.
