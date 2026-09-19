@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="210" viewBox="0 0 1200 210" role="img" aria-labelledby="title desc">
+<title id="title">GitHub activity</title>
+<desc id="desc">Compact GitHub activity panel. Automatic refresh is pending.</desc>
+<rect width="1200" height="210" rx="18" fill="#0b0d10"/>
+<rect x="1" y="1" width="1198" height="208" rx="17" fill="none" stroke="#2b313a"/>
+<text x="40" y="48" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">ACTIVITY</text>
+<text x="200" y="48" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">GitHub since 2026 · 6 repos · 29 followers · 33 following</text>
+<path d="M40 72H1160" stroke="#252a31" stroke-width="1"/>
+<text x="40" y="108" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LANGUAGES</text>
+<rect x="200" y="90" width="960" height="10" rx="5" fill="#252a31"/>
+<rect x="200" y="90" width="339" height="10" rx="5" fill="#f1e05a"/>
+<rect x="539" y="90" width="288" height="10" rx="5" fill="#3178c6"/>
+<rect x="827" y="90" width="253" height="10" rx="5" fill="#178600"/>
+<rect x="1080" y="90" width="72" height="10" rx="5" fill="#02f88c"/>
+<text x="200" y="126" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">JavaScript 35% · TypeScript 30% · C# 26% · Ada/SPARK 8%</text>
+<path d="M40 145H1160" stroke="#252a31" stroke-width="1"/>
+<text x="40" y="183" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">12 MONTHS</text>
+<text x="200" y="183" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">337 contributions · automatic activity refresh pending</text>
+</svg>

@@ -10,6 +10,10 @@ High-assurance software · security research · deterministic systems · reprodu
 
 </div>
 
+## Activity
+
+![GitHub activity](assets/activity-panel.svg)
+
 ## Current signal
 
 ![Current engineering signal](assets/current-signal.svg)
