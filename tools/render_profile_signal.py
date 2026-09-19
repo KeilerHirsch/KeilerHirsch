@@ -202,7 +202,7 @@ def _project_state_label(project_snapshot: dict[str, Any]) -> str:
     state = verification.get("state") if isinstance(verification, dict) else UNKNOWN
     if state not in {VERIFIED, FAIL, UNKNOWN}:
         state = UNKNOWN
-    return f"{state} · SHIPPED" if project_snapshot.get("release_state") == SHIPPED else state
+    return f"HEAD {state} · RELEASE SHIPPED" if project_snapshot.get("release_state") == SHIPPED else f"HEAD {state}"
 
 
 def _release_verification_state(release: dict[str, Any] | None) -> str:
@@ -261,7 +261,7 @@ def render_svg(config: dict[str, Any], snapshot: dict[str, Any]) -> str:
     svg.extend([
         '<path d="M40 298H1160" stroke="#252a31" stroke-width="1"/>',
         '<text x="40" y="332" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">LATEST SHIP</text>',
-        f'<text x="235" y="332" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">{_safe(latest_label)} · {_safe(release_state)}</text>',
+        f'<text x="235" y="332" fill="#ff6b4a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600">{_safe(latest_label)} · RELEASE {_safe(release_state)}</text>',
         '<text x="40" y="366" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">EVIDENCE</text>',
         '<text x="235" y="366" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">exact-HEAD · GitHub Actions</text>',
         '</svg>',

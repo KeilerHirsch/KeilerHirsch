@@ -18,7 +18,7 @@ High-assurance software · security research · deterministic systems · reprodu
 
 ![Current engineering signal](assets/current-signal.svg)
 
-The panel separates product phase from evidence. `VERIFIED` means the configured GitHub Actions workflow passed for the exact current default-branch HEAD. Stale, ambiguous, malformed, or incomplete evidence stays `UNKNOWN`. `SHIPPED` means a real public release exists — it does not inherit verification by wishful thinking.
+The panel deliberately separates **current HEAD** from **published releases**. `HEAD VERIFIED` means the configured GitHub Actions workflow passed for the exact current default-branch HEAD. Stale, ambiguous, malformed, or incomplete evidence stays `HEAD UNKNOWN`. `RELEASE SHIPPED` only means a real public release exists; its verification is shown separately.
 
 ## Selected work
 
@@ -47,27 +47,29 @@ A deterministic language and licensing navigator where explicit project facts st
 
 ## Engineering DNA
 
-**Ada/SPARK is my primary engineering language.** Not because obscurity is a personality trait, but because I do not like compromising at critical boundaries.
+**Ada/SPARK is my primary engineering language.** I use it where correctness matters enough to justify stronger guarantees — not because every component needs SPARK, and not because language byte counts define architectural importance.
 
 **I would rather prove an invariant than explain later why “that should never happen” happened.**
 
-I still use C#, Python, JavaScript and whatever else fits the job. Not every component needs SPARK — but critical correctness is not where I like to negotiate.
+I still use C#, Python, JavaScript and whatever else fits the job. Critical correctness is simply not where I like to negotiate.
 
-I came to software from the physical world:
+I came to software from the physical world: precision mechanics, industrial electronics, aircraft-technology studies, military service and a suspicious amount of self-teaching. That background shaped how I approach software: **tolerances, measurements, failure modes, maintainability and systems first — syntax second.**
+
+<details>
+<summary><strong>Background & formal status</strong></summary>
 
 - **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification.
-- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinenbau, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
 - **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification.
+- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinenbau, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
 - **23 months of voluntary military service** in the German Armed Forces (`Bundeswehr`).
 - **Autodidact by habit** — largely self-taught in software engineering, security research, digital forensics, OSINT and systems work.
-
-That background shaped how I approach software: tolerances, measurements, failure modes, maintainability and systems first — syntax second.
-
-**GitHub is where the workshop became software — and the measurements stayed.**
-
-**Languages:** Polish (native) · German (fluent / native-level) · English (very good)
+- **Languages:** Polish (native) · German (fluent / native-level) · English (very good).
 
 *Formal education helped. So did a suspicious amount of self-teaching — and, apparently, 9th-grade Realschule Technik-AG.*
+
+</details>
+
+**GitHub is where the workshop became software — and the measurements stayed.**
 
 ## Security & forensics
 

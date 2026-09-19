@@ -94,6 +94,7 @@ def render_svg(data: dict, now: datetime) -> str:
         f'<rect width="1200" height="210" rx="18" fill="{BG}"/>',
         f'<rect x="1" y="1" width="1198" height="208" rx="17" fill="none" stroke="{BORDER}"/>',
         f'<text x="40" y="48" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">ACTIVITY</text>',
+        f'<text x="1160" y="22" text-anchor="end" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11">updated {now:%Y-%m-%d} UTC</text>',
     ]
     metrics = (
         f"GitHub since {user['createdAt'][:4]} · {user['publicRepos']['totalCount']} repos · "

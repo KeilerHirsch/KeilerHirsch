@@ -59,7 +59,7 @@ class ProfileSignalTests(BaseProfileTest):
         second = self.renderer.render_svg(self.config, self.snapshot)
         self.assertEqual(first, second)
         ET.fromstring(first)
-        for marker in ("CURRENT SIGNAL", "WOLPERTINGER", "BUILDING", "VERIFIED", "SHIPPED", "main@1111111", "PLLDN v0.0.1 Beta 1", "exact-HEAD · GitHub Actions"):
+        for marker in ("CURRENT SIGNAL", "WOLPERTINGER", "BUILDING", "HEAD VERIFIED", "RELEASE SHIPPED", "main@1111111", "PLLDN v0.0.1 Beta 1", "RELEASE VERIFIED", "exact-HEAD · GitHub Actions"):
             self.assertIn(marker, first)
         self.assertNotIn("CI PASS", first)
 
@@ -76,7 +76,7 @@ class ProfileSignalTests(BaseProfileTest):
         snapshot["projects"]["PLLDN"]["verification"]["state"] = "UNKNOWN"
         svg = self.renderer.render_svg(self.config, snapshot)
         self.assertIn("FAIL", svg)
-        self.assertIn("UNKNOWN · SHIPPED", svg)
+        self.assertIn("HEAD UNKNOWN · RELEASE SHIPPED", svg)
         ET.fromstring(svg)
 
     def test_latest_release_prefers_newest_valid_shipped_release(self):

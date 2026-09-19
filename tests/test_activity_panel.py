@@ -52,6 +52,7 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertIn("29 followers", svg)
         self.assertIn("Ada/SPARK 100%", svg)
         self.assertIn("14 contributions · 10 commits · 2 PRs", svg)
+        self.assertIn("updated 2026-09-19 UTC", svg)
 
 
 if __name__ == "__main__":
