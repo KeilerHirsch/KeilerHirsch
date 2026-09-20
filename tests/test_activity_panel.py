@@ -157,7 +157,7 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertIn("Ada/SPARK", svg)
         self.assertIn("14 contributions · 10 commits · 2 PRs", svg)
         self.assertIn("10 contributions · 2 active days · best day 7 on 09-20", svg)
-        self.assertIn("6 public · 5 original · 1 forked · 1 stars · 0 downstream forks", svg)
+        self.assertIn("6 public · 5 original · 1 fork · 1 star · 0 downstream forks", svg)
         self.assertIn("WOLPERTINGER · 2026-09-19", svg)
         self.assertIn("PLLDN-Programming-Languag…", svg)
 

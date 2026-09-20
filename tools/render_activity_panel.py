@@ -189,8 +189,10 @@ def render_svg(data: dict, now: datetime) -> str:
     ]
 
     portfolio = (
-        f"{user['publicRepos']['totalCount']} public · {original_count} original · {fork_count} forked · "
-        f"{total_stars} stars · {downstream_forks} downstream forks"
+        f"{user['publicRepos']['totalCount']} public · {original_count} original · "
+        f"{fork_count} {'fork' if fork_count == 1 else 'forks'} · "
+        f"{total_stars} {'star' if total_stars == 1 else 'stars'} · "
+        f"{downstream_forks} downstream {'fork' if downstream_forks == 1 else 'forks'}"
     )
     parts += [
         f'<text x="40" y="344" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">PORTFOLIO</text>',
