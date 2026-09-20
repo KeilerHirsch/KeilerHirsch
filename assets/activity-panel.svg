@@ -4,42 +4,36 @@
 <rect width="1200" height="540" rx="18" fill="#0b0d10"/>
 <rect x="1" y="1" width="1198" height="538" rx="17" fill="none" stroke="#2b313a"/>
 <text x="40" y="48" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="27" font-weight="700">GITHUB ACTIVITY</text>
-<text x="1160" y="24" text-anchor="end" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">updated 2026-09-20 08:22 UTC</text>
+<text x="1160" y="24" text-anchor="end" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">updated 2026-09-20 08:27 UTC</text>
 <path d="M40 70H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="108" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">ACCOUNT</text>
-<text x="220" y="108" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21" font-weight="600">GitHub since 2026 · 6 public repos · 29 followers · 28 following</text>
+<text x="40" y="108" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">GitHub since 2026 · 6 public repos · 29 followers · 28 following</text>
 <path d="M40 132H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="171" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">LANGUAGES</text>
-<rect x="220" y="148" width="940" height="15" rx="7" fill="#252a31"/>
-<rect x="220.0" y="148" width="331.9" height="15" rx="7" fill="#f1e05a"/>
-<rect x="551.9" y="148" width="281.5" height="15" rx="7" fill="#3178c6"/>
-<rect x="833.4" y="148" width="248.2" height="15" rx="7" fill="#7355dd"/>
-<rect x="1081.6" y="148" width="70.8" height="15" rx="7" fill="#02f88c"/>
-<text x="220" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">JavaScript 35% · TypeScript 30% · C# 26% · Ada/SPARK 8%</text>
+<rect x="40" y="148" width="1120" height="17" rx="8" fill="#252a31"/>
+<rect x="40.0" y="148" width="395.5" height="17" rx="8" fill="#f1e05a"/>
+<rect x="435.5" y="148" width="335.4" height="17" rx="8" fill="#3178c6"/>
+<rect x="770.9" y="148" width="295.7" height="17" rx="8" fill="#7355dd"/>
+<rect x="1066.6" y="148" width="84.3" height="17" rx="8" fill="#02f88c"/>
+<text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">JavaScript 35% · TypeScript 30% · C# 26% · Ada/SPARK 8%</text>
 <path d="M40 219H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="258" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">12 MONTHS</text>
-<rect x="220" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="258" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="296" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="334" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="372" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="410" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="448" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="486" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="524" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="562" y="256.2" width="25" height="19.8" rx="3" fill="#67e480"/>
-<rect x="600" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="638" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
-<text x="710" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">346 contributions · 231 commits · 68 PRs</text>
+<rect x="40" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="78" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="116" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="154" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="192" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="230" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="268" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="306" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="344" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="382" y="256.4" width="25" height="19.6" rx="3" fill="#67e480"/>
+<rect x="420" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="458" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
+<text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">348 contributions · 233 commits · 68 PRs</text>
 <path d="M40 294H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="334" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">30 DAYS</text>
-<text x="220" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20" font-weight="600">206 contributions · 14 active days · best day 36 on 09-08</text>
+<text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">208 contributions · 14 active days · best day 36 on 09-08</text>
 <path d="M40 358H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="396" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">PORTFOLIO</text>
-<text x="220" y="396" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">6 public · 5 original · 1 fork · 1 star · 0 downstream forks</text>
+<text x="40" y="396" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21">6 public · 5 original · 1 fork · 1 star · 0 downstream forks</text>
 <path d="M40 420H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="458" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">RECENT WORK</text>
-<text x="220" y="458" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17" font-weight="600">SCUM-SENF · pushed 2026-09-19</text>
-<text x="220" y="493" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17" font-weight="600">PLLDN-Programming-Language-Licensing-… · pushed 2026-09-13</text>
-<text x="220" y="526" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17" font-weight="600">Critical-FAR-Disclosure · pushed 2026-09-13</text>
+<text x="40" y="458" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">SCUM-SENF · pushed 2026-09-19</text>
+<text x="40" y="493" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">PLLDN-Programming-Language-Licensing-Decision-Navigator · pushed 2026-09-13</text>
+<text x="40" y="526" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">Critical-FAR-Disclosure · pushed 2026-09-13</text>
 </svg>
