@@ -1,4 +1,4 @@
-name: Profile signal
+name: Profile activity
 
 on:
   schedule:
@@ -9,17 +9,14 @@ on:
       - main
     paths:
       - README.md
-      - profile.json
-      - tools/**
+      - tools/render_activity_panel.py
       - tests/**
       - .github/workflows/profile-signal.yml
   pull_request:
     paths:
       - README.md
-      - profile.json
-      - tools/**
+      - tools/render_activity_panel.py
       - tests/**
-      - assets/current-signal.svg
       - assets/activity-panel.svg
       - .github/workflows/profile-signal.yml
 
@@ -27,7 +24,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: profile-signal-${{ github.ref }}
+  group: profile-activity-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -39,27 +36,26 @@ jobs:
         with:
           persist-credentials: true
 
-      - name: Verify renderers
+      - name: Verify profile surface
         run: python -m unittest discover -s tests -v
 
-      - name: Render profile panels
-        id: signal
+      - name: Render activity panel
+        id: activity
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          python tools/render_profile_signal.py --config profile.json --output assets/current-signal.svg
           python tools/render_activity_panel.py --output assets/activity-panel.svg
-          if git diff --quiet -- assets/current-signal.svg assets/activity-panel.svg; then
+          if git diff --quiet -- assets/activity-panel.svg; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Commit changed panels
-        if: steps.signal.outputs.changed == 'true' && github.ref == 'refs/heads/main'
+      - name: Commit changed activity panel
+        if: steps.activity.outputs.changed == 'true' && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- assets/current-signal.svg assets/activity-panel.svg
-          git commit -m "chore: refresh profile signal"
+          git add -- assets/activity-panel.svg
+          git commit -m "chore: refresh profile activity"
           git push

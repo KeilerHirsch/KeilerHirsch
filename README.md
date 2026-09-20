@@ -12,13 +12,9 @@ High-assurance software · security research · deterministic systems · reprodu
 
 ## Activity
 
+*The workshop moves; this panel follows it automatically — repositories, languages and public activity included.*
+
 ![GitHub activity](assets/activity-panel.svg)
-
-## Current signal
-
-![Current engineering signal](assets/current-signal.svg)
-
-The panel deliberately separates **current HEAD** from **published releases**. `HEAD VERIFIED` means the configured GitHub Actions workflow passed for the exact current default-branch HEAD. Stale, ambiguous, malformed, or incomplete evidence stays `HEAD UNKNOWN`. `RELEASE SHIPPED` only means a real public release exists; its verification is shown separately.
 
 ## How I build
 
