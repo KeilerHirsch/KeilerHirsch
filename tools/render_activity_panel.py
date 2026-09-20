@@ -11,6 +11,13 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 GRAPHQL_URL = "https://api.github.com/graphql"
+
+WIDTH = 1200
+HEIGHT = 540
+LEFT = 40
+RIGHT = 1160
+TRACK_WIDTH = 1120
+
 BG = "#0b0d10"
 BORDER = "#2b313a"
 MUTED = "#8e99a8"
@@ -19,6 +26,7 @@ SOFT = "#cbd3dd"
 TRACK = "#252a31"
 FALLBACK = "#7f8a99"
 ACCENT = "#67e480"
+FONT = "ui-monospace, SFMono-Regular, Consolas, monospace"
 
 
 def graphql(token: str, query: str, variables: dict) -> dict:
@@ -48,9 +56,31 @@ def month_keys(end: datetime, count: int = 12) -> list[str]:
     return result
 
 
-def language_breakdown(repositories: list[dict], login: str, limit: int = 4) -> list[tuple[str, int, str]]:
+def validated_repositories(user: dict) -> list[dict]:
+    connection = user.get("originalRepos")
+    if not isinstance(connection, dict):
+        raise RuntimeError("GitHub repository data is missing")
+
+    nodes = connection.get("nodes")
+    total_count = connection.get("totalCount")
+    if not isinstance(nodes, list) or not isinstance(total_count, int):
+        raise RuntimeError("GitHub repository data is malformed")
+
+    if len(nodes) != total_count:
+        raise RuntimeError(
+            f"GitHub repository query incomplete: received {len(nodes)} of {total_count} repositories"
+        )
+    return nodes
+
+
+def language_breakdown(
+    repositories: list[dict],
+    login: str,
+    limit: int = 4,
+) -> list[tuple[str, int, str]]:
     totals: dict[str, int] = defaultdict(int)
     colors: dict[str, str] = {}
+
     for repo in repositories:
         if repo["name"].casefold() == login.casefold() or repo.get("isArchived", False):
             continue
@@ -58,8 +88,19 @@ def language_breakdown(repositories: list[dict], login: str, limit: int = 4) -> 
             name = edge["node"]["name"]
             totals[name] += int(edge["size"])
             colors[name] = edge["node"].get("color") or FALLBACK
+
     ordered = sorted(totals.items(), key=lambda item: (-item[1], item[0].casefold()))
     return [(name, size, colors[name]) for name, size in ordered[:limit]]
+
+
+def total_language_bytes(repositories: list[dict], login: str) -> int:
+    return sum(
+        int(edge["size"])
+        for repo in repositories
+        if repo["name"].casefold() != login.casefold()
+        and not repo.get("isArchived", False)
+        for edge in repo.get("languages", {}).get("edges", [])
+    )
 
 
 def aggregate_months(days: list[dict], end: datetime) -> list[tuple[str, int]]:
@@ -69,23 +110,34 @@ def aggregate_months(days: list[dict], end: datetime) -> list[tuple[str, int]]:
     return [(key, counts[key]) for key in month_keys(end)]
 
 
-def window_metrics(days: list[dict], now: datetime, window_days: int = 30) -> tuple[int, int, str]:
+def window_metrics(
+    days: list[dict],
+    now: datetime,
+    window_days: int = 30,
+) -> tuple[int, int, str]:
     cutoff = (now - timedelta(days=window_days - 1)).date()
     selected = []
+
     for day in days:
         date = datetime.fromisoformat(day["date"]).date()
         if cutoff <= date <= now.date():
             selected.append((date, int(day["contributionCount"])))
+
     total = sum(count for _, count in selected)
     active = sum(1 for _, count in selected if count > 0)
     if not selected:
         return 0, 0, "no activity"
+
     best_date, best_count = max(selected, key=lambda item: (item[1], item[0]))
     best = f"best day {best_count} on {best_date:%m-%d}" if best_count else "best day 0"
     return total, active, best
 
 
-def recent_repositories(repositories: list[dict], login: str, limit: int = 3) -> list[dict]:
+def recent_repositories(
+    repositories: list[dict],
+    login: str,
+    limit: int = 3,
+) -> list[dict]:
     candidates = [
         repo
         for repo in repositories
@@ -100,69 +152,134 @@ def short_repo_name(name: str, limit: int = 70) -> str:
     return name if len(name) <= limit else name[: limit - 1] + "…"
 
 
-def render_svg(data: dict, now: datetime) -> str:
-    user = data["user"]
-    contributions = user["contributionsCollection"]
-    repositories = user["originalRepos"]["nodes"]
-    languages = language_breakdown(repositories, user["login"])
-    all_language_bytes = sum(
-        int(edge["size"])
-        for repo in repositories
-        if repo["name"].casefold() != user["login"].casefold() and not repo.get("isArchived", False)
-        for edge in repo.get("languages", {}).get("edges", [])
-    )
-    days = [
+def contribution_days(contributions: dict) -> list[dict]:
+    return [
         day
         for week in contributions["contributionCalendar"]["weeks"]
         for day in week["contributionDays"]
     ]
-    months = aggregate_months(days, now)
-    max_month = max((count for _, count in months), default=0) or 1
-    thirty_total, thirty_active, thirty_best = window_metrics(days, now, 30)
-    recent = recent_repositories(repositories, user["login"])
 
-    original_count = int(user["originalRepos"]["totalCount"])
-    fork_count = int(user["forkRepos"]["totalCount"])
-    total_stars = sum(int(repo.get("stargazerCount", 0)) for repo in repositories)
+
+def build_panel_model(data: dict, now: datetime) -> dict:
+    user = data["user"]
+    repositories = validated_repositories(user)
+    contributions = user["contributionsCollection"]
+    days = contribution_days(contributions)
+    languages = language_breakdown(repositories, user["login"])
+    language_bytes = total_language_bytes(repositories, user["login"])
+    months = aggregate_months(days, now)
+    thirty_total, thirty_active, thirty_best = window_metrics(days, now, 30)
+
+    stars = sum(int(repo.get("stargazerCount", 0)) for repo in repositories)
     downstream_forks = sum(int(repo.get("forkCount", 0)) for repo in repositories)
+    fork_count = int(user["forkRepos"]["totalCount"])
+
+    return {
+        "account": (
+            f"GitHub since {user['createdAt'][:4]} · "
+            f"{user['publicRepos']['totalCount']} public repos · "
+            f"{user['followers']['totalCount']} followers · "
+            f"{user['following']['totalCount']} following"
+        ),
+        "languages": languages,
+        "language_bytes": language_bytes,
+        "months": months,
+        "contribution_totals": (
+            f"{contributions['contributionCalendar']['totalContributions']} contributions · "
+            f"{contributions['totalCommitContributions']} commits · "
+            f"{contributions['totalPullRequestContributions']} PRs"
+        ),
+        "window": (
+            f"{thirty_total} contributions · {thirty_active} active days · {thirty_best}"
+        ),
+        "portfolio": (
+            f"{user['publicRepos']['totalCount']} public · "
+            f"{user['originalRepos']['totalCount']} original · "
+            f"{fork_count} {'fork' if fork_count == 1 else 'forks'} · "
+            f"{stars} {'star' if stars == 1 else 'stars'} · "
+            f"{downstream_forks} downstream "
+            f"{'fork' if downstream_forks == 1 else 'forks'}"
+        ),
+        "recent": recent_repositories(repositories, user["login"]),
+    }
+
+
+def svg_text(
+    x: int,
+    y: int,
+    value: str,
+    *,
+    fill: str = TEXT,
+    size: int = 19,
+    weight: int | None = None,
+    anchor: str | None = None,
+) -> str:
+    attributes = [
+        f'x="{x}"',
+        f'y="{y}"',
+        f'fill="{fill}"',
+        f'font-family="{FONT}"',
+        f'font-size="{size}"',
+    ]
+    if weight is not None:
+        attributes.append(f'font-weight="{weight}"')
+    if anchor is not None:
+        attributes.append(f'text-anchor="{anchor}"')
+    return f"<text {' '.join(attributes)}>{html.escape(value)}</text>"
+
+
+def render_svg(model: dict) -> str:
+    months = model["months"]
+    max_month = max((count for _, count in months), default=0) or 1
 
     parts = [
-        '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">',
+        (
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{HEIGHT}" '
+            f'viewBox="0 0 {WIDTH} {HEIGHT}" role="img" aria-labelledby="title desc">'
+        ),
         '<title id="title">GitHub activity</title>',
-        '<desc id="desc">Live GitHub account metrics, language share, contribution momentum, portfolio totals, and recently pushed repositories.</desc>',
-        f'<rect width="1200" height="540" rx="18" fill="{BG}"/>',
-        f'<rect x="1" y="1" width="1198" height="538" rx="17" fill="none" stroke="{BORDER}"/>',
-        f'<text x="40" y="48" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="27" font-weight="700">GITHUB ACTIVITY</text>',
-        f'<text x="1160" y="24" text-anchor="end" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">updated {now:%Y-%m-%d %H:%M} UTC</text>',
-        f'<path d="M40 70H1160" stroke="{TRACK}" stroke-width="1"/>',
+        (
+            '<desc id="desc">Automatically refreshed GitHub account metrics, language share, '
+            'contribution momentum, portfolio totals, and recently pushed repositories.</desc>'
+        ),
+        f'<rect width="{WIDTH}" height="{HEIGHT}" rx="18" fill="{BG}"/>',
+        (
+            f'<rect x="1" y="1" width="{WIDTH - 2}" height="{HEIGHT - 2}" '
+            f'rx="17" fill="none" stroke="{BORDER}"/>'
+        ),
+        svg_text(LEFT, 48, "GITHUB ACTIVITY", size=27, weight=700),
+        svg_text(RIGHT, 24, "AUTO · GitHub GraphQL", fill=MUTED, size=13, anchor="end"),
+        f'<path d="M{LEFT} 70H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, 108, model["account"], size=23, weight=600),
+        f'<path d="M{LEFT} 132H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        f'<rect x="{LEFT}" y="148" width="{TRACK_WIDTH}" height="17" rx="8" fill="{TRACK}"/>',
     ]
 
-    account = (
-        f"GitHub since {user['createdAt'][:4]} · {user['publicRepos']['totalCount']} public repos · "
-        f"{user['followers']['totalCount']} followers · {user['following']['totalCount']} following"
-    )
-    parts += [
-        f'<text x="40" y="108" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">{html.escape(account)}</text>',
-        f'<path d="M40 132H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<rect x="40" y="148" width="1120" height="17" rx="8" fill="{TRACK}"/>',
-    ]
-
-    cursor = 40.0
+    cursor = float(LEFT)
     legend = []
-    if all_language_bytes:
-        for name, size, color in languages:
-            width = 1120 * size / all_language_bytes
-            parts.append(f'<rect x="{cursor:.1f}" y="148" width="{width:.1f}" height="17" rx="8" fill="{color}"/>')
+    language_bytes = model["language_bytes"]
+    if language_bytes:
+        for name, size, color in model["languages"]:
+            width = TRACK_WIDTH * size / language_bytes
+            parts.append(
+                f'<rect x="{cursor:.1f}" y="148" width="{width:.1f}" '
+                f'height="17" rx="8" fill="{color}"/>'
+            )
             cursor += width
-            label = "Ada/SPARK" if name == "Ada" else name
-            legend.append(f"{label} {100 * size / all_language_bytes:.0f}%")
-    legend_text = " · ".join(legend) if legend else "No language data yet"
+            legend.append(f"{name} {100 * size / language_bytes:.0f}%")
+
     parts += [
-        f'<text x="40" y="198" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">{html.escape(legend_text)}</text>',
-        f'<path d="M40 219H1160" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(
+            LEFT,
+            198,
+            " · ".join(legend) if legend else "No language data yet",
+            fill=SOFT,
+            size=20,
+        ),
+        f'<path d="M{LEFT} 219H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
     ]
 
-    start_x = 40
+    start_x = LEFT
     baseline = 276
     bar_width = 25
     gap = 13
@@ -170,43 +287,42 @@ def render_svg(data: dict, now: datetime) -> str:
         height = 5 if count == 0 else max(8, 40 * count / max_month)
         x = start_x + index * (bar_width + gap)
         y = baseline - height
-        parts.append(f'<rect x="{x}" y="{y:.1f}" width="{bar_width}" height="{height:.1f}" rx="3" fill="{ACCENT}"/>')
+        parts.append(
+            f'<rect x="{x}" y="{y:.1f}" width="{bar_width}" '
+            f'height="{height:.1f}" rx="3" fill="{ACCENT}"/>'
+        )
 
-    totals = (
-        f"{contributions['contributionCalendar']['totalContributions']} contributions · "
-        f"{contributions['totalCommitContributions']} commits · "
-        f"{contributions['totalPullRequestContributions']} PRs"
-    )
     parts += [
-        f'<text x="570" y="258" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">{html.escape(totals)}</text>',
-        f'<path d="M40 294H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<text x="40" y="334" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">{thirty_total} contributions · {thirty_active} active days · {html.escape(thirty_best)}</text>',
-        f'<path d="M40 358H1160" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(570, 258, model["contribution_totals"], fill=SOFT, size=19),
+        f'<path d="M{LEFT} 294H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, 334, model["window"], size=22, weight=600),
+        f'<path d="M{LEFT} 358H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, 396, model["portfolio"], fill=SOFT, size=21),
+        f'<path d="M{LEFT} 420H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
     ]
 
-    portfolio = (
-        f"{user['publicRepos']['totalCount']} public · {original_count} original · "
-        f"{fork_count} {'fork' if fork_count == 1 else 'forks'} · "
-        f"{total_stars} {'star' if total_stars == 1 else 'stars'} · "
-        f"{downstream_forks} downstream {'fork' if downstream_forks == 1 else 'forks'}"
-    )
-    parts += [
-        f'<text x="40" y="396" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21">{html.escape(portfolio)}</text>',
-        f'<path d="M40 420H1160" stroke="{TRACK}" stroke-width="1"/>',
-    ]
-
+    recent = model["recent"]
     if recent:
-        row_y = [458, 493, 526]
-        for y, repo in zip(row_y, recent):
+        for y, repo in zip((458, 493, 526), recent):
             pushed = datetime.fromisoformat(repo["pushedAt"].replace("Z", "+00:00"))
-            label = f"{short_repo_name(repo['name'])} · pushed {pushed:%Y-%m-%d}"
             parts.append(
-                f'<text x="40" y="{y}" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" '
-                f'font-size="19" font-weight="600">{html.escape(label)}</text>'
+                svg_text(
+                    LEFT,
+                    y,
+                    f"{short_repo_name(repo['name'])} · pushed {pushed:%Y-%m-%d}",
+                    size=19,
+                    weight=600,
+                )
             )
     else:
         parts.append(
-            f'<text x="40" y="458" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">No recent public project activity</text>'
+            svg_text(
+                LEFT,
+                458,
+                "No recent public project activity",
+                fill=SOFT,
+                size=19,
+            )
         )
 
     parts.append("</svg>")
@@ -261,7 +377,10 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--user", default=os.environ.get("GITHUB_REPOSITORY_OWNER", "KeilerHirsch"))
+    parser.add_argument(
+        "--user",
+        default=os.environ.get("GITHUB_REPOSITORY_OWNER", "KeilerHirsch"),
+    )
     parser.add_argument("--output", default="assets/activity-panel.svg")
     args = parser.parse_args()
 
@@ -271,8 +390,13 @@ def main() -> None:
 
     now = datetime.now(timezone.utc)
     start = now - timedelta(days=365)
-    data = graphql(token, QUERY, {"login": args.user, "from": start.isoformat(), "to": now.isoformat()})
-    Path(args.output).write_text(render_svg(data, now), encoding="utf-8")
+    data = graphql(
+        token,
+        QUERY,
+        {"login": args.user, "from": start.isoformat(), "to": now.isoformat()},
+    )
+    model = build_panel_model(data, now)
+    Path(args.output).write_text(render_svg(model), encoding="utf-8")
 
 
 if __name__ == "__main__":

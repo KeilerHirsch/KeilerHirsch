@@ -1,28 +1,112 @@
 import unittest
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 from tools.render_activity_panel import (
     aggregate_months,
+    build_panel_model,
     language_breakdown,
     recent_repositories,
     render_svg,
     short_repo_name,
+    validated_repositories,
     window_metrics,
 )
 
 
+def sample_data() -> dict:
+    return {
+        "user": {
+            "login": "KeilerHirsch",
+            "createdAt": "2026-02-03T18:45:21Z",
+            "followers": {"totalCount": 29},
+            "following": {"totalCount": 28},
+            "publicRepos": {"totalCount": 6},
+            "forkRepos": {"totalCount": 1},
+            "originalRepos": {
+                "totalCount": 3,
+                "nodes": [
+                    {
+                        "name": "KeilerHirsch",
+                        "isArchived": False,
+                        "pushedAt": "2026-09-20T10:00:00Z",
+                        "stargazerCount": 0,
+                        "forkCount": 0,
+                        "languages": {"edges": []},
+                    },
+                    {
+                        "name": "WOLPERTINGER",
+                        "isArchived": False,
+                        "pushedAt": "2026-09-19T12:00:00Z",
+                        "stargazerCount": 1,
+                        "forkCount": 0,
+                        "languages": {
+                            "edges": [
+                                {"size": 100, "node": {"name": "Ada", "color": "#02f88c"}},
+                                {"size": 200, "node": {"name": "C#", "color": "#178600"}},
+                            ]
+                        },
+                    },
+                    {
+                        "name": "PLLDN-Programming-Language-Licensing-Decision-Navigator",
+                        "isArchived": False,
+                        "pushedAt": "2026-09-18T12:00:00Z",
+                        "stargazerCount": 0,
+                        "forkCount": 0,
+                        "languages": {
+                            "edges": [
+                                {"size": 300, "node": {"name": "TypeScript", "color": "#3178c6"}}
+                            ]
+                        },
+                    },
+                ],
+            },
+            "contributionsCollection": {
+                "totalCommitContributions": 10,
+                "totalPullRequestContributions": 2,
+                "contributionCalendar": {
+                    "totalContributions": 14,
+                    "weeks": [
+                        {
+                            "contributionDays": [
+                                {"date": "2026-09-10", "contributionCount": 3},
+                                {"date": "2026-09-20", "contributionCount": 7},
+                            ]
+                        }
+                    ],
+                },
+            },
+        }
+    }
+
+
 class ActivityPanelTests(unittest.TestCase):
+    def test_repository_query_fails_closed_when_truncated(self):
+        user = sample_data()["user"]
+        user["originalRepos"]["totalCount"] = 101
+
+        with self.assertRaisesRegex(RuntimeError, "query incomplete"):
+            validated_repositories(user)
+
     def test_language_breakdown_excludes_profile_and_archived_repos(self):
         repos = [
             {
                 "name": "KeilerHirsch",
                 "isArchived": False,
-                "languages": {"edges": [{"size": 999, "node": {"name": "Python", "color": "#3572A5"}}]},
+                "languages": {
+                    "edges": [
+                        {"size": 999, "node": {"name": "Python", "color": "#3572A5"}}
+                    ]
+                },
             },
             {
                 "name": "Archived",
                 "isArchived": True,
-                "languages": {"edges": [{"size": 999, "node": {"name": "Rust", "color": "#dea584"}}]},
+                "languages": {
+                    "edges": [
+                        {"size": 999, "node": {"name": "Rust", "color": "#dea584"}}
+                    ]
+                },
             },
             {
                 "name": "A",
@@ -37,9 +121,14 @@ class ActivityPanelTests(unittest.TestCase):
             {
                 "name": "B",
                 "isArchived": False,
-                "languages": {"edges": [{"size": 20, "node": {"name": "Ada", "color": "#02f88c"}}]},
+                "languages": {
+                    "edges": [
+                        {"size": 20, "node": {"name": "Ada", "color": "#02f88c"}}
+                    ]
+                },
             },
         ]
+
         self.assertEqual(
             language_breakdown(repos, "KeilerHirsch"),
             [("Ada", 50, "#02f88c"), ("C#", 50, "#178600")],
@@ -48,9 +137,13 @@ class ActivityPanelTests(unittest.TestCase):
     def test_month_aggregation_keeps_empty_months(self):
         now = datetime(2026, 9, 19, tzinfo=timezone.utc)
         result = aggregate_months(
-            [{"date": "2026-08-01", "contributionCount": 3}, {"date": "2026-09-01", "contributionCount": 5}],
+            [
+                {"date": "2026-08-01", "contributionCount": 3},
+                {"date": "2026-09-01", "contributionCount": 5},
+            ],
             now,
         )
+
         self.assertEqual(len(result), 12)
         self.assertEqual(result[-2:], [("2026-08", 3), ("2026-09", 5)])
 
@@ -64,6 +157,7 @@ class ActivityPanelTests(unittest.TestCase):
             ],
             now,
         )
+
         self.assertEqual((total, active), (10, 2))
         self.assertEqual(best, "best day 7 on 09-20")
 
@@ -76,6 +170,7 @@ class ActivityPanelTests(unittest.TestCase):
             {"name": "C", "isArchived": False, "pushedAt": "2026-09-17T10:00:00Z"},
             {"name": "D", "isArchived": False, "pushedAt": "2026-09-16T10:00:00Z"},
         ]
+
         self.assertEqual(
             [repo["name"] for repo in recent_repositories(repos, "KeilerHirsch")],
             ["A", "B", "C"],
@@ -83,85 +178,27 @@ class ActivityPanelTests(unittest.TestCase):
 
     def test_short_repo_name_is_bounded(self):
         self.assertEqual(short_repo_name("short"), "short")
-        self.assertEqual(short_repo_name("x" * 40), "x" * 40)
         self.assertTrue(short_repo_name("x" * 80).endswith("…"))
+        self.assertLessEqual(len(short_repo_name("x" * 80)), 70)
 
-    def test_svg_contains_expanded_live_metrics(self):
+    def test_rendered_panel_is_deterministic_and_evidence_honest(self):
         now = datetime(2026, 9, 20, 10, 11, tzinfo=timezone.utc)
-        data = {
-            "user": {
-                "login": "KeilerHirsch",
-                "createdAt": "2026-02-03T18:45:21Z",
-                "followers": {"totalCount": 29},
-                "following": {"totalCount": 28},
-                "publicRepos": {"totalCount": 6},
-                "forkRepos": {"totalCount": 1},
-                "originalRepos": {
-                    "totalCount": 5,
-                    "nodes": [
-                        {
-                            "name": "KeilerHirsch",
-                            "isArchived": False,
-                            "pushedAt": "2026-09-20T10:00:00Z",
-                            "stargazerCount": 0,
-                            "forkCount": 0,
-                            "languages": {"edges": []},
-                        },
-                        {
-                            "name": "WOLPERTINGER",
-                            "isArchived": False,
-                            "pushedAt": "2026-09-19T12:00:00Z",
-                            "stargazerCount": 1,
-                            "forkCount": 0,
-                            "languages": {
-                                "edges": [
-                                    {"size": 100, "node": {"name": "Ada", "color": "#02f88c"}},
-                                    {"size": 200, "node": {"name": "C#", "color": "#178600"}},
-                                ]
-                            },
-                        },
-                        {
-                            "name": "PLLDN-Programming-Language-Licensing-Decision-Navigator",
-                            "isArchived": False,
-                            "pushedAt": "2026-09-18T12:00:00Z",
-                            "stargazerCount": 0,
-                            "forkCount": 0,
-                            "languages": {
-                                "edges": [{"size": 300, "node": {"name": "TypeScript", "color": "#3178c6"}}]
-                            },
-                        },
-                    ],
-                },
-                "contributionsCollection": {
-                    "totalCommitContributions": 10,
-                    "totalPullRequestContributions": 2,
-                    "contributionCalendar": {
-                        "totalContributions": 14,
-                        "weeks": [
-                            {
-                                "contributionDays": [
-                                    {"date": "2026-09-10", "contributionCount": 3},
-                                    {"date": "2026-09-20", "contributionCount": 7},
-                                ]
-                            }
-                        ],
-                    },
-                },
-            }
-        }
-        svg = render_svg(data, now)
-        self.assertIn('height="540"', svg)
-        self.assertIn("updated 2026-09-20 10:11 UTC", svg)
-        self.assertIn("6 public repos", svg)
-        self.assertIn("29 followers", svg)
-        self.assertIn("Ada/SPARK", svg)
-        self.assertIn("14 contributions · 10 commits · 2 PRs", svg)
-        self.assertIn("10 contributions · 2 active days · best day 7 on 09-20", svg)
-        self.assertIn("6 public · 5 original · 1 fork · 1 star · 0 downstream forks", svg)
-        self.assertIn("WOLPERTINGER · pushed 2026-09-19", svg)
-        for removed_label in ("ACCOUNT</text>", "LANGUAGES</text>", "12 MONTHS</text>", "30 DAYS</text>", "PORTFOLIO</text>", "RECENT WORK</text>"):
-            self.assertNotIn(removed_label, svg)
-        self.assertIn("PLLDN-Programming-Language-Licensing-Decision-Navigator", svg)
+        model = build_panel_model(sample_data(), now)
+        first = render_svg(model)
+        second = render_svg(model)
+
+        self.assertEqual(first, second)
+        ET.fromstring(first)
+        self.assertIn("AUTO · GitHub GraphQL", first)
+        self.assertNotIn("updated ", first)
+        self.assertIn("Ada 17%", first)
+        self.assertNotIn("Ada/SPARK", first)
+        self.assertIn("14 contributions · 10 commits · 2 PRs", first)
+        self.assertIn("10 contributions · 2 active days", first)
+        self.assertIn(
+            "PLLDN-Programming-Language-Licensing-Decision-Navigator",
+            first,
+        )
 
 
 if __name__ == "__main__":

@@ -11,14 +11,14 @@ on:
       - README.md
       - tools/render_activity_panel.py
       - tests/**
-      - .github/workflows/profile-signal.yml
+      - .github/workflows/profile-activity.yml
   pull_request:
     paths:
       - README.md
       - tools/render_activity_panel.py
       - tests/**
       - assets/activity-panel.svg
-      - .github/workflows/profile-signal.yml
+      - .github/workflows/profile-activity.yml
 
 permissions:
   contents: write

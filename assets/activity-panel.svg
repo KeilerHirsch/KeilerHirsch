@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
 <title id="title">GitHub activity</title>
-<desc id="desc">Live GitHub account metrics, language share, contribution momentum, portfolio totals, and recently pushed repositories.</desc>
+<desc id="desc">Automatically refreshed GitHub account metrics, language share, contribution momentum, portfolio totals, and recently pushed repositories.</desc>
 <rect width="1200" height="540" rx="18" fill="#0b0d10"/>
 <rect x="1" y="1" width="1198" height="538" rx="17" fill="none" stroke="#2b313a"/>
 <text x="40" y="48" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="27" font-weight="700">GITHUB ACTIVITY</text>
-<text x="1160" y="24" text-anchor="end" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13">updated 2026-09-20 08:27 UTC</text>
+<text x="1160" y="24" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" text-anchor="end">AUTO · GitHub GraphQL</text>
 <path d="M40 70H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="108" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">GitHub since 2026 · 6 public repos · 29 followers · 28 following</text>
 <path d="M40 132H1160" stroke="#252a31" stroke-width="1"/>
@@ -13,7 +13,7 @@
 <rect x="435.5" y="148" width="335.4" height="17" rx="8" fill="#3178c6"/>
 <rect x="770.9" y="148" width="295.7" height="17" rx="8" fill="#7355dd"/>
 <rect x="1066.6" y="148" width="84.3" height="17" rx="8" fill="#02f88c"/>
-<text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">JavaScript 35% · TypeScript 30% · C# 26% · Ada/SPARK 8%</text>
+<text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">JavaScript 35% · TypeScript 30% · C# 26% · Ada 8%</text>
 <path d="M40 219H1160" stroke="#252a31" stroke-width="1"/>
 <rect x="40" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <rect x="78" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
