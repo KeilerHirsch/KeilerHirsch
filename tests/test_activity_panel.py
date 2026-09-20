@@ -83,8 +83,8 @@ class ActivityPanelTests(unittest.TestCase):
 
     def test_short_repo_name_is_bounded(self):
         self.assertEqual(short_repo_name("short"), "short")
-        self.assertTrue(short_repo_name("x" * 40).endswith("…"))
         self.assertEqual(short_repo_name("x" * 40), "x" * 40)
+        self.assertTrue(short_repo_name("x" * 80).endswith("…"))
 
     def test_svg_contains_expanded_live_metrics(self):
         now = datetime(2026, 9, 20, 10, 11, tzinfo=timezone.utc)
