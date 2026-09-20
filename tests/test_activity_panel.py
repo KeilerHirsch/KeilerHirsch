@@ -84,7 +84,7 @@ class ActivityPanelTests(unittest.TestCase):
     def test_short_repo_name_is_bounded(self):
         self.assertEqual(short_repo_name("short"), "short")
         self.assertTrue(short_repo_name("x" * 40).endswith("…"))
-        self.assertEqual(len(short_repo_name("x" * 40)), 38)
+        self.assertEqual(short_repo_name("x" * 40), "x" * 40)
 
     def test_svg_contains_expanded_live_metrics(self):
         now = datetime(2026, 9, 20, 10, 11, tzinfo=timezone.utc)
@@ -159,7 +159,9 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertIn("10 contributions · 2 active days · best day 7 on 09-20", svg)
         self.assertIn("6 public · 5 original · 1 fork · 1 star · 0 downstream forks", svg)
         self.assertIn("WOLPERTINGER · pushed 2026-09-19", svg)
-        self.assertIn("PLLDN-Programming-Language-Licensing-…", svg)
+        for removed_label in ("ACCOUNT</text>", "LANGUAGES</text>", "12 MONTHS</text>", "30 DAYS</text>", "PORTFOLIO</text>", "RECENT WORK</text>"):
+            self.assertNotIn(removed_label, svg)
+        self.assertIn("PLLDN-Programming-Language-Licensing-Decision-Navigator", svg)
 
 
 if __name__ == "__main__":

@@ -96,7 +96,7 @@ def recent_repositories(repositories: list[dict], login: str, limit: int = 3) ->
     return sorted(candidates, key=lambda repo: repo["pushedAt"], reverse=True)[:limit]
 
 
-def short_repo_name(name: str, limit: int = 38) -> str:
+def short_repo_name(name: str, limit: int = 70) -> str:
     return name if len(name) <= limit else name[: limit - 1] + "…"
 
 
@@ -142,30 +142,27 @@ def render_svg(data: dict, now: datetime) -> str:
         f"{user['followers']['totalCount']} followers · {user['following']['totalCount']} following"
     )
     parts += [
-        f'<text x="40" y="108" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">ACCOUNT</text>',
-        f'<text x="220" y="108" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21" font-weight="600">{html.escape(account)}</text>',
+        f'<text x="40" y="108" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">{html.escape(account)}</text>',
         f'<path d="M40 132H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<text x="40" y="171" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">LANGUAGES</text>',
-        f'<rect x="220" y="148" width="940" height="15" rx="7" fill="{TRACK}"/>',
+        f'<rect x="40" y="148" width="1120" height="17" rx="8" fill="{TRACK}"/>',
     ]
 
-    cursor = 220.0
+    cursor = 40.0
     legend = []
     if all_language_bytes:
         for name, size, color in languages:
-            width = 940 * size / all_language_bytes
-            parts.append(f'<rect x="{cursor:.1f}" y="148" width="{width:.1f}" height="15" rx="7" fill="{color}"/>')
+            width = 1120 * size / all_language_bytes
+            parts.append(f'<rect x="{cursor:.1f}" y="148" width="{width:.1f}" height="17" rx="8" fill="{color}"/>')
             cursor += width
             label = "Ada/SPARK" if name == "Ada" else name
             legend.append(f"{label} {100 * size / all_language_bytes:.0f}%")
     legend_text = " · ".join(legend) if legend else "No language data yet"
     parts += [
-        f'<text x="220" y="198" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">{html.escape(legend_text)}</text>',
+        f'<text x="40" y="198" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">{html.escape(legend_text)}</text>',
         f'<path d="M40 219H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<text x="40" y="258" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">12 MONTHS</text>',
     ]
 
-    start_x = 220
+    start_x = 40
     baseline = 276
     bar_width = 25
     gap = 13
@@ -181,10 +178,9 @@ def render_svg(data: dict, now: datetime) -> str:
         f"{contributions['totalPullRequestContributions']} PRs"
     )
     parts += [
-        f'<text x="710" y="258" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">{html.escape(totals)}</text>',
+        f'<text x="570" y="258" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">{html.escape(totals)}</text>',
         f'<path d="M40 294H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<text x="40" y="334" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">30 DAYS</text>',
-        f'<text x="220" y="334" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20" font-weight="600">{thirty_total} contributions · {thirty_active} active days · {html.escape(thirty_best)}</text>',
+        f'<text x="40" y="334" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">{thirty_total} contributions · {thirty_active} active days · {html.escape(thirty_best)}</text>',
         f'<path d="M40 358H1160" stroke="{TRACK}" stroke-width="1"/>',
     ]
 
@@ -195,10 +191,8 @@ def render_svg(data: dict, now: datetime) -> str:
         f"{downstream_forks} downstream {'fork' if downstream_forks == 1 else 'forks'}"
     )
     parts += [
-        f'<text x="40" y="396" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">PORTFOLIO</text>',
-        f'<text x="220" y="396" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">{html.escape(portfolio)}</text>',
+        f'<text x="40" y="396" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21">{html.escape(portfolio)}</text>',
         f'<path d="M40 420H1160" stroke="{TRACK}" stroke-width="1"/>',
-        f'<text x="40" y="458" fill="{MUTED}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">RECENT WORK</text>',
     ]
 
     if recent:
@@ -207,12 +201,12 @@ def render_svg(data: dict, now: datetime) -> str:
             pushed = datetime.fromisoformat(repo["pushedAt"].replace("Z", "+00:00"))
             label = f"{short_repo_name(repo['name'])} · pushed {pushed:%Y-%m-%d}"
             parts.append(
-                f'<text x="220" y="{y}" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" '
-                f'font-size="17" font-weight="600">{html.escape(label)}</text>'
+                f'<text x="40" y="{y}" fill="{TEXT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" '
+                f'font-size="19" font-weight="600">{html.escape(label)}</text>'
             )
     else:
         parts.append(
-            f'<text x="220" y="458" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="17">No recent public project activity</text>'
+            f'<text x="40" y="458" fill="{SOFT}" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">No recent public project activity</text>'
         )
 
     parts.append("</svg>")
