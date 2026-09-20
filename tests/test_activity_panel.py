@@ -159,7 +159,7 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertIn("10 contributions · 2 active days · best day 7 on 09-20", svg)
         self.assertIn("6 public · 5 original · 1 fork · 1 star · 0 downstream forks", svg)
         self.assertIn("WOLPERTINGER · pushed 2026-09-19", svg)
-        self.assertIn("PLLDN-Programming-Language-Licensing…", svg)
+        self.assertIn("PLLDN-Programming-Language-Licensing-…", svg)
 
 
 if __name__ == "__main__":
