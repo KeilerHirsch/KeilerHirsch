@@ -281,16 +281,16 @@ class ProfileSurfaceContractTests(unittest.TestCase):
     def test_readme_contract(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         hero, signal = "assets/profile-hero.webp", "assets/current-signal.svg"
-        required_sections = ["## Current signal", "## Selected work", "## How I build", "## Engineering DNA", "## Security & forensics", "## MAYHEM Club"]
+        required_sections = ["## Current signal", "## How I build", "## Engineering DNA", "## Security & forensics", "## MAYHEM Club"]
         self.assertIn(hero, readme)
         self.assertIn(signal, readme)
         self.assertLess(readme.index(hero), readme.index(signal))
         self.assertEqual([readme.index(s) for s in required_sections], sorted(readme.index(s) for s in required_sections))
-        required_markers = ["Simple products. Uncomfortably serious engineering underneath.", "High-assurance software", "One core. Multiple presentation surfaces.", "Decisions you can defend.", "Evidence before claims.", "Over State of the Art by default.", "I would rather prove an invariant than explain later why", "Precision Mechanic", "Feinwerkmechaniker", "13 of 24 full-time months completed", "no qualification awarded", "Electronics Technician for Industrial Engineering", "Elektroniker für Betriebstechnik", "23 months of voluntary military service", "Autodidact by habit", "Polish", "German", "English", "GitHub is where the workshop became software", "Build cool shit. Share it. Get real feedback.", "Simple outside. Technically unpleasant to copy inside.", "The Man, The Myth, The Legend.", "https://github.com/KeilerHirsch/WOLPERTINGER", "https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator", "https://myrank.dev/u/KeilerHirsch", "https://ko-fi.com/keilerhirsch", "https://www.reddit.com/r/MAYHEMClub/"]
+        required_markers = ["Simple products. Uncomfortably serious engineering underneath.", "High-assurance software", "Evidence before claims.", "Over State of the Art by default.", "I would rather prove an invariant than explain later why", "Precision Mechanic", "Feinwerkmechaniker", "13 of 24 full-time months completed", "no qualification awarded", "Electronics Technician for Industrial Engineering", "Elektroniker für Betriebstechnik", "23 months of voluntary military service", "Autodidact by habit", "Polish", "German", "English", "GitHub is where the workshop became software", "Build cool shit. Share it. Get real feedback.", "Simple outside. Technically unpleasant to copy inside.", "The Man, The Myth, The Legend.", "https://myrank.dev/u/KeilerHirsch", "https://ko-fi.com/keilerhirsch", "https://www.reddit.com/r/MAYHEMClub/"]
         for marker in required_markers: self.assertIn(marker, readme)
         self.assertNotIn("Airbus", readme)
         self.assertNotIn("utm_", readme.lower())
-        self.assertGreaterEqual(len(readme.split()), 350)
+        self.assertGreaterEqual(len(readme.split()), 300)
         self.assertLessEqual(len(readme.split()), 650)
         section = readme.split("## How I build", 1)[1].split("## Engineering DNA", 1)[0]
         self.assertEqual(len([line for line in section.splitlines() if line.startswith("- **")]), 4)

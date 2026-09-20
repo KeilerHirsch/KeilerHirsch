@@ -20,22 +20,6 @@ High-assurance software · security research · deterministic systems · reprodu
 
 The panel deliberately separates **current HEAD** from **published releases**. `HEAD VERIFIED` means the configured GitHub Actions workflow passed for the exact current default-branch HEAD. Stale, ambiguous, malformed, or incomplete evidence stays `HEAD UNKNOWN`. `RELEASE SHIPPED` only means a real public release exists; its verification is shown separately.
 
-## Selected work
-
-### [WOLPERTINGER](https://github.com/KeilerHirsch/WOLPERTINGER)
-
-**One core. Multiple presentation surfaces.**
-
-An Elite Dangerous companion platform built around deterministic replay, provenance, explicit trust boundaries and a narrow high-assurance core. The complicated machinery belongs underneath; the Commander should not have to operate it.
-
-### [PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)
-
-**Decisions you can defend.**
-
-A deterministic language and licensing navigator where explicit project facts stay authoritative, unknown evidence stays unknown, and free text accelerates the workflow without becoming an oracle.
-
-[Use PLLDN](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/) · [Latest release](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator/releases)
-
 ## How I build
 
 - **Evidence before claims.** Tests, provenance and reproducible artifacts should support what a README says.
@@ -55,9 +39,6 @@ I still use C#, Python, JavaScript and whatever else fits the job. Critical corr
 
 I came to software from the physical world: precision mechanics, industrial electronics, aircraft-technology studies, military service and a suspicious amount of self-teaching. That background shaped how I approach software: **tolerances, measurements, failure modes, maintainability and systems first — syntax second.**
 
-<details>
-<summary><strong>Background & formal status</strong></summary>
-
 - **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification.
 - **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification.
 - **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinenbau, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
@@ -66,8 +47,6 @@ I came to software from the physical world: precision mechanics, industrial elec
 - **Languages:** Polish (native) · German (fluent / native-level) · English (very good).
 
 *Formal education helped. So did a suspicious amount of self-teaching — and, apparently, 9th-grade Realschule Technik-AG.*
-
-</details>
 
 **GitHub is where the workshop became software — and the measurements stayed.**
 
