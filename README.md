@@ -58,6 +58,12 @@ I am the **Founder & Mod** of [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub
 
 **Build cool shit. Share it. Get real feedback.**
 
+## Licence
+
+Repository-controlled automation software — including `tools/`, `tests/` and project-controlled workflow logic — is available under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+
+Profile prose, personal branding and visual assets are **not** covered by that software licence unless explicitly stated otherwise. Third-party names, links and public GitHub data retain their own rights.
+
 ---
 
 **Simple outside. Technically unpleasant to copy inside. 😎**
