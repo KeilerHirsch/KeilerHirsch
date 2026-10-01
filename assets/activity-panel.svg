@@ -18,15 +18,15 @@
 <rect x="40" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <rect x="78" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <rect x="116" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="154" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
+<rect x="154" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
 <rect x="192" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="230" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="230" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <rect x="268" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="306" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
-<rect x="344" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="382" y="259.3" width="25" height="16.7" rx="3" fill="#67e480"/>
-<rect x="420" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<rect x="458" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
+<rect x="306" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="344" y="259.3" width="25" height="16.7" rx="3" fill="#67e480"/>
+<rect x="382" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
+<rect x="420" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
+<rect x="458" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">384 contributions · 253 commits · 84 PRs</text>
 <path d="M40 294H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">244 contributions · 18 active days · best day 36 on 09-08</text>
