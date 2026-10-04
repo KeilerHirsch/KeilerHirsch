@@ -9,11 +9,11 @@
 <text x="40" y="108" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">GitHub since 2026 · 6 public repos · 30 followers · 28 following</text>
 <path d="M40 132H1160" stroke="#252a31" stroke-width="1"/>
 <rect x="40" y="148" width="1120" height="17" rx="8" fill="#252a31"/>
-<rect x="40.0" y="148" width="477.8" height="17" rx="8" fill="#7355dd"/>
-<rect x="517.8" y="148" width="288.1" height="17" rx="8" fill="#f1e05a"/>
-<rect x="805.9" y="148" width="254.1" height="17" rx="8" fill="#3178c6"/>
-<rect x="1060.0" y="148" width="81.3" height="17" rx="8" fill="#02f88c"/>
-<text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">C# 43% · JavaScript 26% · TypeScript 23% · Ada 7%</text>
+<rect x="40.0" y="148" width="438.7" height="17" rx="8" fill="#7355dd"/>
+<rect x="478.7" y="148" width="317.5" height="17" rx="8" fill="#3178c6"/>
+<rect x="796.3" y="148" width="264.6" height="17" rx="8" fill="#f1e05a"/>
+<rect x="1060.8" y="148" width="74.6" height="17" rx="8" fill="#02f88c"/>
+<text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">C# 39% · TypeScript 28% · JavaScript 24% · Ada 7%</text>
 <path d="M40 219H1160" stroke="#252a31" stroke-width="1"/>
 <rect x="40" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
 <rect x="78" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
@@ -27,9 +27,9 @@
 <rect x="382" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
 <rect x="420" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
 <rect x="458" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
-<text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">395 contributions · 258 commits · 90 PRs</text>
+<text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">406 contributions · 264 commits · 95 PRs</text>
 <path d="M40 294H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">251 contributions · 18 active days · best day 36 on 09-08</text>
+<text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">262 contributions · 18 active days · best day 36 on 09-08</text>
 <path d="M40 358H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="396" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21">6 public · 5 original · 1 fork · 1 star · 0 downstream forks</text>
 <path d="M40 420H1160" stroke="#252a31" stroke-width="1"/>
