@@ -9,10 +9,10 @@
 <text x="40" y="108" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600">GitHub since 2026 · 7 public repos · 32 followers · 28 following</text>
 <path d="M40 132H1160" stroke="#252a31" stroke-width="1"/>
 <rect x="40" y="148" width="1120" height="17" rx="8" fill="#252a31"/>
-<rect x="40.0" y="148" width="481.9" height="17" rx="8" fill="#3178c6"/>
-<rect x="521.9" y="148" width="345.8" height="17" rx="8" fill="#7355dd"/>
-<rect x="867.7" y="148" width="208.5" height="17" rx="8" fill="#f1e05a"/>
-<rect x="1076.2" y="148" width="58.8" height="17" rx="8" fill="#02f88c"/>
+<rect x="40.0" y="148" width="482.8" height="17" rx="8" fill="#3178c6"/>
+<rect x="522.8" y="148" width="345.3" height="17" rx="8" fill="#7355dd"/>
+<rect x="868.1" y="148" width="208.2" height="17" rx="8" fill="#f1e05a"/>
+<rect x="1076.3" y="148" width="58.7" height="17" rx="8" fill="#02f88c"/>
 <text x="40" y="198" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20">TypeScript 43% · C# 31% · JavaScript 19% · Ada 5%</text>
 <path d="M40 219H1160" stroke="#252a31" stroke-width="1"/>
 <rect x="40" y="271.0" width="25" height="5.0" rx="3" fill="#67e480"/>
@@ -26,14 +26,14 @@
 <rect x="344" y="259.3" width="25" height="16.7" rx="3" fill="#67e480"/>
 <rect x="382" y="268.0" width="25" height="8.0" rx="3" fill="#67e480"/>
 <rect x="420" y="236.0" width="25" height="40.0" rx="3" fill="#67e480"/>
-<rect x="458" y="252.2" width="25" height="23.8" rx="3" fill="#67e480"/>
-<text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">529 contributions · 322 commits · 154 PRs</text>
+<rect x="458" y="251.9" width="25" height="24.1" rx="3" fill="#67e480"/>
+<text x="570" y="258" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19">531 contributions · 323 commits · 155 PRs</text>
 <path d="M40 294H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">205 contributions · 13 active days · best day 68 on 10-11</text>
+<text x="40" y="334" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="600">207 contributions · 14 active days · best day 68 on 10-11</text>
 <path d="M40 358H1160" stroke="#252a31" stroke-width="1"/>
 <text x="40" y="396" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="21">7 public · 5 original · 2 forks · 1 star · 0 downstream forks</text>
 <path d="M40 420H1160" stroke="#252a31" stroke-width="1"/>
-<text x="40" y="458" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">PLLDN-Programming-Language-Licensing-Decision-Navigator · pushed 2026-10-14</text>
+<text x="40" y="458" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">PLLDN-Programming-Language-Licensing-Decision-Navigator · pushed 2026-10-15</text>
 <text x="40" y="493" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">wolpertinger · pushed 2026-10-11</text>
 <text x="40" y="526" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="19" font-weight="600">Critical-FAR-Disclosure · pushed 2026-10-11</text>
 </svg>
