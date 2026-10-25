@@ -86,6 +86,30 @@ class ProfileSurfaceTests(unittest.TestCase):
         ):
             self.assertIn(marker, workflow)
 
+    def test_pull_request_validation_cannot_publish(self):
+        workflow = (ROOT / ".github" / "workflows" / "profile-activity.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("\npermissions:\n  contents: read\n", workflow)
+        self.assertIn("\n  validate:\n", workflow)
+        self.assertIn("\n  refresh:\n", workflow)
+
+        validate = workflow.split("\n  validate:\n", 1)[1].split(
+            "\n  refresh:\n", 1
+        )[0]
+        refresh = workflow.split("\n  refresh:\n", 1)[1]
+
+        self.assertIn("if: github.event_name == 'pull_request'", validate)
+        self.assertIn("contents: read", validate)
+        self.assertIn("persist-credentials: false", validate)
+        self.assertNotIn("contents: write", validate)
+        self.assertNotIn("git push", validate)
+        self.assertNotIn("persist-credentials: true", validate)
+        self.assertIn("if: github.event_name != 'pull_request'", refresh)
+        self.assertIn("contents: write", refresh)
+        self.assertIn("ref: ${{ github.event.repository.default_branch }}", refresh)
+        self.assertIn("git push", refresh)
+
     def test_internal_planning_material_is_not_published(self):
         self.assertFalse((ROOT / "docs" / "superpowers").exists())
 
