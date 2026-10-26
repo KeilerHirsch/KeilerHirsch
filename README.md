@@ -10,17 +10,17 @@ High-assurance software · security research · deterministic systems · reprodu
 
 </div>
 
-## Activity
-
-*The workshop moves; this panel follows it automatically — repositories, languages and public activity included.*
-
-![GitHub activity](assets/activity-panel.svg)
-
 ## Projects
 
 - **[Advanced Realms Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite)** — Farming Simulator 25 realism suite (in development).
 - **[PLLDN](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — Programming language and software licence guide.
 - **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — Elite Dangerous companion (pre-alpha).
+
+## Activity
+
+![GitHub activity](assets/activity-panel.svg)
+
+---
 
 ## How I build
 
