@@ -16,6 +16,20 @@ High-assurance software · security research · deterministic systems · reprodu
 
 ![GitHub activity](assets/activity-panel.svg)
 
+## Featured projects
+
+The best way to understand my work is to inspect what is built, how it is tested, and what is still missing.
+
+| Project | What it does | Current status |
+|---|---|---|
+| **[Advanced Realms Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite)** | An interconnected realism and machinery-systems suite for Farming Simulator 25: physics, wear, breakdowns, maintenance and workshops, developed as original GIANTS-native code. **[Live roadmap](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/blob/main/docs/ROADMAP.md)** · **[Community credits](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/blob/main/docs/HALL_OF_HEROES.md)** | Active development; no public release or claim of replacing ADS, Courseplay or AutoDrive |
+| **[PLLDN](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** | Browser-based programming-language and software-licence decision guide with traceable evidence. **[Try the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)** | Public interactive tool |
+| **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** | Local-first Elite Dangerous companion built around deterministic game-state processing. **[Project site](https://keilerhirsch.github.io/wolpertinger/)** | Pre-alpha; commander-facing UI in development |
+
+**More from the workshop:** [SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF) (server observability, research stage) · [GRANITProtokoll](https://github.com/KeilerHirsch/GRANITProtokoll) (engineering provenance) · [All repositories](https://github.com/KeilerHirsch?tab=repositories)
+
+Interested in collaborating, testing or comparing approaches? Start with a project's README, open issues or discussions. Work-in-progress status is intentional; release claims require evidence.
+
 ## How I build
 
 - **Evidence before claims.** Tests, provenance and reproducible artifacts should support what a README says.
