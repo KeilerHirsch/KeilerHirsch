@@ -85,7 +85,7 @@ def language_breakdown(
     repositories: list[dict],
     login: str,
 ) -> list[tuple[str, int, str]]:
-    """Every GitHub Linguist language from published original repos, not a skills list."""
+    """Linguist languages from active nonempty original projects, not personal skills."""
     totals: dict[str, int] = defaultdict(int)
     colors: dict[str, str] = {}
 
@@ -288,8 +288,8 @@ def render_svg(model: dict) -> str:
         ),
         '<title id="title">GitHub activity: code languages, contributions and portfolio</title>',
         (
-            '<desc id="desc">GitHub Linguist shares across all public original repositories, '
-            'excluding forks and empty repositories. This is source-code composition, '
+            '<desc id="desc">GitHub Linguist shares from active, nonempty public original projects, '
+            'excluding the profile repo, forks and archived projects. This is source-code composition, '
             'not a list of every language the developer knows. '
             'A separate static, owner-confirmed working-language list follows. '
             'GitHub contribution metrics and recently pushed nonempty projects follow.</desc>'
@@ -304,7 +304,7 @@ def render_svg(model: dict) -> str:
         f'<path d="M{LEFT} 70H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
         svg_text(LEFT, 107, model["account"], size=23, weight=600),
         f'<path d="M{LEFT} 133H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
-        svg_text(LEFT, 161, "LANGUAGES · PUBLISHED ORIGINAL CODE", size=17, weight=700),
+        svg_text(LEFT, 161, "LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", size=17, weight=700),
         svg_text(
             RIGHT, 161,
             f"ALL {len(languages)} DETECTED · BYTE SHARE, NOT SKILL LEVEL",
@@ -401,7 +401,7 @@ def render_svg(model: dict) -> str:
 
     parts.append(
         svg_text(LEFT, height - 17,
-                 "Language shares are GitHub Linguist code-size estimates; forks excluded.",
+                 "Linguist code-size shares; profile, archived, empty repos and forks excluded.",
                  fill=MUTED, size=14)
     )
     parts.append("</svg>")

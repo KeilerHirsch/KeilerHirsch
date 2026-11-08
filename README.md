@@ -49,7 +49,7 @@ Forking or studying a repository is **not** a claim of authorship, endorsement o
 
 ![GitHub activity — public metrics, original projects and contribution history](assets/activity-panel.svg)
 
-<sub>The code-language chart and activity metrics refresh automatically from GitHub; forks are counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
+<sub>The code-language chart uses active, nonempty public original projects (excluding the profile and archives); activity metrics refresh automatically from GitHub, with forks counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
 
 ## How I build
 

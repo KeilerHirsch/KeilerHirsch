@@ -233,7 +233,9 @@ class ActivityPanelTests(unittest.TestCase):
         for name in names:
             self.assertIn(name + " ", output)
         self.assertIn("NOT SKILL LEVEL", output)
-        self.assertIn("Language shares are GitHub Linguist", output)
+        self.assertIn("Linguist code-size shares; profile, archived, empty repos and forks excluded.", output)
+        self.assertIn("LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", output)
+        self.assertNotIn("all public original repositories", output.lower())
         self.assertIn("LANGUAGES I WORK WITH", output)
         self.assertIn("OWNER-CONFIRMED", output)
         for name in WORKING_LANGUAGES:
@@ -306,6 +308,8 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertEqual(first, second)
         ET.fromstring(first)
         self.assertIn("AUTO · GitHub GraphQL", first)
+        self.assertIn("active, nonempty public original projects", first)
+        self.assertIn("excluding the profile repo, forks and archived projects", first)
         self.assertNotIn("updated ", first)
         self.assertIn("Ada 17%", first)
         self.assertNotIn("Ada/SPARK", first.split("LANGUAGES I WORK WITH", 1)[0])
