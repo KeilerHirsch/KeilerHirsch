@@ -28,6 +28,14 @@ FALLBACK = "#7f8a99"
 ACCENT = "#67e480"
 FONT = "ui-monospace, SFMono-Regular, Consolas, monospace"
 
+# Curated profile statement. GitHub cannot infer personal experience from Linguist.
+# Only change when the owner explicitly updates their working-language list.
+WORKING_LANGUAGES = (
+    "Ada/SPARK", "C", "C++", "C#", "Python", "Lua", "JavaScript",
+    "TypeScript", "PowerShell", "Go", "Rust", "Kotlin", "Dart",
+)
+WEB_TECHNOLOGIES = ("HTML", "CSS")
+
 
 def graphql(token: str, query: str, variables: dict) -> dict:
     body = json.dumps({"query": query, "variables": variables}).encode()
@@ -257,7 +265,11 @@ def render_svg(model: dict) -> str:
     legend_rows = max(1, (len(languages) + 2) // 3)
     legend_top = 227
     legend_bottom = legend_top + 29 * (legend_rows - 1)
-    divider_after_languages = legend_bottom + 28
+    working_title_y = legend_bottom + 43
+    working_first_y = working_title_y + 29
+    working_second_y = working_first_y + 28
+    web_tech_y = working_second_y + 28
+    divider_after_languages = web_tech_y + 22
     activity_title_y = divider_after_languages + 36
     monthly_baseline = activity_title_y + 64
     monthly_date_y = monthly_baseline + 18
@@ -279,6 +291,7 @@ def render_svg(model: dict) -> str:
             '<desc id="desc">GitHub Linguist shares across all public original repositories, '
             'excluding forks and empty repositories. This is source-code composition, '
             'not a list of every language the developer knows. '
+            'A separate static, owner-confirmed working-language list follows. '
             'GitHub contribution metrics and recently pushed nonempty projects follow.</desc>'
         ),
         f'<rect width="{WIDTH}" height="{height}" rx="18" fill="{BG}"/>',
@@ -339,6 +352,11 @@ def render_svg(model: dict) -> str:
             )
 
     parts += [
+        svg_text(LEFT, working_title_y, "LANGUAGES I WORK WITH · OWNER-CONFIRMED", size=17, weight=700),
+        svg_text(LEFT, working_first_y, " · ".join(WORKING_LANGUAGES[:7]), fill=SOFT, size=18),
+        svg_text(LEFT, working_second_y, " · ".join(WORKING_LANGUAGES[7:]), fill=SOFT, size=18),
+        svg_text(LEFT, web_tech_y, "Web technologies: " + " · ".join(WEB_TECHNOLOGIES),
+                 fill=SOFT, size=17),
         f'<path d="M{LEFT} {divider_after_languages}H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
         svg_text(LEFT, activity_title_y, "CONTRIBUTIONS · LAST 12 MONTHS", size=17, weight=700),
     ]

@@ -10,6 +10,8 @@ from tools.render_activity_panel import (
     render_svg,
     format_percentage,
     total_language_bytes,
+    WORKING_LANGUAGES,
+    WEB_TECHNOLOGIES,
     short_repo_name,
     validated_repositories,
     window_metrics,
@@ -232,6 +234,14 @@ class ActivityPanelTests(unittest.TestCase):
             self.assertIn(name + " ", output)
         self.assertIn("NOT SKILL LEVEL", output)
         self.assertIn("Language shares are GitHub Linguist", output)
+        self.assertIn("LANGUAGES I WORK WITH", output)
+        self.assertIn("OWNER-CONFIRMED", output)
+        for name in WORKING_LANGUAGES:
+            self.assertIn(name, output)
+        for name in WEB_TECHNOLOGIES:
+            self.assertIn(name, output)
+        self.assertEqual(len(WORKING_LANGUAGES), 13)
+        self.assertEqual(WEB_TECHNOLOGIES, ("HTML", "CSS"))
 
         svg_ns = "{http://www.w3.org/2000/svg}"
         group = root.find(f"{svg_ns}g")
@@ -298,7 +308,8 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertIn("AUTO · GitHub GraphQL", first)
         self.assertNotIn("updated ", first)
         self.assertIn("Ada 17%", first)
-        self.assertNotIn("Ada/SPARK", first)
+        self.assertNotIn("Ada/SPARK", first.split("LANGUAGES I WORK WITH", 1)[0])
+        self.assertIn("Ada/SPARK", first)
         self.assertIn("14 contributions · 10 commits · 2 PRs", first)
         self.assertIn("10 contributions · 2 active days", first)
         self.assertIn(

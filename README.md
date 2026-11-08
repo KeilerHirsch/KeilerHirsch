@@ -16,23 +16,23 @@ Independent software engineering · deterministic systems · security research �
 
 ## Projects
 
-**Original projects, not forks.** The maturity labels below describe what is available *now*, not the entire roadmap.
+**Selected original projects, not forks.** For current features, compatibility and releases, follow each project. [Browse all originals](https://github.com/KeilerHirsch?tab=repositories&type=source).
 
 ### Featured
 
-- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project combining vehicle physics with a broader mechanical-systems vision. **Physics Beta published; full suite in development.** [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
-- **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. **Preview; coverage is deliberately limited and labelled.** [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
-- **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. **Pre-alpha; no supported end-user release yet.** [Project site](https://keilerhirsch.github.io/wolpertinger/)
+- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project combining vehicle physics with a broader mechanical-systems vision. [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
+- **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. Source coverage and limitations are explained in the app. [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
+- **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. Follow the project roadmap and releases for current build status. [Project site](https://keilerhirsch.github.io/wolpertinger/)
 
 ### Research & experiments
 
-- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — SCUM server observability and notifications. **Research stage; no production release.**
+- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — SCUM server observability and notifications. See the repository for current scope and any releases.
 - **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — evidence-oriented security disclosure and remediation records. **Research/documentation**, not a shipped software product.
 
 <details>
 <summary><strong>Forks & upstream projects</strong> — separate from original work</summary>
 
-These are **forks of other maintainers' repositories**, not projects originally created by KeilerHirsch. Upstream ownership and the original projects' licences remain with their respective maintainers.
+These are **selected forks of other maintainers' repositories**, not projects originally created by KeilerHirsch. Upstream ownership and the original projects' licences remain with their respective maintainers. [Browse all current forks](https://github.com/KeilerHirsch?tab=repositories&type=fork).
 
 - [MemPalace fork](https://github.com/KeilerHirsch/mempalace) — upstream: [MemPalace/mempalace](https://github.com/MemPalace/mempalace).
 - [TrimatikLogger fork](https://github.com/KeilerHirsch/TrimatikLogger) — upstream: [cenders77/TrimatikLogger](https://github.com/cenders77/TrimatikLogger).
@@ -49,7 +49,7 @@ Forking or studying a repository is **not** a claim of authorship, endorsement o
 
 ![GitHub activity — public metrics, original projects and contribution history](assets/activity-panel.svg)
 
-<sub>Generated from GitHub account metrics and code-size estimates for public original repositories. Forks are counted separately; the language chart does not claim to list every language I use. Activity is not evidence of product maturity or test coverage.</sub>
+<sub>The code-language chart and activity metrics refresh automatically from GitHub; forks are counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
 
 ## How I build
 
@@ -60,7 +60,7 @@ Forking or studying a repository is **not** a claim of authorship, endorsement o
 
 ## Engineering DNA
 
-My background combines precision mechanics, industrial electronics and applied systems work with largely self-taught software engineering. I work across Ada/SPARK, C#, Python and other technologies when appropriate; the toolchain serves the problem, not the other way around.
+My background combines precision mechanics, industrial electronics and applied systems work with largely self-taught software engineering. The working-language list above is curated; the technology stack follows the problem, not the other way around.
 
 <details>
 <summary><strong>Background & qualifications</strong></summary>

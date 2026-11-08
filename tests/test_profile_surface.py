@@ -64,7 +64,9 @@ class ProfileSurfaceTests(unittest.TestCase):
 
     def test_original_work_and_forks_have_distinct_attribution(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("**Original projects, not forks.**", readme)
+        self.assertIn("**Selected original projects, not forks.**", readme)
+        self.assertIn("https://github.com/KeilerHirsch?tab=repositories&type=source", readme)
+        self.assertIn("https://github.com/KeilerHirsch?tab=repositories&type=fork", readme)
         self.assertIn("Forks & upstream projects", readme)
         self.assertIn(
             "https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite",
