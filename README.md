@@ -20,14 +20,14 @@ Independent software engineering · deterministic systems · security research �
 
 ### Featured
 
-- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project combining vehicle physics with a broader mechanical-systems vision. [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
+- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project developing vehicle physics and a roadmap for connected mechanical systems. [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
 - **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. Source coverage and limitations are explained in the app. [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
 - **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. Follow the project roadmap and releases for current build status. [Project site](https://keilerhirsch.github.io/wolpertinger/)
 
 ### Research & experiments
 
-- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — SCUM server observability and notifications. See the repository for current scope and any releases.
-- **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — evidence-oriented security disclosure and remediation records. **Research/documentation**, not a shipped software product.
+- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — Research into SCUM server telemetry, observability and alerting; see the project for implemented features and any releases.
+- **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — documentation workspace for evidence-first security disclosures. Only the repository's published records establish what has actually been documented.
 
 <details>
 <summary><strong>Forks & upstream projects</strong> — separate from original work</summary>
