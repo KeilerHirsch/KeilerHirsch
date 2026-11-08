@@ -1,66 +1,88 @@
 <div align="center">
 
-![KeilerHirsch — High-assurance inside. KISS outside.](assets/profile-hero.webp)
+<img src="assets/profile-hero.webp" alt="KeilerHirsch Labs — High-assurance inside, KISS outside" width="100%">
 
-**Simple products. Uncomfortably serious engineering underneath.**
+# KeilerHirsch Labs
 
-High-assurance software · security research · deterministic systems · reproducible evidence
+**Simple products. Serious engineering underneath.**
 
-[MyRank](https://myrank.dev/u/KeilerHirsch) · [MAYHEM Club](https://www.reddit.com/r/MAYHEMClub/) · [Ko-fi](https://ko-fi.com/keilerhirsch)
+Independent software engineering · deterministic systems · security research · reproducible evidence
+
+[Projects](#projects) · [Activity](#activity) · [Engineering](#how-i-build) · [Community](#mayhem-club)
+
+[MyRank](https://myrank.dev/u/KeilerHirsch) · [MAYHEM Club](https://www.reddit.com/r/MAYHEMClub/) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)
 
 </div>
 
 ## Projects
 
-- **[Advanced Realms Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite)** — Farming Simulator 25 realism suite (in development).
-- **[PLLDN](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — Programming language and software licence guide.
-- **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — Elite Dangerous companion (pre-alpha).
+**Original projects, not forks.** The maturity labels below describe what is available *now*, not the entire roadmap.
+
+### Featured
+
+- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project combining vehicle physics with a broader mechanical-systems vision. **Physics Beta published; full suite in development.** [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
+- **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. **Preview; coverage is deliberately limited and labelled.** [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
+- **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. **Pre-alpha; no supported end-user release yet.** [Project site](https://keilerhirsch.github.io/wolpertinger/)
+
+### Research & experiments
+
+- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — SCUM server observability and notifications. **Research stage; no production release.**
+- **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — evidence-oriented security disclosure and remediation records. **Research/documentation**, not a shipped software product.
+
+<details>
+<summary><strong>Forks & upstream projects</strong> — separate from original work</summary>
+
+These are **forks of other maintainers' repositories**, not projects originally created by KeilerHirsch. Upstream ownership and the original projects' licences remain with their respective maintainers.
+
+- [MemPalace fork](https://github.com/KeilerHirsch/mempalace) — upstream: [MemPalace/mempalace](https://github.com/MemPalace/mempalace).
+- [TrimatikLogger fork](https://github.com/KeilerHirsch/TrimatikLogger) — upstream: [cenders77/TrimatikLogger](https://github.com/cenders77/TrimatikLogger).
+- [MoreRealistic FS25 fork](https://github.com/KeilerHirsch/MoreRealistic_FS25) — upstream: [quadural/MoreRealistic_FS25](https://github.com/quadural/MoreRealistic_FS25).
+- [Realistic Mechanical Systems FS25 fork](https://github.com/KeilerHirsch/FS25_RealisticMechanicalSystems) — upstream: [Squallqt/FS25_RealisticMechanicalSystems](https://github.com/Squallqt/FS25_RealisticMechanicalSystems).
+- [AutoDrive FS25 fork](https://github.com/KeilerHirsch/FS25_AutoDrive) — upstream: [Stephan-S/FS25_AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive).
+- [Courseplay FS25 fork](https://github.com/KeilerHirsch/Courseplay_FS25) — upstream: [Courseplay/Courseplay_FS25](https://github.com/Courseplay/Courseplay_FS25).
+
+Forking or studying a repository is **not** a claim of authorship, endorsement or an accepted upstream contribution. See each repository's actual history for changes and pull requests.
+
+</details>
 
 ## Activity
 
-![GitHub activity](assets/activity-panel.svg)
+![GitHub activity — public metrics, original projects and contribution history](assets/activity-panel.svg)
 
----
+<sub>Automatically generated from public GitHub data. Original repositories and forks are counted separately; activity is not evidence of product maturity or test coverage.</sub>
 
 ## How I build
 
-- **Evidence before claims.** Tests, provenance and reproducible artifacts should support what a README says.
-- **Over State of the Art by default.** “Good enough” is a release decision, not an engineering philosophy.
-- **Deterministic where it matters.** Core decisions should come from explicit rules and traceable facts whenever possible.
-- **KISS outside. Assurance inside.** Complexity belongs behind the user-facing surface; critical boundaries get stronger assurance when the architecture benefits from it.
-
-*If the UI looks simple, someone probably suffered in the architecture first.*
+- **Evidence before claims.** Reproducible tests, provenance and observable outcomes matter more than impressive status labels.
+- **KISS at the surface.** The user experience should stay simple; stronger assurance belongs at boundaries where it pays off.
+- **Determinism where it matters.** Prefer explicit state, rules and verifiable sources over unexplained decisions.
+- **Engineering over theatre.** Use the language, architecture and checks the actual problem warrants.
 
 ## Engineering DNA
 
-**Ada/SPARK is my primary engineering language.** I use it where correctness matters enough to justify stronger guarantees — not because every component needs SPARK, and not because language byte counts define architectural importance.
+My background combines precision mechanics, industrial electronics and applied systems work with largely self-taught software engineering. I work across Ada/SPARK, C#, Python and other technologies when appropriate; the toolchain serves the problem, not the other way around.
 
-**I would rather prove an invariant than explain later why “that should never happen” happened.**
-
-I still use C#, Python, JavaScript and whatever else fits the job. Critical correctness is simply not where I like to negotiate.
-
-I came to software from the physical world: precision mechanics, industrial electronics, aircraft-technology studies, military service and a suspicious amount of self-teaching. That background shaped how I approach software: **tolerances, measurements, failure modes, maintainability and systems first — syntax second.**
+<details>
+<summary><strong>Background & qualifications</strong></summary>
 
 - **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification.
 - **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification.
-- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** (`Technikerlehrgang Maschinenbau, Schwerpunkt Luftfahrzeugtechnik`) — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
+- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
 - **23 months of voluntary military service** in the German Armed Forces (`Bundeswehr`).
-- **Autodidact by habit** — largely self-taught in software engineering, security research, digital forensics, OSINT and systems work.
-- **Languages:** Polish (native) · German (fluent / native-level) · English (very good).
+- **Autodidact by habit** — software/systems engineering, cybersecurity research, digital forensics, OSINT and AI-assisted development.
+- **Languages:** Polish · German · English.
 
-*Formal education helped. So did a suspicious amount of self-teaching — and, apparently, 9th-grade Realschule Technik-AG.*
+That background shaped a simple habit: look for tolerances, failure modes, measurable behavior and maintainability before celebrating an elegant abstraction.
 
-**GitHub is where the workshop became software — and the measurements stayed.**
+</details>
 
 ## Security & forensics
 
-I approach systems with the same mindset I use to build them: preserve evidence, bind claims to sources, separate observation from inference, and make important state reproducible.
-
-**Focus:** AI systems · agent tooling · digital forensics · OSINT · provenance
+Security research, OSINT and digital forensics follow the same discipline as engineering: preserve evidence, separate observations from interpretations, and make claims traceable. Research repositories are **not** claims that findings or vulnerabilities have been independently verified or remediated.
 
 ## MAYHEM Club
 
-I am the **Founder & Mod** of [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub/), a creator-first workshop for indie devs, modders, open-source builders and people shipping wonderfully weird things.
+I founded and moderate [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub/), a space for independent developers, modders and open-source builders to share work and get practical feedback.
 
 **Build cool shit. Share it. Get real feedback.**
 
@@ -68,17 +90,14 @@ I am the **Founder & Mod** of [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub
 
 Repository-controlled automation software — including `tools/`, `tests/` and project-controlled workflow logic — is available under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
-Profile prose, personal branding and visual assets are **not** covered by that software licence unless explicitly stated otherwise. Third-party names, links and public GitHub data retain their own rights.
+Profile prose, personal branding and visual assets are **not** covered by that software licence unless explicitly stated otherwise. Third-party projects and linked content retain their own rights.
 
 ---
 
-**Simple outside. Technically unpleasant to copy inside. 😎**
+*If the UI looks simple, someone probably suffered in the architecture first.*
 
 <!--
 🥚 You looked behind the curtain.
-
 The Man, The Myth, The Legend.
 — KeilerHirsch
-
-The UI was the easy part.
 -->

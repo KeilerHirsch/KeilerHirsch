@@ -62,6 +62,41 @@ class ProfileSurfaceTests(unittest.TestCase):
         self.assertTrue((ROOT / "assets" / "profile-hero.webp").exists())
         self.assertTrue((ROOT / "assets" / "activity-panel.svg").exists())
 
+    def test_original_work_and_forks_have_distinct_attribution(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("**Original projects, not forks.**", readme)
+        self.assertIn("Forks & upstream projects", readme)
+        self.assertIn(
+            "https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite",
+            readme,
+        )
+        self.assertNotIn("FS25_Advanced_RealmsSuite", readme)
+        for repo in (
+            "PLLDN-Programming-Language-Licensing-Decision-Navigator",
+            "wolpertinger",
+            "SCUM-SENF",
+            "Critical-FAR-Disclosure",
+        ):
+            self.assertIn(f"https://github.com/KeilerHirsch/{repo}", readme)
+
+        for fork, upstream in (
+            ("mempalace", "MemPalace/mempalace"),
+            ("TrimatikLogger", "cenders77/TrimatikLogger"),
+            ("MoreRealistic_FS25", "quadural/MoreRealistic_FS25"),
+            ("FS25_RealisticMechanicalSystems", "Squallqt/FS25_RealisticMechanicalSystems"),
+            ("FS25_AutoDrive", "Stephan-S/FS25_AutoDrive"),
+            ("Courseplay_FS25", "Courseplay/Courseplay_FS25"),
+        ):
+            self.assertIn(f"https://github.com/KeilerHirsch/{fork}", readme)
+            self.assertIn(f"https://github.com/{upstream}", readme)
+
+        original_segment, fork_segment = readme.split(
+            "<summary><strong>Forks & upstream projects</strong>", 1
+        )
+        self.assertNotIn("https://github.com/KeilerHirsch/FS25_AutoDrive", original_segment)
+        self.assertIn("Forking or studying a repository", fork_segment)
+        self.assertNotIn("[FS25_SmartVRAM]", original_segment)
+
     def test_activity_automation_contract(self):
         workflow_path = ROOT / ".github" / "workflows" / "profile-activity.yml"
         workflow = workflow_path.read_text(encoding="utf-8")
