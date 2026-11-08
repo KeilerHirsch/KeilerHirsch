@@ -1,103 +1,45 @@
 <div align="center">
 
-<img src="assets/profile-hero.webp" alt="KeilerHirsch Labs — High-assurance inside, KISS outside" width="100%">
+<img src="assets/profile-hero.webp" alt="KeilerHirsch Labs - engineering and independent development" width="100%">
 
-# KeilerHirsch Labs
+# KeilerHirsch
+
+**Independent developer and founder of [KeilerHirsch Labs](https://github.com/KeilerHirschLabs).**
+
+Software & systems engineering · Automation · Security research
 
 **Simple products. Serious engineering underneath.**
 
-Independent software engineering · deterministic systems · security research · reproducible evidence
+[KeilerHirsch Labs](https://github.com/KeilerHirschLabs) · [Personal repositories](https://github.com/KeilerHirsch?tab=repositories) · [MAYHEM Club](https://www.reddit.com/r/MAYHEMClub/)
 
-[Projects](#projects) · [Activity](#activity) · [Engineering](#how-i-build) · [Community](#mayhem-club)
-
-[MyRank](https://myrank.dev/u/KeilerHirsch) · [MAYHEM Club](https://www.reddit.com/r/MAYHEMClub/) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)
+[MyRank](https://myrank.dev/u/KeilerHirsch) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)
 
 </div>
 
-## Projects
+## About
 
-**Selected original projects, not forks.** For current features, compatibility and releases, follow each project. [Personal originals](https://github.com/KeilerHirsch?tab=repositories&type=source) · [KHL projects](https://github.com/KeilerHirschLabs?tab=repositories).
+I build practical software and research systems with an emphasis on **reproducible evidence, clear trust boundaries and maintainable design**. My background combines vocational training in precision mechanics and industrial electronics with hands-on systems engineering, technical research and security work.
 
-### Featured
+I prefer a simple user experience backed by careful engineering: **measure, reproduce, find the root cause, verify**.
 
-- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project developing vehicle physics and a roadmap for connected mechanical systems. Current project scope and distribution information are maintained in the linked repository.
-- **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. Source coverage and limitations are explained in the app. [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
-- **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. Follow the project roadmap and releases for current build status. [Project site](https://keilerhirsch.github.io/wolpertinger/)
+## Explore & collaborate
 
-### Research & experiments
+- **[KeilerHirsch Labs](https://github.com/KeilerHirschLabs)** — home for products, research projects and their current development status.
+- **Pinned repositories below** — a small selection of work; project READMEs and releases remain the authoritative sources.
+- **[Repositories and forks](https://github.com/KeilerHirsch?tab=repositories)** — personal contributions and upstream work, with their respective authorship and licenses.
+- **[r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub/)** — community exchange. The KeilerHirsch Labs Discord hub is in preparation.
 
-- **[SCUM-SENF](https://github.com/KeilerHirschLabs/SCUM-SENF)** — Research into SCUM server telemetry, observability and alerting; see the project for implemented features and any releases.
-- **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — documentation workspace for evidence-first security disclosures. Only the repository's published records establish what has actually been documented.
-
-<details>
-<summary><strong>Forks & upstream projects</strong> — separate from original work</summary>
-
-These are **selected forks of other maintainers' repositories**, not projects originally created by KeilerHirsch. Upstream ownership and the original projects' licences remain with their respective maintainers. [Browse all current forks](https://github.com/KeilerHirsch?tab=repositories&type=fork).
-
-- [MemPalace fork](https://github.com/KeilerHirsch/mempalace) — upstream: [MemPalace/mempalace](https://github.com/MemPalace/mempalace).
-- [TrimatikLogger fork](https://github.com/KeilerHirsch/TrimatikLogger) — upstream: [cenders77/TrimatikLogger](https://github.com/cenders77/TrimatikLogger).
-- [MoreRealistic FS25 fork](https://github.com/KeilerHirsch/MoreRealistic_FS25) — upstream: [quadural/MoreRealistic_FS25](https://github.com/quadural/MoreRealistic_FS25).
-- [Realistic Mechanical Systems FS25 fork](https://github.com/KeilerHirsch/FS25_RealisticMechanicalSystems) — upstream: [Squallqt/FS25_RealisticMechanicalSystems](https://github.com/Squallqt/FS25_RealisticMechanicalSystems).
-- [AutoDrive FS25 fork](https://github.com/KeilerHirsch/FS25_AutoDrive) — upstream: [Stephan-S/FS25_AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive).
-- [Courseplay FS25 fork](https://github.com/KeilerHirsch/Courseplay_FS25) — upstream: [Courseplay/Courseplay_FS25](https://github.com/Courseplay/Courseplay_FS25).
-
-Forking or studying a repository is **not** a claim of authorship, endorsement or an accepted upstream contribution. See each repository's actual history for changes and pull requests.
-
-</details>
-
-## Activity
-
-![GitHub activity — public metrics, original projects and contribution history](assets/activity-panel.svg)
-
-<sub>The code-language chart includes active public original projects from KeilerHirsch and KeilerHirschLabs (excluding profile, organization metadata, forks and archives); activity metrics refresh automatically from GitHub, with forks counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
-
-## How I build
-
-- **Evidence before claims.** Reproducible tests, provenance and observable outcomes matter more than impressive status labels.
-- **KISS at the surface.** The user experience should stay simple; stronger assurance belongs at boundaries where it pays off.
-- **Determinism where it matters.** Prefer explicit state, rules and verifiable sources over unexplained decisions.
-- **Engineering over theatre.** Use the language, architecture and checks the actual problem warrants.
-
-## Engineering DNA
-
-My background combines precision mechanics, industrial electronics and applied systems work with largely self-taught software engineering. The working-language list above is curated; the technology stack follows the problem, not the other way around.
+Focused issues and pull requests are welcome where the relevant project accepts contributions.
 
 <details>
-<summary><strong>Background & qualifications</strong></summary>
+<summary><strong>Working languages</strong> (owner-confirmed, not derived from repository percentages)</summary>
 
-- **Precision Mechanic** (`Feinwerkmechaniker`) — completed German vocational qualification.
-- **Electronics Technician for Industrial Engineering** (`Elektroniker für Betriebstechnik`) — completed German IHK vocational qualification.
-- **State-Certified Technician program in Mechanical Engineering — Aircraft Technology specialization** — Technische Fachschule Heinze, Hamburg; **13 of 24 full-time months completed; no qualification awarded**.
-- **23 months of voluntary military service** in the German Armed Forces (`Bundeswehr`).
-- **Autodidact by habit** — software/systems engineering, cybersecurity research, digital forensics, OSINT and AI-assisted development.
-- **Languages:** Polish · German · English.
+Ada/SPARK · C · C++ · C# · Python · Lua · JavaScript · TypeScript · PowerShell · Go · Rust · Kotlin · Dart
 
-That background shaped a simple habit: look for tolerances, failure modes, measurable behavior and maintainability before celebrating an elegant abstraction.
+Web technologies: HTML · CSS.
 
 </details>
-
-## Security & forensics
-
-Security research, OSINT and digital forensics follow the same discipline as engineering: preserve evidence, separate observations from interpretations, and make claims traceable. Research repositories are **not** claims that findings or vulnerabilities have been independently verified or remediated.
-
-## MAYHEM Club
-
-I founded and moderate [r/MAYHEMClub](https://www.reddit.com/r/MAYHEMClub/), a space for independent developers, modders and open-source builders to share work and get practical feedback.
-
-**Build cool shit. Share it. Get real feedback.**
-
-## Licence
-
-Repository-controlled automation software — including `tools/`, `tests/` and project-controlled workflow logic — is available under the [PolyForm Noncommercial License 1.0.0](LICENSE).
-
-Profile prose, personal branding and visual assets are **not** covered by that software licence unless explicitly stated otherwise. Third-party projects and linked content retain their own rights.
 
 ---
 
-*If the UI looks simple, someone probably suffered in the architecture first.*
-
-<!--
-🥚 You looked behind the curtain.
-The Man, The Myth, The Legend.
-— KeilerHirsch
--->
+<sub>Personal branding, prose and imagery are not covered by the repository's software license. Linked projects retain their own rights and licenses.</sub>
