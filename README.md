@@ -20,7 +20,7 @@ Independent software engineering · deterministic systems · security research �
 
 ### Featured
 
-- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project developing vehicle physics and a roadmap for connected mechanical systems. [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
+- **[Advanced Realism Suite (ARS)](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite)** — Farming Simulator 25 realism project developing vehicle physics and a roadmap for connected mechanical systems. Current project scope and distribution information are maintained in the linked repository.
 - **[PLLDN — Programming Language & Licensing Decision Navigator](https://github.com/KeilerHirsch/PLLDN-Programming-Language-Licensing-Decision-Navigator)** — browser-based, evidence-aware comparisons of programming languages and software licences. Source coverage and limitations are explained in the app. [Use the web app](https://keilerhirsch.github.io/PLLDN-Programming-Language-Licensing-Decision-Navigator/)
 - **[WOLPERTINGER](https://github.com/KeilerHirsch/wolpertinger)** — local-first Elite Dangerous companion with a deterministic journal-processing foundation. Follow the project roadmap and releases for current build status. [Project site](https://keilerhirsch.github.io/wolpertinger/)
 

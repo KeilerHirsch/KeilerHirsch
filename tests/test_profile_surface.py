@@ -99,6 +99,15 @@ class ProfileSurfaceTests(unittest.TestCase):
         self.assertIn("Forking or studying a repository", fork_segment)
         self.assertNotIn("[FS25_SmartVRAM]", original_segment)
 
+    def test_committed_activity_asset_uses_current_renderer_contract(self):
+        svg = (ROOT / "assets" / "activity-panel.svg").read_text(encoding="utf-8")
+        self.assertIn("LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", svg)
+        self.assertIn("LANGUAGES I WORK WITH · OWNER-CONFIRMED", svg)
+        self.assertIn("Linguist code-size shares; profile, archived, empty repos and forks excluded.", svg)
+        for language in ("Ada/SPARK", "C++", "PowerShell", "Kotlin", "Dart", "HTML", "CSS"):
+            self.assertIn(language, svg)
+        self.assertNotIn("FS25_SmartVRAM · pushed", svg)
+
     def test_activity_automation_contract(self):
         workflow_path = ROOT / ".github" / "workflows" / "profile-activity.yml"
         workflow = workflow_path.read_text(encoding="utf-8")
