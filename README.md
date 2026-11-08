@@ -2,7 +2,7 @@
 
 <img src="assets/profile-hero.webp" alt="KeilerHirsch Labs — High-assurance inside, KISS outside" width="100%">
 
-# KeilerHirsch Labs
+# [KeilerHirschLabs](https://github.com/KeilerHirschLabs)
 
 **KeilerHirsch · Independent developer & founder**
 
