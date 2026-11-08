@@ -80,11 +80,61 @@ def sample_data() -> dict:
                     ],
                 },
             },
-        }
+        },
+        "organization": {
+            "login": "KeilerHirschLabs",
+            "publicRepos": {"totalCount": 0},
+            "forkRepos": {"totalCount": 0},
+            "originalRepos": {"totalCount": 0, "nodes": []},
+        },
     }
 
 
 class ActivityPanelTests(unittest.TestCase):
+    def test_khl_projects_are_counted_without_organization_metadata(self):
+        data = sample_data()
+        data["organization"]["publicRepos"]["totalCount"] = 2
+        data["organization"]["originalRepos"] = {
+            "totalCount": 2,
+            "nodes": [
+                {
+                    "name": ".github", "nameWithOwner": "KeilerHirschLabs/.github",
+                    "isFork": False, "isEmpty": False, "isArchived": False,
+                    "pushedAt": "2026-11-08T14:34:48Z",
+                    "stargazerCount": 0, "forkCount": 0,
+                    "languages": {"edges": [{"size": 5000, "node": {"name": "Markdown", "color": ""}}]},
+                },
+                {
+                    "name": "SCUM-SENF", "nameWithOwner": "KeilerHirschLabs/SCUM-SENF",
+                    "isFork": False, "isEmpty": False, "isArchived": False,
+                    "pushedAt": "2026-11-08T14:10:17Z",
+                    "stargazerCount": 2, "forkCount": 0,
+                    "languages": {"edges": [{"size": 123, "node": {"name": "Python", "color": "#3572A5"}}]},
+                },
+            ],
+        }
+        model = build_panel_model(data, datetime(2026, 11, 8, tzinfo=timezone.utc))
+        self.assertIn("8 public (6 personal + 2 KHL)", model["portfolio"])
+        self.assertIn("3 active originals", model["portfolio"])
+        self.assertEqual(
+            model["languages"],
+            [
+                ("TypeScript", 300, "#3178c6"),
+                ("C#", 200, "#178600"),
+                ("Python", 123, "#3572A5"),
+                ("Ada", 100, "#02f88c"),
+            ],
+        )
+        self.assertNotIn("Markdown", {name for name, _, _ in model["languages"]})
+        self.assertEqual(model["recent"][0]["nameWithOwner"], "KeilerHirschLabs/SCUM-SENF")
+        self.assertIn("KeilerHirschLabs/SCUM-SENF", render_svg(model))
+
+    def test_missing_organization_fails_closed(self):
+        data = sample_data()
+        del data["organization"]
+        with self.assertRaises(KeyError):
+            build_panel_model(data, datetime(2026, 11, 8, tzinfo=timezone.utc))
+
     def test_repository_query_fails_closed_when_truncated(self):
         user = sample_data()["user"]
         user["originalRepos"]["totalCount"] = 101

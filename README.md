@@ -16,7 +16,7 @@ Independent software engineering · deterministic systems · security research �
 
 ## Projects
 
-**Selected original projects, not forks.** For current features, compatibility and releases, follow each project. [Browse all originals](https://github.com/KeilerHirsch?tab=repositories&type=source).
+**Selected original projects, not forks.** For current features, compatibility and releases, follow each project. [Personal originals](https://github.com/KeilerHirsch?tab=repositories&type=source) · [KHL projects](https://github.com/KeilerHirschLabs?tab=repositories).
 
 ### Featured
 
@@ -26,7 +26,7 @@ Independent software engineering · deterministic systems · security research �
 
 ### Research & experiments
 
-- **[SCUM-SENF](https://github.com/KeilerHirsch/SCUM-SENF)** — Research into SCUM server telemetry, observability and alerting; see the project for implemented features and any releases.
+- **[SCUM-SENF](https://github.com/KeilerHirschLabs/SCUM-SENF)** — Research into SCUM server telemetry, observability and alerting; see the project for implemented features and any releases.
 - **[Critical FAR Disclosure](https://github.com/KeilerHirsch/Critical-FAR-Disclosure)** — documentation workspace for evidence-first security disclosures. Only the repository's published records establish what has actually been documented.
 
 <details>
@@ -49,7 +49,7 @@ Forking or studying a repository is **not** a claim of authorship, endorsement o
 
 ![GitHub activity — public metrics, original projects and contribution history](assets/activity-panel.svg)
 
-<sub>The code-language chart uses active, nonempty public original projects (excluding the profile and archives); activity metrics refresh automatically from GitHub, with forks counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
+<sub>The code-language chart includes active public original projects from KeilerHirsch and KeilerHirschLabs (excluding profile, organization metadata, forks and archives); activity metrics refresh automatically from GitHub, with forks counted separately. The separate working-language list is owner-confirmed, not inferred from code percentages. Activity is not evidence of product maturity or test coverage.</sub>
 
 ## How I build
 

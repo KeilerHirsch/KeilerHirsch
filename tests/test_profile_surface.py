@@ -76,10 +76,12 @@ class ProfileSurfaceTests(unittest.TestCase):
         for repo in (
             "PLLDN-Programming-Language-Licensing-Decision-Navigator",
             "wolpertinger",
-            "SCUM-SENF",
             "Critical-FAR-Disclosure",
         ):
             self.assertIn(f"https://github.com/KeilerHirsch/{repo}", readme)
+
+        self.assertIn("https://github.com/KeilerHirschLabs/SCUM-SENF", readme)
+        self.assertNotIn("https://github.com/KeilerHirsch/SCUM-SENF", readme)
 
         for fork, upstream in (
             ("mempalace", "MemPalace/mempalace"),

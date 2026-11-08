@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 GRAPHQL_URL = "https://api.github.com/graphql"
+ORG_LOGIN = "KeilerHirschLabs"
 
 WIDTH = 1200
 LEFT = 40
@@ -90,7 +91,7 @@ def language_breakdown(
     colors: dict[str, str] = {}
 
     for repo in repositories:
-        if repo["name"].casefold() == login.casefold() or repo.get("isArchived", False):
+        if repo["name"].casefold() in {login.casefold(), ".github"} or repo.get("isArchived", False):
             continue
         if repo.get("isEmpty", False) or repo.get("isFork", False):
             continue
@@ -108,7 +109,7 @@ def total_language_bytes(repositories: list[dict], login: str) -> int:
     return sum(
         int(edge["size"])
         for repo in repositories
-        if repo["name"].casefold() != login.casefold()
+        if repo["name"].casefold() not in {login.casefold(), ".github"}
         and not repo.get("isArchived", False)
         and not repo.get("isEmpty", False)
         and not repo.get("isFork", False)
@@ -154,7 +155,7 @@ def recent_repositories(
     candidates = [
         repo
         for repo in repositories
-        if repo["name"].casefold() != login.casefold()
+        if repo["name"].casefold() not in {login.casefold(), ".github"}
         and not repo.get("isArchived", False)
         and not repo.get("isEmpty", False)
         and not repo.get("isFork", False)
@@ -177,22 +178,32 @@ def contribution_days(contributions: dict) -> list[dict]:
 
 def build_panel_model(data: dict, now: datetime) -> dict:
     user = data["user"]
-    repositories = validated_repositories(user)
+    organization = data["organization"]
+    if organization is None or organization.get("login") != ORG_LOGIN:
+        raise RuntimeError("KHL organization query failed or returned the wrong account")
+    repositories = validated_repositories(user) + validated_repositories(organization)
     contributions = user["contributionsCollection"]
     days = contribution_days(contributions)
     languages = language_breakdown(repositories, user["login"])
     language_bytes = total_language_bytes(repositories, user["login"])
     months = aggregate_months(days, now)
     thirty_total, thirty_active, thirty_best = window_metrics(days, now, 30)
-
-    stars = sum(int(repo.get("stargazerCount", 0)) for repo in repositories)
-    downstream_forks = sum(int(repo.get("forkCount", 0)) for repo in repositories)
-    fork_count = int(user["forkRepos"]["totalCount"])
-
+    projects = [
+        repo for repo in repositories
+        if repo["name"].casefold() not in {user["login"].casefold(), ".github"}
+        and not repo.get("isArchived", False)
+        and not repo.get("isEmpty", False)
+        and not repo.get("isFork", False)
+    ]
+    stars = sum(int(repo.get("stargazerCount", 0)) for repo in projects)
+    downstream_forks = sum(int(repo.get("forkCount", 0)) for repo in projects)
+    fork_count = int(user["forkRepos"]["totalCount"]) + int(organization["forkRepos"]["totalCount"])
+    personal_public = int(user["publicRepos"]["totalCount"])
+    khl_public = int(organization["publicRepos"]["totalCount"])
     return {
         "account": (
             f"GitHub since {user['createdAt'][:4]} · "
-            f"{user['publicRepos']['totalCount']} public repos · "
+            f"{personal_public} personal public repos · "
             f"{user['followers']['totalCount']} followers · "
             f"{user['following']['totalCount']} following"
         ),
@@ -209,8 +220,8 @@ def build_panel_model(data: dict, now: datetime) -> dict:
             f"{thirty_active} active days · {thirty_best}"
         ),
         "portfolio": (
-            f"{user['publicRepos']['totalCount']} public · "
-            f"{user['originalRepos']['totalCount']} original · "
+            f"{personal_public + khl_public} public ({personal_public} personal + {khl_public} KHL) · "
+            f"{len(projects)} active originals · "
             f"{fork_count} {'fork' if fork_count == 1 else 'forks'} · "
             f"{stars} {'star' if stars == 1 else 'stars'} · "
             f"{downstream_forks} downstream "
@@ -391,7 +402,7 @@ def render_svg(model: dict) -> str:
             parts.append(
                 svg_text(
                     LEFT, recent_top + 29 * i,
-                    f"{short_repo_name(repo['name'])} · pushed {pushed:%Y-%m-%d}",
+                    f"{short_repo_name(repo.get('nameWithOwner', repo['name']))} · pushed {pushed:%Y-%m-%d}",
                     size=18,
                 )
             )
@@ -409,7 +420,7 @@ def render_svg(model: dict) -> str:
 
 
 QUERY = """
-query($login: String!, $from: DateTime!, $to: DateTime!) {
+query($login: String!, $organization: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
     login
     createdAt
@@ -418,27 +429,20 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
     publicRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC) { totalCount }
     forkRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC, isFork: true) { totalCount }
     originalRepos: repositories(
-      first: 100
-      ownerAffiliations: [OWNER]
-      privacy: PUBLIC
-      isFork: false
+      first: 100, ownerAffiliations: [OWNER], privacy: PUBLIC, isFork: false,
       orderBy: {field: PUSHED_AT, direction: DESC}
     ) {
       totalCount
       nodes {
         name
+        nameWithOwner
         isFork
         isEmpty
         isArchived
         pushedAt
         stargazerCount
         forkCount
-        languages(first: 100) {
-          edges {
-            size
-            node { name color }
-          }
-        }
+        languages(first: 100) { edges { size node { name color } } }
       }
     }
     contributionsCollection(from: $from, to: $to) {
@@ -446,9 +450,29 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
       totalPullRequestContributions
       contributionCalendar {
         totalContributions
-        weeks {
-          contributionDays { date contributionCount }
-        }
+        weeks { contributionDays { date contributionCount } }
+      }
+    }
+  }
+  organization(login: $organization) {
+    login
+    publicRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC) { totalCount }
+    forkRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC, isFork: true) { totalCount }
+    originalRepos: repositories(
+      first: 100, ownerAffiliations: [OWNER], privacy: PUBLIC, isFork: false,
+      orderBy: {field: PUSHED_AT, direction: DESC}
+    ) {
+      totalCount
+      nodes {
+        name
+        nameWithOwner
+        isFork
+        isEmpty
+        isArchived
+        pushedAt
+        stargazerCount
+        forkCount
+        languages(first: 100) { edges { size node { name color } } }
       }
     }
   }
@@ -474,7 +498,7 @@ def main() -> None:
     data = graphql(
         token,
         QUERY,
-        {"login": args.user, "from": start.isoformat(), "to": now.isoformat()},
+        {"login": args.user, "organization": ORG_LOGIN, "from": start.isoformat(), "to": now.isoformat()},
     )
     model = build_panel_model(data, now)
     Path(args.output).write_text(render_svg(model), encoding="utf-8")
