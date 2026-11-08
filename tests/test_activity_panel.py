@@ -8,6 +8,8 @@ from tools.render_activity_panel import (
     language_breakdown,
     recent_repositories,
     render_svg,
+    format_percentage,
+    total_language_bytes,
     short_repo_name,
     validated_repositories,
     window_metrics,
@@ -159,7 +161,7 @@ class ActivityPanelTests(unittest.TestCase):
         )
 
         self.assertEqual((total, active), (10, 2))
-        self.assertEqual(best, "best day 7 on 09-20")
+        self.assertEqual(best, "best day 7 on 2026-09-20")
 
     def test_recent_repositories_excludes_profile_and_archived(self):
         repos = [
@@ -175,6 +177,110 @@ class ActivityPanelTests(unittest.TestCase):
             [repo["name"] for repo in recent_repositories(repos, "KeilerHirsch")],
             ["A", "B", "C"],
         )
+
+    def test_all_original_languages_appear_and_fill_visual_bar(self):
+        names = [
+            "TypeScript", "C#", "JavaScript", "Ada", "Python",
+            "Lua", "CSS", "PowerShell", "HTML",
+        ]
+        repo = {
+            "name": "ActualProject",
+            "isArchived": False,
+            "isEmpty": False,
+            "languages": {
+                "edges": [
+                    {
+                        "size": (1000 if i == 0 else 30 - i),
+                        "node": {"name": name, "color": "#123456"},
+                    }
+                    for i, name in enumerate(names)
+                ]
+            },
+        }
+        ignored_empty = {
+            "name": "EmptyProject",
+            "isArchived": False,
+            "isEmpty": True,
+            "languages": {
+                "edges": [{"size": 999999, "node": {"name": "Rust", "color": "#123456"}}]
+            },
+        }
+        ignored_fork = {
+            "name": "UpstreamFork",
+            "isFork": True,
+            "isArchived": False,
+            "languages": {
+                "edges": [{"size": 777777, "node": {"name": "Go", "color": "#123456"}}]
+            },
+        }
+        repos = [repo, ignored_empty, ignored_fork]
+        languages = language_breakdown(repos, "KeilerHirsch")
+        total = total_language_bytes(repos, "KeilerHirsch")
+        self.assertEqual(len(languages), len(names))
+        self.assertEqual({name for name, _, _ in languages}, set(names))
+        self.assertEqual(total, sum(size for _, size, _ in languages))
+        self.assertNotIn("Rust", {name for name, _, _ in languages})
+        self.assertNotIn("Go", {name for name, _, _ in languages})
+
+        model = build_panel_model(sample_data(), datetime(2026, 9, 20, tzinfo=timezone.utc))
+        model["languages"] = languages
+        model["language_bytes"] = total
+        output = render_svg(model)
+        root = ET.fromstring(output)
+        self.assertIn("ALL 9 DETECTED", output)
+        for name in names:
+            self.assertIn(name + " ", output)
+        self.assertIn("NOT SKILL LEVEL", output)
+        self.assertIn("Language shares are GitHub Linguist", output)
+
+        svg_ns = "{http://www.w3.org/2000/svg}"
+        group = root.find(f"{svg_ns}g")
+        segments = group.findall(f"{svg_ns}rect")
+        self.assertEqual(len(segments), 9)
+        self.assertAlmostEqual(
+            sum(float(segment.attrib["width"]) for segment in segments),
+            1120,
+            delta=0.02,
+        )
+        self.assertGreater(int(root.attrib["height"]), 540)
+
+    def test_missing_and_small_language_shares_are_readable(self):
+        self.assertEqual(format_percentage(0, 0), "0%")
+        self.assertEqual(format_percentage(1, 50000), "<0.1%")
+        self.assertEqual(format_percentage(1, 1000), "0.1%")
+        self.assertEqual(format_percentage(1, 4), "25%")
+
+    def test_recent_repositories_ignore_empty_newly_created_repo(self):
+        repos = [
+            {
+                "name": "FS25_SmartVRAM", "isArchived": False,
+                "isEmpty": True, "pushedAt": "2026-11-07T18:43:26Z",
+            },
+            {
+                "name": "PLLDN", "isArchived": False,
+                "isEmpty": False, "pushedAt": "2026-11-07T02:13:00Z",
+            },
+            {
+                "name": "KeilerHirsch", "isArchived": False,
+                "isEmpty": False, "pushedAt": "2026-11-08T00:00:00Z",
+            },
+        ]
+        self.assertEqual(
+            [repo["name"] for repo in recent_repositories(repos, "KeilerHirsch")],
+            ["PLLDN"],
+        )
+
+    def test_language_colors_are_restricted_to_valid_hex(self):
+        repo = {
+            "name": "Project",
+            "isArchived": False,
+            "languages": {
+                "edges": [{"size": 12, "node": {
+                    "name": "C#", "color": '" onmouseover="alert(1)'
+                }}]
+            },
+        }
+        self.assertEqual(language_breakdown([repo], "KeilerHirsch")[0][2], "#7f8a99")
 
     def test_short_repo_name_is_bounded(self):
         self.assertEqual(short_repo_name("short"), "short")

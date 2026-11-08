@@ -5,6 +5,7 @@ import argparse
 import html
 import json
 import os
+import re
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -13,7 +14,6 @@ from urllib.request import Request, urlopen
 GRAPHQL_URL = "https://api.github.com/graphql"
 
 WIDTH = 1200
-HEIGHT = 540
 LEFT = 40
 RIGHT = 1160
 TRACK_WIDTH = 1120
@@ -76,21 +76,24 @@ def validated_repositories(user: dict) -> list[dict]:
 def language_breakdown(
     repositories: list[dict],
     login: str,
-    limit: int = 4,
 ) -> list[tuple[str, int, str]]:
+    """Every GitHub Linguist language from published original repos, not a skills list."""
     totals: dict[str, int] = defaultdict(int)
     colors: dict[str, str] = {}
 
     for repo in repositories:
         if repo["name"].casefold() == login.casefold() or repo.get("isArchived", False):
             continue
+        if repo.get("isEmpty", False) or repo.get("isFork", False):
+            continue
         for edge in repo.get("languages", {}).get("edges", []):
             name = edge["node"]["name"]
             totals[name] += int(edge["size"])
-            colors[name] = edge["node"].get("color") or FALLBACK
+            color = edge["node"].get("color") or ""
+            colors[name] = color if re.fullmatch(r"#[0-9a-fA-F]{6}", color) else FALLBACK
 
     ordered = sorted(totals.items(), key=lambda item: (-item[1], item[0].casefold()))
-    return [(name, size, colors[name]) for name, size in ordered[:limit]]
+    return [(name, size, colors[name]) for name, size in ordered]
 
 
 def total_language_bytes(repositories: list[dict], login: str) -> int:
@@ -99,6 +102,8 @@ def total_language_bytes(repositories: list[dict], login: str) -> int:
         for repo in repositories
         if repo["name"].casefold() != login.casefold()
         and not repo.get("isArchived", False)
+        and not repo.get("isEmpty", False)
+        and not repo.get("isFork", False)
         for edge in repo.get("languages", {}).get("edges", [])
     )
 
@@ -129,7 +134,7 @@ def window_metrics(
         return 0, 0, "no activity"
 
     best_date, best_count = max(selected, key=lambda item: (item[1], item[0]))
-    best = f"best day {best_count} on {best_date:%m-%d}" if best_count else "best day 0"
+    best = f"best day {best_count} on {best_date:%Y-%m-%d}" if best_count else "no activity"
     return total, active, best
 
 
@@ -143,6 +148,8 @@ def recent_repositories(
         for repo in repositories
         if repo["name"].casefold() != login.casefold()
         and not repo.get("isArchived", False)
+        and not repo.get("isEmpty", False)
+        and not repo.get("isFork", False)
         and isinstance(repo.get("pushedAt"), str)
     ]
     return sorted(candidates, key=lambda repo: repo["pushedAt"], reverse=True)[:limit]
@@ -190,7 +197,8 @@ def build_panel_model(data: dict, now: datetime) -> dict:
             f"{contributions['totalPullRequestContributions']} PRs"
         ),
         "window": (
-            f"{thirty_total} contributions · {thirty_active} active days · {thirty_best}"
+            f"Past 30 days: {thirty_total} contributions · "
+            f"{thirty_active} active days · {thirty_best}"
         ),
         "portfolio": (
             f"{user['publicRepos']['totalCount']} public · "
@@ -228,103 +236,156 @@ def svg_text(
     return f"<text {' '.join(attributes)}>{html.escape(value)}</text>"
 
 
-def render_svg(model: dict) -> str:
-    months = model["months"]
-    max_month = max((count for _, count in months), default=0) or 1
+def format_percentage(size: int, total: int) -> str:
+    """Readable, honest labels for small language shares."""
+    if not total:
+        return "0%"
+    percent = 100 * size / total
+    if 0 < percent < 0.05:
+        return "<0.1%"
+    if percent < 10:
+        return f"{percent:.1f}%"
+    return f"{percent:.0f}%"
 
+
+def render_svg(model: dict) -> str:
+    languages = model["languages"]
+    language_bytes = model["language_bytes"]
+    months = model["months"]
+    recent = model["recent"]
+
+    legend_rows = max(1, (len(languages) + 2) // 3)
+    legend_top = 227
+    legend_bottom = legend_top + 29 * (legend_rows - 1)
+    divider_after_languages = legend_bottom + 28
+    activity_title_y = divider_after_languages + 36
+    monthly_baseline = activity_title_y + 64
+    monthly_date_y = monthly_baseline + 18
+    activity_metrics_y = monthly_baseline + 40
+    window_y = activity_metrics_y + 57
+    portfolio_y = window_y + 55
+    recent_title_y = portfolio_y + 51
+    recent_top = recent_title_y + 29
+    height = recent_top + 29 * max(len(recent), 1) + 39
+
+    max_month = max((count for _, count in months), default=0) or 1
     parts = [
         (
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{HEIGHT}" '
-            f'viewBox="0 0 {WIDTH} {HEIGHT}" role="img" aria-labelledby="title desc">'
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
+            f'viewBox="0 0 {WIDTH} {height}" role="img" aria-labelledby="title desc">'
         ),
-        '<title id="title">GitHub activity</title>',
+        '<title id="title">GitHub activity: code languages, contributions and portfolio</title>',
         (
-            '<desc id="desc">Automatically refreshed GitHub account metrics, language share, '
-            'contribution momentum, portfolio totals, and recently pushed repositories.</desc>'
+            '<desc id="desc">GitHub Linguist shares across all public original repositories, '
+            'excluding forks and empty repositories. This is source-code composition, '
+            'not a list of every language the developer knows. '
+            'GitHub contribution metrics and recently pushed nonempty projects follow.</desc>'
         ),
-        f'<rect width="{WIDTH}" height="{HEIGHT}" rx="18" fill="{BG}"/>',
+        f'<rect width="{WIDTH}" height="{height}" rx="18" fill="{BG}"/>',
         (
-            f'<rect x="1" y="1" width="{WIDTH - 2}" height="{HEIGHT - 2}" '
+            f'<rect x="1" y="1" width="{WIDTH - 2}" height="{height - 2}" '
             f'rx="17" fill="none" stroke="{BORDER}"/>'
         ),
         svg_text(LEFT, 48, "GITHUB ACTIVITY", size=27, weight=700),
-        svg_text(RIGHT, 24, "AUTO · GitHub GraphQL", fill=MUTED, size=13, anchor="end"),
+        svg_text(RIGHT, 27, "AUTO · GitHub GraphQL", fill=MUTED, size=14, anchor="end"),
         f'<path d="M{LEFT} 70H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
-        svg_text(LEFT, 108, model["account"], size=23, weight=600),
-        f'<path d="M{LEFT} 132H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
-        f'<rect x="{LEFT}" y="148" width="{TRACK_WIDTH}" height="17" rx="8" fill="{TRACK}"/>',
+        svg_text(LEFT, 107, model["account"], size=23, weight=600),
+        f'<path d="M{LEFT} 133H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, 161, "LANGUAGES · PUBLISHED ORIGINAL CODE", size=17, weight=700),
+        svg_text(
+            RIGHT, 161,
+            f"ALL {len(languages)} DETECTED · BYTE SHARE, NOT SKILL LEVEL",
+            fill=MUTED, size=14, anchor="end",
+        ),
+        f'<rect x="{LEFT}" y="179" width="{TRACK_WIDTH}" height="15" rx="7" fill="{TRACK}"/>',
+        (
+            '<clipPath id="language-bar-clip">'
+            f'<rect x="{LEFT}" y="179" width="{TRACK_WIDTH}" height="15" rx="7"/>'
+            '</clipPath>'
+        ),
+        '<g clip-path="url(#language-bar-clip)">',
     ]
 
     cursor = float(LEFT)
-    legend = []
-    language_bytes = model["language_bytes"]
     if language_bytes:
-        for name, size, color in model["languages"]:
+        for _, size, color in languages:
             width = TRACK_WIDTH * size / language_bytes
             parts.append(
-                f'<rect x="{cursor:.1f}" y="148" width="{width:.1f}" '
-                f'height="17" rx="8" fill="{color}"/>'
+                f'<rect x="{cursor:.3f}" y="179" width="{width:.3f}" '
+                f'height="15" fill="{color}"/>'
             )
             cursor += width
-            legend.append(f"{name} {100 * size / language_bytes:.0f}%")
+    parts.append("</g>")
+
+    if not languages:
+        parts.append(
+            svg_text(LEFT, legend_top, "No published original-repository source languages detected",
+                     fill=SOFT, size=18)
+        )
+    else:
+        columns = (LEFT, 422, 810)
+        for i, (name, size, color) in enumerate(languages):
+            x = columns[i % 3]
+            y = legend_top + 29 * (i // 3)
+            parts.append(
+                f'<rect x="{x}" y="{y - 13}" width="12" height="12" '
+                f'rx="3" fill="{color}"/>'
+            )
+            parts.append(
+                svg_text(
+                    x + 22, y, f"{name} {format_percentage(size, language_bytes)}",
+                    fill=SOFT, size=17,
+                )
+            )
 
     parts += [
-        svg_text(
-            LEFT,
-            198,
-            " · ".join(legend) if legend else "No language data yet",
-            fill=SOFT,
-            size=20,
-        ),
-        f'<path d="M{LEFT} 219H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        f'<path d="M{LEFT} {divider_after_languages}H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, activity_title_y, "CONTRIBUTIONS · LAST 12 MONTHS", size=17, weight=700),
     ]
 
     start_x = LEFT
-    baseline = 276
     bar_width = 25
     gap = 13
-    for index, (_, count) in enumerate(months):
-        height = 5 if count == 0 else max(8, 40 * count / max_month)
+    for index, (month, count) in enumerate(months):
+        bar_height = 5 if count == 0 else max(8, 38 * count / max_month)
         x = start_x + index * (bar_width + gap)
-        y = baseline - height
+        y = monthly_baseline - bar_height
         parts.append(
             f'<rect x="{x}" y="{y:.1f}" width="{bar_width}" '
-            f'height="{height:.1f}" rx="3" fill="{ACCENT}"/>'
+            f'height="{bar_height:.1f}" rx="3" fill="{ACCENT}"/>'
         )
+        parts.append(svg_text(x + bar_width // 2, monthly_date_y, month[-2:],
+                              fill=MUTED, size=13, anchor="middle"))
 
     parts += [
-        svg_text(570, 258, model["contribution_totals"], fill=SOFT, size=19),
-        f'<path d="M{LEFT} 294H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
-        svg_text(LEFT, 334, model["window"], size=22, weight=600),
-        f'<path d="M{LEFT} 358H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
-        svg_text(LEFT, 396, model["portfolio"], fill=SOFT, size=21),
-        f'<path d="M{LEFT} 420H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(570, monthly_baseline - 14, model["contribution_totals"], fill=SOFT, size=18),
+        f'<path d="M{LEFT} {activity_metrics_y + 18}H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, window_y, model["window"], size=21, weight=600),
+        f'<path d="M{LEFT} {window_y + 19}H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, portfolio_y, model["portfolio"], fill=SOFT, size=20),
+        f'<path d="M{LEFT} {portfolio_y + 19}H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
+        svg_text(LEFT, recent_title_y, "RECENTLY PUSHED ORIGINAL PROJECTS", size=17, weight=700),
     ]
 
-    recent = model["recent"]
     if recent:
-        for y, repo in zip((458, 493, 526), recent):
+        for i, repo in enumerate(recent):
             pushed = datetime.fromisoformat(repo["pushedAt"].replace("Z", "+00:00"))
             parts.append(
                 svg_text(
-                    LEFT,
-                    y,
+                    LEFT, recent_top + 29 * i,
                     f"{short_repo_name(repo['name'])} · pushed {pushed:%Y-%m-%d}",
-                    size=19,
-                    weight=600,
+                    size=18,
                 )
             )
     else:
-        parts.append(
-            svg_text(
-                LEFT,
-                458,
-                "No recent public project activity",
-                fill=SOFT,
-                size=19,
-            )
-        )
+        parts.append(svg_text(LEFT, recent_top, "No recent nonempty originals",
+                              fill=SOFT, size=18))
 
+    parts.append(
+        svg_text(LEFT, height - 17,
+                 "Language shares are GitHub Linguist code-size estimates; forks excluded.",
+                 fill=MUTED, size=14)
+    )
     parts.append("</svg>")
     return "\n".join(parts) + "\n"
 
@@ -348,6 +409,8 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
       totalCount
       nodes {
         name
+        isFork
+        isEmpty
         isArchived
         pushedAt
         stargazerCount
