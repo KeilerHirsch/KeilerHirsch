@@ -18,6 +18,7 @@ on:
       - tools/render_activity_panel.py
       - tests/**
       - assets/activity-panel.svg
+      - assets/activity-panel-mobile.svg
       - .github/workflows/profile-activity.yml
 
 # Pull requests may execute proposed code but must never hold a write token.
@@ -44,7 +45,7 @@ jobs:
       - name: Render activity panel without publishing
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python tools/render_activity_panel.py --output assets/activity-panel.svg
+        run: python tools/render_activity_panel.py --output assets/activity-panel.svg --mobile-output assets/activity-panel-mobile.svg
 
   refresh:
     if: github.event_name != 'pull_request'
@@ -66,8 +67,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          python tools/render_activity_panel.py --output assets/activity-panel.svg
-          if git diff --quiet -- assets/activity-panel.svg; then
+          python tools/render_activity_panel.py --output assets/activity-panel.svg --mobile-output assets/activity-panel-mobile.svg
+          if git diff --quiet -- assets/activity-panel.svg assets/activity-panel-mobile.svg; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -78,6 +79,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- assets/activity-panel.svg
+          git add -- assets/activity-panel.svg assets/activity-panel-mobile.svg
           git commit -m "chore: refresh profile activity"
           git push

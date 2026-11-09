@@ -204,9 +204,9 @@ def build_panel_model(data: dict, now: datetime) -> dict:
         "account": (
             f"GitHub since {user['createdAt'][:4]} · "
             f"{personal_public} personal public repos · "
-            f"{user['followers']['totalCount']} followers · "
-            f"{user['following']['totalCount']} following"
+            f"{user['followers']['totalCount']} followers"
         ),
+        "snapshot": now.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "languages": languages,
         "language_bytes": language_bytes,
         "months": months,
@@ -312,6 +312,8 @@ def render_svg(model: dict) -> str:
         ),
         svg_text(LEFT, 48, "GITHUB ACTIVITY", size=27, weight=700),
         svg_text(RIGHT, 27, "AUTO · GitHub GraphQL", fill=MUTED, size=14, anchor="end"),
+        svg_text(RIGHT, 49, "Metrics changed · " + model["snapshot"],
+                 fill=MUTED, size=14, anchor="end"),
         f'<path d="M{LEFT} 70H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
         svg_text(LEFT, 107, model["account"], size=23, weight=600),
         f'<path d="M{LEFT} 133H{RIGHT}" stroke="{TRACK}" stroke-width="1"/>',
@@ -419,13 +421,152 @@ def render_svg(model: dict) -> str:
     return "\n".join(parts) + "\n"
 
 
+
+def wrap_labels(items: tuple[str, ...], max_chars: int = 35) -> list[str]:
+    """Wrap owner-confirmed skills without dropping a single language."""
+    lines: list[str] = []
+    for item in items:
+        if not lines or len(lines[-1]) + 3 + len(item) > max_chars:
+            lines.append(item)
+        else:
+            lines[-1] += " \u00b7 " + item
+    return lines
+
+
+def render_mobile_svg(model: dict) -> str:
+    """Narrow portrait layout, derived from the exact desktop data model."""
+    width, left, content_width = 360, 20, 320
+    parts: list[str] = []
+    y = 0
+
+    def line(label: str, *, size: int = 16, fill: str = TEXT,
+             weight: int | None = None, x: int = left, gap: int = 25) -> None:
+        nonlocal y
+        y += gap
+        parts.append(svg_text(x, y, label, size=size, fill=fill, weight=weight))
+
+    def rule() -> None:
+        nonlocal y
+        y += 18
+        parts.append(f'<path d="M{left} {y}H{width - left}" stroke="{TRACK}"/>')
+        y += 8
+
+    def section(label: str) -> None:
+        line(label, size=16, weight=700, gap=30)
+
+    line("GITHUB ACTIVITY", size=23, weight=700, gap=38)
+    line("AUTO \u00b7 GitHub GraphQL", size=15, fill=MUTED, gap=24)
+    line("Metrics changed \u00b7 " + model["snapshot"], size=14, fill=MUTED, gap=23)
+    rule()
+
+    # The GitHub sidebar is the natural source for following counts.
+    for fragment in model["account"].split(" \u00b7 "):
+        line(fragment, size=16, weight=600, gap=24)
+    rule()
+
+    languages = model["languages"]
+    language_bytes = model["language_bytes"]
+    section("CODE LANGUAGES \u00b7 LINGUIST")
+    line(f"All {len(languages)} detected \u00b7 byte share, not skill", size=14, fill=MUTED, gap=24)
+    y += 17
+    bar_y = y
+    parts.append(f'<rect x="{left}" y="{bar_y}" width="{content_width}" height="14" rx="7" fill="{TRACK}"/>')
+    parts.append(f'<clipPath id="mobile-lang-clip"><rect x="{left}" y="{bar_y}" width="{content_width}" height="14" rx="7"/></clipPath>')
+    parts.append('<g clip-path="url(#mobile-lang-clip)">')
+    cursor = float(left)
+    if language_bytes:
+        for _, size, color in languages:
+            span = content_width * size / language_bytes
+            parts.append(f'<rect x="{cursor:.3f}" y="{bar_y}" width="{span:.3f}" height="14" fill="{color}"/>')
+            cursor += span
+    parts.append("</g>")
+    y += 34
+
+    # Use two columns until a long language label needs the full width.
+    columns = 2 if all(
+        len(name) + len(format_percentage(size, language_bytes)) + 1 <= 16
+        for name, size, _ in languages
+    ) else 1
+    if not languages:
+        line("No published source languages detected", size=14, fill=SOFT, gap=18)
+    for index, (name, size, color) in enumerate(languages):
+        column, row = index % columns, index // columns
+        x = left + column * 166
+        line_y = y + row * 30
+        parts.append(f'<rect x="{x}" y="{line_y - 12}" width="11" height="11" rx="3" fill="{color}"/>')
+        label = f"{name} {format_percentage(size, language_bytes)}"
+        parts.append(svg_text(x + 17, line_y, label, size=15, fill=SOFT))
+    y += 30 * max(1, (len(languages) + columns - 1) // columns)
+    rule()
+
+    section("LANGUAGES I WORK WITH")
+    line("Owner-confirmed \u00b7 not inferred from code", size=14, fill=MUTED, gap=22)
+    for row in wrap_labels(WORKING_LANGUAGES):
+        line(row, size=16, fill=SOFT, gap=25)
+    line("Web: " + " \u00b7 ".join(WEB_TECHNOLOGIES), size=16, fill=SOFT, gap=25)
+    rule()
+
+    section("CONTRIBUTIONS \u00b7 LAST 12 MONTHS")
+    months = model["months"]
+    if len(months) != 12:
+        raise ValueError("Expected 12 monthly contribution buckets")
+    max_month = max((n for _, n in months), default=0) or 1
+    baseline = y + 72
+    for idx, (month, count) in enumerate(months):
+        bar_height = 5 if count == 0 else max(8, 46 * count / max_month)
+        x = left + 26 * idx
+        parts.append(f'<rect x="{x}" y="{baseline - bar_height:.1f}" width="14" height="{bar_height:.1f}" rx="3" fill="{ACCENT}"/>')
+        parts.append(svg_text(x + 7, baseline + 20, month[-2:], fill=MUTED, size=13, anchor="middle"))
+    y = baseline + 37
+
+    for fragment in model["contribution_totals"].split(" \u00b7 "):
+        line(fragment, size=16, fill=SOFT, gap=25)
+    rule()
+
+    section("LAST 30 DAYS")
+    for fragment in model["window"].replace("Past 30 days: ", "").split(" \u00b7 "):
+        line(fragment, size=16, gap=25)
+    rule()
+
+    section("PORTFOLIO \u00b7 PUBLIC")
+    for fragment in model["portfolio"].split(" \u00b7 "):
+        line(fragment, size=15, fill=SOFT, gap=25)
+    rule()
+
+    section("RECENT ORIGINAL PROJECTS")
+    if not model["recent"]:
+        line("No recent nonempty originals", size=15, fill=SOFT, gap=25)
+    for repo in model["recent"]:
+        # All references are in the KeilerHirschLabs org or the personal account.
+        name = repo["name"]
+        line(short_repo_name(name, 35), size=16, weight=600, gap=29)
+        pushed = datetime.fromisoformat(repo["pushedAt"].replace("Z", "+00:00"))
+        line(f"Last push: {pushed:%Y-%m-%d}", size=14, fill=MUTED, gap=20)
+    rule()
+    line("Shares: source bytes, not proficiency.", size=14, fill=MUTED, gap=20)
+    line("Excludes profile, forks, empty & archived.", size=14, fill=MUTED, gap=21)
+    height = y + 26
+
+    header = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
+        '<title id="title">Mobile GitHub activity: code languages, contributions and projects</title>',
+        '<desc id="desc">GitHub Linguist distribution from nonempty public original projects. '
+        'Includes the full owner-confirmed working-language list, contributions, '
+        'portfolio and up to three recently pushed projects. Last changed timestamp is in UTC.</desc>',
+        f'<rect width="{width}" height="{height}" rx="12" fill="{BG}"/>',
+        f'<rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="11" '
+        f'fill="none" stroke="{BORDER}"/>',
+    ]
+    return "\n".join(header + parts + ["</svg>"]) + "\n"
+
+
 QUERY = """
 query($login: String!, $organization: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
     login
     createdAt
     followers { totalCount }
-    following { totalCount }
     publicRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC) { totalCount }
     forkRepos: repositories(ownerAffiliations: [OWNER], privacy: PUBLIC, isFork: true) { totalCount }
     originalRepos: repositories(
@@ -480,6 +621,26 @@ query($login: String!, $organization: String!, $from: DateTime!, $to: DateTime!)
 """
 
 
+
+def write_panels(model: dict, desktop: Path, mobile_file: Path | None = None) -> None:
+
+    # Mark the time of the LAST CHANGED METRICS, not an unobservable live feed.
+    # Repeated scheduled fetches with identical data must not generate bot commits.
+    if mobile_file and desktop.is_file() and mobile_file.is_file():
+        previous = desktop.read_text(encoding="utf-8")
+        prior_stamp = re.search(r"Metrics changed \u00b7 ([0-9]{4}-[0-9]{2}-[0-9]{2} "
+                                r"[0-9]{2}:[0-9]{2} UTC)", previous)
+        if prior_stamp:
+            unchanged = dict(model, snapshot=prior_stamp.group(1))
+            if (previous == render_svg(unchanged)
+                    and mobile_file.read_text(encoding="utf-8") == render_mobile_svg(unchanged)):
+                return
+
+    desktop.write_text(render_svg(model), encoding="utf-8")
+    if mobile_file:
+        mobile_file.write_text(render_mobile_svg(model), encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -487,6 +648,7 @@ def main() -> None:
         default=os.environ.get("GITHUB_REPOSITORY_OWNER", "KeilerHirsch"),
     )
     parser.add_argument("--output", default="assets/activity-panel.svg")
+    parser.add_argument("--mobile-output", help="Optional mobile SVG, same fetched data")
     args = parser.parse_args()
 
     token = os.environ.get("GITHUB_TOKEN")
@@ -501,7 +663,8 @@ def main() -> None:
         {"login": args.user, "organization": ORG_LOGIN, "from": start.isoformat(), "to": now.isoformat()},
     )
     model = build_panel_model(data, now)
-    Path(args.output).write_text(render_svg(model), encoding="utf-8")
+    write_panels(model, Path(args.output),
+                 Path(args.mobile_output) if args.mobile_output else None)
 
 
 if __name__ == "__main__":

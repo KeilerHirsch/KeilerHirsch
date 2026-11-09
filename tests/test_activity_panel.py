@@ -1,4 +1,6 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
@@ -8,6 +10,9 @@ from tools.render_activity_panel import (
     language_breakdown,
     recent_repositories,
     render_svg,
+    render_mobile_svg,
+    write_panels,
+    QUERY,
     format_percentage,
     total_language_bytes,
     WORKING_LANGUAGES,
@@ -305,10 +310,14 @@ class ActivityPanelTests(unittest.TestCase):
         model["languages"] = languages
         model["language_bytes"] = total
         output = render_svg(model)
+        mobile_output = render_mobile_svg(model)
         root = ET.fromstring(output)
+        ET.fromstring(mobile_output)
         self.assertIn("ALL 9 DETECTED", output)
+        self.assertIn("All 9 detected", mobile_output)
         for name in names:
             self.assertIn(name + " ", output)
+            self.assertIn(name + " ", mobile_output)
         self.assertIn("NOT SKILL LEVEL", output)
         self.assertIn("Linguist code-size shares; profile, archived, empty repos and forks excluded.", output)
         self.assertIn("LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", output)
@@ -332,6 +341,62 @@ class ActivityPanelTests(unittest.TestCase):
             delta=0.02,
         )
         self.assertGreater(int(root.attrib["height"]), 540)
+
+    def test_mobile_layout_shows_every_language_and_source_qualifier(self):
+        model = build_panel_model(sample_data(), datetime(2026, 11, 9, tzinfo=timezone.utc))
+        desktop = render_svg(model)
+        mobile = render_mobile_svg(model)
+        root = ET.fromstring(mobile)
+        self.assertEqual(root.attrib["viewBox"].split()[2], "360")
+        self.assertIn("Metrics changed", mobile)
+        self.assertIn("Owner-confirmed", mobile)
+        self.assertIn("byte share, not skill", mobile)
+        self.assertIn("RECENT ORIGINAL PROJECTS", mobile)
+        self.assertNotIn("following", desktop.lower())
+        self.assertNotIn("following", mobile.lower())
+        self.assertNotIn("following { totalCount }", QUERY)
+        for language in WORKING_LANGUAGES:
+            self.assertIn(language, mobile)
+        for language in WEB_TECHNOLOGIES:
+            self.assertIn(language, mobile)
+        for name, _, _ in model["languages"]:
+            self.assertIn(name, desktop)
+            self.assertIn(name, mobile)
+
+    def test_mobile_long_language_label_gets_full_width(self):
+        model = build_panel_model(sample_data(), datetime(2026, 11, 9, tzinfo=timezone.utc))
+        model["languages"] = [
+            ("Objective-C++", 100, "#123456"),
+            ("Rust", 10, "#456789"),
+        ]
+        model["language_bytes"] = 110
+        svg = render_mobile_svg(model)
+        ns = "{http://www.w3.org/2000/svg}"
+        labels = {
+            elem.text: elem.attrib["x"]
+            for elem in ET.fromstring(svg).findall(ns + "text")
+        }
+        self.assertEqual(labels["Objective-C++ 91%"], labels["Rust 9.1%"])
+
+    def test_repeated_identical_metrics_do_not_refresh_timestamp(self):
+        model = build_panel_model(sample_data(), datetime(2026, 11, 9, 8, 0, tzinfo=timezone.utc))
+        with TemporaryDirectory() as work:
+            desktop = Path(work) / "activity.svg"
+            mobile = Path(work) / "activity-mobile.svg"
+            write_panels(model, desktop, mobile)
+            first_desktop = desktop.read_bytes()
+            first_mobile = mobile.read_bytes()
+            rechecked = dict(model, snapshot="2026-11-09 14:00 UTC")
+            write_panels(rechecked, desktop, mobile)
+            self.assertEqual(first_desktop, desktop.read_bytes())
+            self.assertEqual(first_mobile, mobile.read_bytes())
+
+            changed = dict(rechecked, portfolio=rechecked["portfolio"] + " · 1 new star")
+            write_panels(changed, desktop, mobile)
+            self.assertNotEqual(first_desktop, desktop.read_bytes())
+            self.assertNotEqual(first_mobile, mobile.read_bytes())
+            self.assertIn("2026-11-09 14:00 UTC", desktop.read_text(encoding="utf-8"))
+            self.assertIn("2026-11-09 14:00 UTC", mobile.read_text(encoding="utf-8"))
 
     def test_missing_and_small_language_shares_are_readable(self):
         self.assertEqual(format_percentage(0, 0), "0%")
