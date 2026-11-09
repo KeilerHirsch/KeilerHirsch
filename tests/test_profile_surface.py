@@ -57,7 +57,12 @@ class ProfileSurfaceTests(unittest.TestCase):
     def test_dynamic_languages_and_graphic(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         svg = (ROOT / "assets/activity-panel.svg").read_text(encoding="utf-8")
-        self.assertIn("![GitHub activity", readme)
+        mobile_svg = (ROOT / "assets/activity-panel-mobile.svg").read_text(encoding="utf-8")
+        self.assertIn("<picture>", readme)
+        self.assertIn('media="(max-width: 600px)"', readme)
+        self.assertIn('srcset="assets/activity-panel-mobile.svg"', readme)
+        self.assertIn('src="assets/activity-panel.svg"', readme)
+        self.assertIn("The UTC timestamp shows when displayed metrics last changed", readme)
         self.assertIn("both KeilerHirsch and KeilerHirschLabs", readme)
         self.assertIn("13 working languages", readme)
         self.assertIn("LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", svg)
@@ -81,6 +86,13 @@ class ProfileSurfaceTests(unittest.TestCase):
         self.assertIn("HTML", svg)
         self.assertIn("CSS", svg)
         ET.fromstring(svg)
+        ET.fromstring(mobile_svg)
+        self.assertIn("Metrics changed", svg)
+        self.assertIn("Metrics changed", mobile_svg)
+        self.assertNotIn(" following", svg)
+        self.assertNotIn(" following", mobile_svg)
+        for language in LANGUAGES:
+            self.assertIn(language, mobile_svg)
 
     def test_public_safety_and_links(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
@@ -99,6 +111,8 @@ class ProfileSurfaceTests(unittest.TestCase):
             "workflow_dispatch:", "pull_request:", "contents: write",
             "python -m unittest discover -s tests -v",
             "tools/render_activity_panel.py",
+            "--mobile-output assets/activity-panel-mobile.svg",
+            "git add -- assets/activity-panel.svg assets/activity-panel-mobile.svg",
             'git commit -m "chore: refresh profile activity"',
         ):
             self.assertIn(marker, workflow)

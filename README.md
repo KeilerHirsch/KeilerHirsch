@@ -28,9 +28,12 @@ My foundation is hands-on engineering: precision mechanics, industrial electroni
 
 ## Activity
 
-![GitHub activity — automatically updated languages, public project metrics and contributions](assets/activity-panel.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="assets/activity-panel-mobile.svg">
+  <img src="assets/activity-panel.svg" width="100%" alt="GitHub activity, measured code languages, confirmed working languages, contributions and portfolio">
+</picture>
 
-<sub>Automatically refreshed from GitHub (scheduled every six hours), covering public original projects under both KeilerHirsch and KeilerHirschLabs. Forks, profile metadata and archived projects are excluded from source-language percentages. The separate list of 13 working languages is owner-confirmed, not an inference from code size. Activity metrics are not a measure of proficiency or product maturity.</sub>
+<sub>Automatically refreshed from GitHub (scheduled every six hours), covering public original projects under both KeilerHirsch and KeilerHirschLabs. Forks, profile metadata and archived projects are excluded from source-language percentages. The separate list of 13 working languages is owner-confirmed, not an inference from code size. Activity metrics are not a measure of proficiency or product maturity. The UTC timestamp shows when displayed metrics last changed, not the latest fetch; unchanged data is checked without generating new commits.</sub>
 
 ## How I build
 
