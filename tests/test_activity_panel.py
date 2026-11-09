@@ -215,6 +215,33 @@ class ActivityPanelTests(unittest.TestCase):
         self.assertEqual((total, active), (10, 2))
         self.assertEqual(best, "best day 7 on 2026-09-20")
 
+    def test_recent_repositories_rotate_after_new_push(self):
+        def project(name, date):
+            return {
+                "name": name,
+                "nameWithOwner": f"KeilerHirschLabs/{name}",
+                "pushedAt": f"{date}T12:00:00Z",
+                "isFork": False,
+                "isEmpty": False,
+                "isArchived": False,
+            }
+
+        repos = [
+            project("A", "2026-11-08"),
+            project("B", "2026-11-07"),
+            project("SCUM-SENF", "2026-11-06"),
+            project("D", "2026-11-05"),
+        ]
+        self.assertEqual(
+            [r["name"] for r in recent_repositories(repos, "KeilerHirsch")],
+            ["A", "B", "SCUM-SENF"],
+        )
+        repos.append(project("New", "2026-11-09"))
+        self.assertEqual(
+            [r["name"] for r in recent_repositories(repos, "KeilerHirsch")],
+            ["New", "A", "B"],
+        )
+
     def test_recent_repositories_excludes_profile_and_archived(self):
         repos = [
             {"name": "KeilerHirsch", "isArchived": False, "pushedAt": "2026-09-20T10:00:00Z"},

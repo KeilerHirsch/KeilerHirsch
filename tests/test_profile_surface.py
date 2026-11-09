@@ -62,7 +62,20 @@ class ProfileSurfaceTests(unittest.TestCase):
         self.assertIn("13 working languages", readme)
         self.assertIn("LANGUAGES · ACTIVE ORIGINAL PROJECT CODE", svg)
         self.assertIn("LANGUAGES I WORK WITH · OWNER-CONFIRMED", svg)
-        self.assertIn("KeilerHirschLabs/SCUM-SENF", svg)
+        # Recent projects must rotate with real pushes, not pin yesterday's project.
+        self.assertIn("RECENTLY PUSHED ORIGINAL PROJECTS", svg)
+        visible_text = [
+            node.text or ""
+            for node in ET.fromstring(svg).iter()
+            if node.tag.endswith("}text")
+        ]
+        recent_rows = [line for line in visible_text if " pushed " in line]
+        self.assertTrue(recent_rows or "No recent nonempty originals" in visible_text)
+        self.assertLessEqual(len(recent_rows), 3)
+        for line in recent_rows:
+            self.assertRegex(
+                line, r"^KeilerHirsch(?:Labs)?/.+ pushed \d{4}-\d{2}-\d{2}$"
+            )
         for language in LANGUAGES:
             self.assertIn(language, svg)
         self.assertIn("HTML", svg)
