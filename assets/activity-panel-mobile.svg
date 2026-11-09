@@ -5,7 +5,7 @@
 <rect x="1" y="1" width="358" height="1513" rx="11" fill="none" stroke="#2b313a"/>
 <text x="20" y="38" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="23" font-weight="700">GITHUB ACTIVITY</text>
 <text x="20" y="62" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">AUTO · GitHub GraphQL</text>
-<text x="20" y="85" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Metrics changed · 2026-11-09 09:30 UTC</text>
+<text x="20" y="85" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Metrics changed · 2026-11-09 22:21 UTC</text>
 <path d="M20 103H340" stroke="#252a31"/>
 <text x="20" y="135" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">GitHub since 2026</text>
 <text x="20" y="159" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">7 personal public repos</text>
@@ -16,15 +16,15 @@
 <rect x="20" y="280" width="320" height="14" rx="7" fill="#252a31"/>
 <clipPath id="mobile-lang-clip"><rect x="20" y="280" width="320" height="14" rx="7"/></clipPath>
 <g clip-path="url(#mobile-lang-clip)">
-<rect x="20.000" y="280" width="131.697" height="14" fill="#3178c6"/>
-<rect x="151.697" y="280" width="93.538" height="14" fill="#7355dd"/>
-<rect x="245.235" y="280" width="56.406" height="14" fill="#f1e05a"/>
-<rect x="301.641" y="280" width="15.913" height="14" fill="#02f88c"/>
-<rect x="317.555" y="280" width="9.069" height="14" fill="#3572A5"/>
-<rect x="326.623" y="280" width="6.628" height="14" fill="#000080"/>
-<rect x="333.251" y="280" width="3.592" height="14" fill="#663399"/>
-<rect x="336.843" y="280" width="2.901" height="14" fill="#012456"/>
-<rect x="339.744" y="280" width="0.256" height="14" fill="#e34c26"/>
+<rect x="20.000" y="280" width="131.395" height="14" fill="#3178c6"/>
+<rect x="151.395" y="280" width="93.324" height="14" fill="#7355dd"/>
+<rect x="244.719" y="280" width="56.277" height="14" fill="#f1e05a"/>
+<rect x="300.996" y="280" width="15.877" height="14" fill="#02f88c"/>
+<rect x="316.872" y="280" width="9.048" height="14" fill="#3572A5"/>
+<rect x="325.920" y="280" width="6.612" height="14" fill="#000080"/>
+<rect x="332.533" y="280" width="3.584" height="14" fill="#663399"/>
+<rect x="336.116" y="280" width="2.895" height="14" fill="#012456"/>
+<rect x="339.011" y="280" width="0.989" height="14" fill="#e34c26"/>
 </g>
 <rect x="20" y="302" width="11" height="11" rx="3" fill="#3178c6"/>
 <text x="37" y="314" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">TypeScript 41%</text>
@@ -43,7 +43,7 @@
 <rect x="186" y="392" width="11" height="11" rx="3" fill="#012456"/>
 <text x="203" y="404" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">PowerShell 0.9%</text>
 <rect x="20" y="422" width="11" height="11" rx="3" fill="#e34c26"/>
-<text x="37" y="434" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">HTML 0.1%</text>
+<text x="37" y="434" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">HTML 0.3%</text>
 <path d="M20 482H340" stroke="#252a31"/>
 <text x="20" y="520" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="700">LANGUAGES I WORK WITH</text>
 <text x="20" y="542" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Owner-confirmed · not inferred from code</text>
@@ -78,29 +78,29 @@
 <text x="287" y="815" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" text-anchor="middle">10</text>
 <rect x="306" y="787.0" width="14" height="8.0" rx="3" fill="#67e480"/>
 <text x="313" y="815" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" text-anchor="middle">11</text>
-<text x="20" y="857" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">670 contributions</text>
-<text x="20" y="882" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">401 commits</text>
-<text x="20" y="907" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">203 PRs</text>
+<text x="20" y="857" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">682 contributions</text>
+<text x="20" y="882" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">408 commits</text>
+<text x="20" y="907" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">207 PRs</text>
 <path d="M20 925H340" stroke="#252a31"/>
 <text x="20" y="963" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="700">LAST 30 DAYS</text>
-<text x="20" y="988" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">257 contributions</text>
+<text x="20" y="988" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">269 contributions</text>
 <text x="20" y="1013" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">15 active days</text>
 <text x="20" y="1038" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16">best day 68 on 2026-10-11</text>
 <path d="M20 1056H340" stroke="#252a31"/>
 <text x="20" y="1094" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="700">PORTFOLIO · PUBLIC</text>
 <text x="20" y="1119" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">14 public (7 personal + 7 KHL)</text>
-<text x="20" y="1144" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">5 active originals</text>
+<text x="20" y="1144" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">6 active originals</text>
 <text x="20" y="1169" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">6 forks</text>
 <text x="20" y="1194" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">2 stars</text>
 <text x="20" y="1219" fill="#cbd3dd" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">0 downstream forks</text>
 <path d="M20 1237H340" stroke="#252a31"/>
 <text x="20" y="1275" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="700">RECENT ORIGINAL PROJECTS</text>
-<text x="20" y="1304" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">FS25_Advanced_RealismSuite</text>
-<text x="20" y="1324" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-08</text>
-<text x="20" y="1353" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">wolpertinger</text>
-<text x="20" y="1373" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-08</text>
-<text x="20" y="1402" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">PLLDN-Programming-Language-Licensi…</text>
-<text x="20" y="1422" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-08</text>
+<text x="20" y="1304" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">FS25_SmartVRAM</text>
+<text x="20" y="1324" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-09</text>
+<text x="20" y="1353" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">PLLDN-Programming-Language-Licensi…</text>
+<text x="20" y="1373" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-09</text>
+<text x="20" y="1402" fill="#f4f7fa" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600">wolpertinger</text>
+<text x="20" y="1422" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Last push: 2026-11-09</text>
 <path d="M20 1440H340" stroke="#252a31"/>
 <text x="20" y="1468" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Shares: source bytes, not proficiency.</text>
 <text x="20" y="1489" fill="#8e99a8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Excludes profile, forks, empty &amp; archived.</text>
